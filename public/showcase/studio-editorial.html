@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Nord — Editorial Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #f6f2eb;
+      color: #121212;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.75rem;
+      border-bottom: 1px solid rgba(18,18,18,0.08);
+    }
+    .logo {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,0.45);
+    }
+    .pill {
+      padding: 0.7rem 1.35rem;
+      border-radius: 999px;
+      background: #121212;
+      color: #f6f2eb;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 81px);
+    }
+    .copy {
+      padding: 3.5rem 2.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tag {
+      display: inline-block;
+      width: fit-content;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(18,18,18,0.12);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,0.5);
+      margin-bottom: 1.75rem;
+    }
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      max-width: 9ch;
+    }
+    h1 em {
+      font-style: italic;
+      color: #7a6348;
+    }
+    .lead {
+      margin-top: 1.75rem;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(18,18,18,0.62);
+      max-width: 38ch;
+    }
+    .row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.25rem;
+    }
+    .btn-dark {
+      background: #121212;
+      color: #f6f2eb;
+      border: none;
+      border-radius: 999px;
+      padding: 0.95rem 1.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .btn-line {
+      background: transparent;
+      color: #121212;
+      border: 1px solid rgba(18,18,18,0.18);
+      border-radius: 999px;
+      padding: 0.95rem 1.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(18,18,18,0.08);
+    }
+    .metric strong {
+      display: block;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .metric span {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,0.42);
+    }
+    .visual {
+      position: relative;
+      background:
+        linear-gradient(160deg, #e8dfd2 0%, #d4c4ad 45%, #b9a48a 100%);
+      overflow: hidden;
+    }
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(18,18,18,0.35), transparent 55%);
+    }
+    .frame {
+      position: absolute;
+      inset: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 0.25rem;
+    }
+    .floating {
+      position: absolute;
+      background: rgba(246,242,235,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(18,18,18,0.06);
+      border-radius: 1rem;
+      padding: 1.1rem 1.25rem;
+      box-shadow: 0 24px 60px rgba(18,18,18,0.12);
+    }
+    .float-1 { top: 3rem; right: 2.5rem; width: 200px; }
+    .float-2 { bottom: 3rem; left: 2.5rem; width: 240px; }
+    .float-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,0.42);
+      margin-bottom: 0.45rem;
+    }
+    .float-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+    .float-text {
+      margin-top: 0.45rem;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: rgba(18,18,18,0.55);
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 3rem;
+      right: 3rem;
+      z-index: 2;
+      text-align: right;
+      color: #fff;
+    }
+    .hero-text p {
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+    .hero-text h2 {
+      margin-top: 0.5rem;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Atelier Nord</div>
+    <div class="nav-right">
+      <span>Work</span>
+      <span>Studio</span>
+      <span>Kontakt</span>
+      <div class="pill">Erstgespräch</div>
+    </div>
+  </nav>
+  <main>
+    <section class="copy">
+      <span class="tag">Interior · Architektur · Berlin</span>
+      <h1>Räume, die <em>Geschichten</em> erzählen.</h1>
+      <p class="lead">
+        Editorial Website für ein Design-Studio — minimalistisch, hochwertig,
+        mit Fokus auf Bildsprache, Vertrauen und klare Anfragen.
+      </p>
+      <div class="row">
+        <button class="btn-dark">Projekt anfragen</button>
+        <button class="btn-line">Portfolio</button>
+      </div>
+      <div class="metrics">
+        <div class="metric"><strong>12</strong><span>Auszeichnungen</span></div>
+        <div class="metric"><strong>98%</strong><span>Weiterempfehlung</span></div>
+        <div class="metric"><strong>3×</strong><span>Mehr Anfragen</span></div>
+      </div>
+    </section>
+    <section class="visual">
+      <div class="frame"></div>
+      <div class="floating float-1">
+        <p class="float-label">Case Study</p>
+        <p class="float-title">Penthouse Mitte</p>
+        <p class="float-text">Warmes Materialkonzept mit klarer Typografie.</p>
+      </div>
+      <div class="floating float-2">
+        <p class="float-label">Conversion</p>
+        <p class="float-title">+214% Leads</p>
+        <p class="float-text">Nach dem Website-Relaunch in 8 Wochen.</p>
+      </div>
+      <div class="hero-text">
+        <p>Featured Project</p>
+        <h2>Signature<br />Living</h2>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

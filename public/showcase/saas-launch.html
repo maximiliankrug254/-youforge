@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse — SaaS Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #050510;
+      color: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 520px; height: 520px;
+      background: rgba(124, 92, 255, 0.35);
+      top: -180px; left: -120px;
+    }
+    .orb-2 {
+      width: 480px; height: 480px;
+      background: rgba(255, 92, 122, 0.28);
+      top: 20%; right: -100px;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: rgba(56, 189, 248, 0.18);
+      bottom: -120px; left: 35%;
+    }
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #7c5cff, #ff5c7a);
+      box-shadow: 0 0 24px rgba(124, 92, 255, 0.5);
+    }
+    .nav-mid {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-ghost {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      padding: 0.55rem 1rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c5cff 0%, #ff5c7a 100%);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.78rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(124, 92, 255, 0.35);
+    }
+    .hero {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 2.5rem 2rem 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1.5rem;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+    }
+    h1 {
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 20%, #c4b5fd 50%, #ff8fa3 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sub {
+      margin-top: 1.25rem;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.5);
+      max-width: 52ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .btn-xl {
+      padding: 0.9rem 1.75rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: none;
+      cursor: default;
+    }
+    .btn-xl-primary {
+      background: #fff;
+      color: #050510;
+      box-shadow: 0 12px 40px rgba(255,255,255,0.15);
+    }
+    .btn-xl-outline {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .trust {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+    }
+    .trust span { opacity: 0.7; }
+    .mockup-wrap {
+      position: relative;
+      z-index: 5;
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding: 0 2rem;
+    }
+    .mockup {
+      position: relative;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-bottom: none;
+      background: linear-gradient(180deg, rgba(20,18,40,0.95) 0%, rgba(8,8,18,0.98) 100%);
+      box-shadow:
+        0 -20px 80px rgba(124, 92, 255, 0.15),
+        0 40px 120px rgba(0,0,0,0.6);
+      overflow: hidden;
+      height: 380px;
+    }
+    .mockup-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.3);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .mockup-url {
+      flex: 1;
+      text-align: center;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .mockup-body {
+      display: grid;
+      grid-template-columns: 200px 1fr 260px;
+      height: calc(100% - 42px);
+    }
+    .sidebar {
+      padding: 1.25rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .side-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.25rem;
+    }
+    .side-item.active {
+      background: rgba(124, 92, 255, 0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(124, 92, 255, 0.2);
+    }
+    .side-dot {
+      width: 8px; height: 8px;
+      border-radius: 3px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+    .main-panel { padding: 1.25rem; }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .panel-header h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .panel-header span {
+      font-size: 0.65rem;
+      color: #38bdf8;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.2);
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .kpi {
+      padding: 0.85rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .kpi label {
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+    }
+    .kpi strong {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+    .kpi.up strong { color: #38bdf8; }
+    .kpi.hot strong { color: #ff8fa3; }
+    .chart {
+      height: 100px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .chart-bars {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      padding: 0 1rem 0.75rem;
+      height: 100%;
+    }
+    .bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      background: linear-gradient(180deg, #7c5cff, rgba(124,92,255,0.2));
+      min-height: 20%;
+    }
+    .bar:nth-child(2) { height: 45%; }
+    .bar:nth-child(3) { height: 65%; }
+    .bar:nth-child(4) { height: 40%; }
+    .bar:nth-child(5) { height: 80%; }
+    .bar:nth-child(6) { height: 55%; }
+    .bar:nth-child(7) { height: 90%; }
+    .bar:nth-child(8) { height: 70%; }
+    .right-panel {
+      padding: 1.25rem;
+      border-left: 1px solid rgba(255,255,255,0.05);
+      background: rgba(0,0,0,0.15);
+    }
+    .activity {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.85rem;
+    }
+    .feed-item {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .avatar {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #7c5cff, #38bdf8);
+    }
+    .feed-item p {
+      font-size: 0.7rem;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.55);
+    }
+    .feed-item strong { color: #fff; font-weight: 600; }
+    .float-card {
+      position: absolute;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      background: rgba(15,12,30,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      font-size: 0.72rem;
+    }
+    .float-1 {
+      top: -20px;
+      right: 80px;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .float-1 .icon {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff5c7a, #ff8fa3);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .float-1 strong { display: block; font-size: 0.85rem; }
+    .float-1 span { color: rgba(255,255,255,0.45); font-size: 0.65rem; }
+    .float-2 {
+      bottom: 60px;
+      left: 40px;
+      border-color: rgba(56,189,248,0.25);
+    }
+    .float-2 strong {
+      display: block;
+      font-size: 1.1rem;
+      color: #38bdf8;
+      margin-bottom: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="noise"></div>
+
+  <nav>
+    <div class="logo">
+      <div class="logo-mark"></div>
+      Pulse
+    </div>
+    <div class="nav-mid">
+      <span>Produkt</span>
+      <span>Preise</span>
+      <span>Kunden</span>
+      <span>Ressourcen</span>
+    </div>
+    <div class="nav-cta">
+      <span class="btn-ghost">Anmelden</span>
+      <button class="btn-primary">Kostenlos starten</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Neu — Automatisierung für wachsende Teams
+    </div>
+    <h1>
+      Dein Business.<br />
+      <span class="gradient-text">Ein Klick schneller.</span>
+    </h1>
+    <p class="sub">
+      Conversion-starke SaaS-Landingpage mit Produkt-Mockup, Social Proof
+      und klarem Funnel — designed für Startups, die sofort verkaufen wollen.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-xl btn-xl-primary">14 Tage gratis testen</button>
+      <button class="btn-xl btn-xl-outline">Demo ansehen →</button>
+    </div>
+    <div class="trust">
+      <span>Vertraut von 2.400+ Teams</span>
+      <span>·</span>
+      <span>Stripe</span>
+      <span>Notion</span>
+      <span>Linear</span>
+      <span>Vercel</span>
+    </div>
+  </section>
+
+  <div class="mockup-wrap">
+    <div class="float-card float-1">
+      <div class="icon">↑</div>
+      <div>
+        <strong>+340% Conversion</strong>
+        <span>Nach dem Relaunch</span>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-bar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="mockup-url">app.pulse.io/dashboard</span>
+      </div>
+      <div class="mockup-body">
+        <aside class="sidebar">
+          <div class="side-item active"><span class="side-dot"></span> Dashboard</div>
+          <div class="side-item"><span class="side-dot"></span> Workflows</div>
+          <div class="side-item"><span class="side-dot"></span> Analytics</div>
+          <div class="side-item"><span class="side-dot"></span> Team</div>
+          <div class="side-item"><span class="side-dot"></span> Einstellungen</div>
+        </aside>
+        <div class="main-panel">
+          <div class="panel-header">
+            <h3>Performance Overview</h3>
+            <span>Live</span>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi up"><label>Umsatz</label><strong>€48.2k</strong></div>
+            <div class="kpi hot"><label>Leads</label><strong>1.284</strong></div>
+            <div class="kpi"><label>Conversion</label><strong>12.4%</strong></div>
+          </div>
+          <div class="chart">
+            <div class="chart-bars">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+          </div>
+        </div>
+        <aside class="right-panel">
+          <p class="activity">Live Activity</p>
+          <div class="feed-item">
+            <div class="avatar"></div>
+            <p><strong>Sarah M.</strong> hat Workflow „Onboarding" aktiviert</p>
+          </div>
+          <div class="feed-item">
+            <div class="avatar" style="background:linear-gradient(135deg,#ff5c7a,#ff8fa3)"></div>
+            <p><strong>Team Nord</strong> +23 neue Leads heute</p>
+          </div>
+          <div class="feed-item">
+            <div class="avatar" style="background:linear-gradient(135deg,#38bdf8,#7c5cff)"></div>
+            <p><strong>API Sync</strong> erfolgreich abgeschlossen</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="float-card float-2">
+      <strong>4.9 ★</strong>
+      <span style="color:rgba(255,255,255,0.5)">Durchschnittliche Bewertung</span>
+    </div>
+  </div>
+</body>
+</html>

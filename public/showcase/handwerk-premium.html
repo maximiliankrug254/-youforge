@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meisterbetrieb — Premium Handwerk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 75%);
+    }
+    .glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,255,0,0.12), transparent 70%);
+      top: -120px;
+      right: -80px;
+      pointer-events: none;
+    }
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .logo span { color: #c8ff00; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .cta-nav {
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(200,255,0,0.35);
+      color: #c8ff00;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    main {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      align-items: center;
+      min-height: calc(100vh - 73px);
+      padding: 2rem 2.5rem 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #c8ff00;
+      margin-bottom: 1.25rem;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 11ch;
+    }
+    .lead {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.55);
+      max-width: 42ch;
+    }
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .btn-primary {
+      background: #c8ff00;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #c8ff00;
+    }
+    .stat span {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .visual {
+      position: relative;
+      height: 520px;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(145deg, rgba(200,255,0,0.08), transparent 40%),
+        linear-gradient(180deg, #111 0%, #050505 100%);
+    }
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(200,255,0,0.15), transparent 45%),
+        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.04), transparent 40%);
+    }
+    .card {
+      position: absolute;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      padding: 1rem 1.25rem;
+    }
+    .card-1 { top: 2rem; left: 1.5rem; width: 220px; }
+    .card-2 { bottom: 2.5rem; right: 1.5rem; width: 260px; }
+    .card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c8ff00;
+      margin-bottom: 0.5rem;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .card p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+    .sphere {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 280px;
+      height: 280px;
+      transform: translate(-50%, -52%);
+      border-radius: 50%;
+      border: 1px solid rgba(200,255,0,0.25);
+      background:
+        repeating-conic-gradient(from 0deg, rgba(200,255,0,0.15) 0deg 8deg, transparent 8deg 16deg);
+      box-shadow: 0 0 80px rgba(200,255,0,0.12);
+    }
+    .badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(200,255,0,0.12);
+      border: 1px solid rgba(200,255,0,0.25);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #c8ff00;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <nav>
+    <div class="logo">Meister<span>.</span>werk</div>
+    <div class="nav-links">
+      <span>Leistungen</span>
+      <span>Projekte</span>
+      <span>Über uns</span>
+    </div>
+    <div class="cta-nav">Angebot anfordern</div>
+  </nav>
+  <main>
+    <section>
+      <p class="eyebrow">Schreinerei · Meisterbetrieb · München</p>
+      <h1>Handwerk, das man sieht. Qualität, die bleibt.</h1>
+      <p class="lead">
+        Maßmöbel, Innenausbau und Reparaturen auf Meisterniveau —
+        mit einem Online-Auftritt, der genauso präzise wirkt wie unsere Arbeit.
+      </p>
+      <div class="actions">
+        <button class="btn-primary">Projekt starten</button>
+        <button class="btn-ghost">Referenzen</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>25+</strong><span>Jahre Erfahrung</span></div>
+        <div class="stat"><strong>4.9</strong><span>Kundenbewertung</span></div>
+        <div class="stat"><strong>48h</strong><span>Erstantwort</span></div>
+      </div>
+    </section>
+    <section class="visual">
+      <span class="badge">Premium Website</span>
+      <div class="sphere"></div>
+      <div class="card card-1">
+        <p class="card-label">Live-Anfragen</p>
+        <h3>+127%</h3>
+        <p>Mehr Kontaktanfragen nach dem Relaunch.</p>
+      </div>
+      <div class="card card-2">
+        <p class="card-label">Highlight</p>
+        <h3>Maßanfertigung</h3>
+        <p>Individuelle Lösungen — von der Planung bis zur Montage.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

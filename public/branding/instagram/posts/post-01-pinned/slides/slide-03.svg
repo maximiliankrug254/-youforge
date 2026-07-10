@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg3" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#0f1330"/>
+      <stop offset="100%" stop-color="#04060f"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#bg3)"/>
+  <text x="90" y="200" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="6">YOUFORGE</text>
+  <text x="90" y="340" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Was wir schmieden.</text>
+  <rect x="90" y="420" width="900" height="140" rx="20" fill="#141414" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="130" y="490" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Websites</text>
+  <text x="130" y="530" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="24">Premium-Auftritt, der ueberzeugt</text>
+  <rect x="90" y="590" width="900" height="140" rx="20" fill="#141414" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="130" y="660" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">KI und Automatisierung</text>
+  <text x="130" y="700" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="24">Prozesse, die Zeit sparen</text>
+  <rect x="90" y="760" width="900" height="140" rx="20" fill="#141414" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="130" y="830" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Web-Apps</text>
+  <text x="130" y="870" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="24">Individuelle Tools fuer dein Business</text>
+  <rect x="90" y="930" width="900" height="140" rx="20" fill="#141414" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="130" y="1000" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">Digitale Beratung</text>
+  <text x="130" y="1040" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="24">Strategie vor dem ersten Pixel</text>
+  <circle cx="1000" cy="1280" r="28" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
+  <text x="1000" y="1288" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="20" opacity="0.5">3/5</text>
+</svg>

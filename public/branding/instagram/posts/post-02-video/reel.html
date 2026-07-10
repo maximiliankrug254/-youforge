@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="reel.css" />
+</head>
+<body>
+  <div id="stage">
+    <div class="speed-lines" id="speedLines"></div>
+    <div class="scan" id="scan"></div>
+    <div class="shockwave" id="shockwave"></div>
+    <img class="logo" id="logo" src="../../../logos/final/youforge-yf-master-hires.png" alt="" />
+
+    <div class="layer" id="L1"><span class="blast">STOP.</span></div>
+    <div class="layer bottom" id="L2" style="align-items:flex-start;text-align:left;">
+      <span class="blast-md">Du verlierst<br/><span class="red">Kunden.</span></span>
+    </div>
+    <div class="layer" id="L3"><span class="blast-md dim" id="wordFlash">LANGSAM</span></div>
+    <div class="layer bottom" id="L4" style="align-items:flex-start;text-align:left;">
+      <p class="mono accent" style="font-size:18px;margin-bottom:20px;">Während du wartest</p>
+      <span class="blast-sm">Dein Konkurrent<br/>zieht vorbei.</span>
+    </div>
+    <div class="layer" id="L5">
+      <span class="blast-md accent">Wir bauen Systeme<br/>die Umsatz machen.</span>
+    </div>
+    <div class="layer" id="L6" style="align-items:flex-start;padding-left:100px;">
+      <div class="whip" id="w1">Website die konvertiert</div>
+      <div class="whip" id="w2">KI die Zeit spart</div>
+      <div class="whip" id="w3">Prozesse die laufen</div>
+    </div>
+    <div class="layer" id="L7">
+      <p class="mono dim" style="font-size:20px;margin-bottom:16px;">Ergebnis in</p>
+      <div class="counter" id="counter">0</div>
+      <p class="blast-sm" style="margin-top:8px;">WOCHEN. NICHT MONATEN.</p>
+    </div>
+    <div class="layer" id="L8">
+      <span class="cta-box">DM: START</span>
+      <p style="margin-top:40px;font-size:28px;color:#888;">Kostenloses Erstgespräch.</p>
+      <p class="mono accent" style="margin-top:24px;font-size:22px;">@youforge.studio</p>
+    </div>
+
+    <div class="flash" id="flash"></div>
+    <div class="lime-flash" id="limeFlash"></div>
+    <div class="red-flash" id="redFlash"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <p class="handle mono">@youforge.studio</p>
+  </div>
+
+  <script>
+    const stage = document.getElementById("stage");
+    const flash = document.getElementById("flash");
+    const limeFlash = document.getElementById("limeFlash");
+    const redFlash = document.getElementById("redFlash");
+    const scan = document.getElementById("scan");
+    const speedLines = document.getElementById("speedLines");
+    const shockwave = document.getElementById("shockwave");
+    const logo = document.getElementById("logo");
+    const wordFlash = document.getElementById("wordFlash");
+    const counter = document.getElementById("counter");
+
+    const layers = {};
+    for (let i = 1; i <= 8; i++) layers["L" + i] = document.getElementById("L" + i);
+
+    const words = ["LANGSAM", "ALT", "CHAOS", "MANUELL", "VERLOREN"];
+
+    function hideAll() {
+      Object.values(layers).forEach((l) => { l.style.opacity = "0"; });
+    }
+
+    function show(id) {
+      hideAll();
+      layers[id].style.opacity = "1";
+      layers[id].style.transition = "opacity 0.08s";
+    }
+
+    function whiteFlash(intensity = 0.5) {
+      flash.style.opacity = String(intensity);
+      flash.style.transition = "opacity 0.04s";
+      setTimeout(() => { flash.style.opacity = "0"; flash.style.transition = "opacity 0.12s"; }, 50);
+    }
+
+    function limeBurst() {
+      limeFlash.style.opacity = "0.35";
+      limeFlash.style.transition = "opacity 0.05s";
+      setTimeout(() => { limeFlash.style.opacity = "0"; limeFlash.style.transition = "opacity 0.2s"; }, 60);
+    }
+
+    function redBurst() {
+      redFlash.style.opacity = "0.25";
+      redFlash.style.transition = "opacity 0.05s";
+      setTimeout(() => { redFlash.style.opacity = "0"; redFlash.style.transition = "opacity 0.15s"; }, 50);
+    }
+
+    function shake() {
+      stage.classList.remove("shake");
+      void stage.offsetWidth;
+      stage.classList.add("shake");
+    }
+
+    function runScan() {
+      scan.style.opacity = "1";
+      scan.style.top = "-120px";
+      scan.style.transition = "none";
+      requestAnimationFrame(() => {
+        scan.style.transition = "top 0.45s linear";
+        scan.style.top = "110%";
+        setTimeout(() => { scan.style.opacity = "0"; }, 480);
+      });
+    }
+
+    function shock() {
+      shockwave.style.opacity = "1";
+      shockwave.style.transform = "translate(-50%,-50%) scale(0.2)";
+      shockwave.style.transition = "none";
+      requestAnimationFrame(() => {
+        shockwave.style.transition = "all 0.7s cubic-bezier(0.12,0.85,0.22,1)";
+        shockwave.style.transform = "translate(-50%,-50%) scale(4.5)";
+        shockwave.style.opacity = "0";
+      });
+    }
+
+    function animateCounter(target, duration) {
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        counter.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const timeline = [
+      { at: 0, fn: () => { whiteFlash(0.7); show("L1"); shake(); } },
+      { at: 700, fn: () => { redBurst(); show("L2"); shake(); } },
+      { at: 1400, fn: () => {
+        show("L3");
+        let i = 0;
+        const iv = setInterval(() => {
+          wordFlash.textContent = words[i];
+          wordFlash.className = "blast-md " + (i % 2 === 0 ? "red" : "accent");
+          whiteFlash(0.15);
+          shake();
+          i++;
+          if (i >= words.length) clearInterval(iv);
+        }, 280);
+      }},
+      { at: 2900, fn: () => { speedLines.style.opacity = "1"; runScan(); show("L4"); shake(); } },
+      { at: 4200, fn: () => { limeBurst(); whiteFlash(0.3); show("L5"); speedLines.style.opacity = "0.6"; } },
+      { at: 5600, fn: () => {
+        show("L6");
+        ["w1","w2","w3"].forEach((id, i) => {
+          setTimeout(() => {
+            document.getElementById(id).classList.add("show");
+            limeBurst();
+            shake();
+          }, i * 220);
+        });
+      }},
+      { at: 7200, fn: () => {
+        show("L7");
+        animateCounter(4, 600);
+        runScan();
+        shake();
+      }},
+      { at: 9000, fn: () => {
+        hideAll();
+        logo.style.opacity = "1";
+        logo.style.animation = "zoomPulse 0.55s cubic-bezier(0.12,0.85,0.22,1) forwards";
+        shock();
+        limeBurst();
+        whiteFlash(0.25);
+      }},
+      { at: 10500, fn: () => {
+        logo.style.opacity = "0.35";
+        logo.style.transform = "translate(-50%,-50%) scale(0.85)";
+        logo.style.transition = "all 0.3s";
+      }},
+      { at: 11200, fn: () => { limeBurst(); show("L8"); shake(); } },
+      { at: 17000, fn: () => {
+        logo.style.opacity = "0.15";
+        document.querySelector(".cta-box").style.transform = "scale(1.06)";
+        document.querySelector(".cta-box").style.transition = "transform 0.3s";
+      }},
+    ];
+
+    const start = performance.now();
+    const done = new Set();
+
+    function loop(now) {
+      const t = now - start;
+      timeline.forEach((ev, i) => {
+        if (t >= ev.at && !done.has(i)) { done.add(i); ev.fn(); }
+      });
+      if (t < 20500) requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault — Client Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #0c0e14;
+      color: #e8eaef;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: #080a0f;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 1rem;
+    }
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #f59e0b, #ef4444);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+    }
+    .brand-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand-text span {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-section {
+      padding: 0 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .nav-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      padding: 0 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.15rem;
+    }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(245,158,11,0.12), transparent);
+      color: #fbbf24;
+      border: 1px solid rgba(245,158,11,0.15);
+    }
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.06);
+    }
+    .nav-item.active .nav-icon {
+      background: rgba(245,158,11,0.25);
+    }
+    .user-card {
+      margin-top: auto;
+      margin: auto 0.75rem 0;
+      padding: 0.85rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+    .user-card strong { display: block; font-size: 0.78rem; }
+    .user-card span { font-size: 0.65rem; color: rgba(255,255,255,0.4); }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(8,10,15,0.6);
+    }
+    .topbar h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .topbar p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.15rem;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      width: 220px;
+    }
+    .notif {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .notif::after {
+      content: "";
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      border: 2px solid #0c0e14;
+    }
+    .btn-gold {
+      padding: 0.55rem 1.1rem;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+    .content {
+      flex: 1;
+      padding: 1.5rem 1.75rem;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      grid-template-rows: auto 1fr;
+      gap: 1rem;
+      overflow: hidden;
+    }
+    .stats-row {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+    .stat-card {
+      padding: 1.1rem 1.25rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.6;
+    }
+    .stat-card:nth-child(1) { --accent: #f59e0b; }
+    .stat-card:nth-child(2) { --accent: #38bdf8; }
+    .stat-card:nth-child(3) { --accent: #a78bfa; }
+    .stat-card:nth-child(4) { --accent: #34d399; }
+    .stat-card label {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .stat-card strong {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .stat-card .delta {
+      margin-top: 0.35rem;
+      font-size: 0.68rem;
+      color: #34d399;
+    }
+    .panel {
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.25rem;
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .panel-head h2 {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .panel-head span {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .chart-area {
+      height: 180px;
+      position: relative;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .chart-line {
+      position: absolute;
+      inset: 1rem 1rem 2rem;
+    }
+    .chart-line svg {
+      width: 100%;
+      height: 100%;
+    }
+    .chart-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 30px;
+    }
+    .clients-table {
+      margin-top: 1rem;
+    }
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 80px;
+      gap: 0.5rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.72rem;
+      align-items: center;
+    }
+    .table-row.header {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 0.5rem;
+    }
+    .client-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .client-av {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .status {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .status.active {
+      background: rgba(52,211,153,0.12);
+      color: #34d399;
+      border: 1px solid rgba(52,211,153,0.2);
+    }
+    .status.pending {
+      background: rgba(245,158,11,0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245,158,11,0.2);
+    }
+    .progress-bar {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+    }
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+    }
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+      background: #f59e0b;
+      box-shadow: 0 0 12px rgba(245,158,11,0.5);
+    }
+    .timeline-item p {
+      font-size: 0.72rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.55);
+    }
+    .timeline-item strong {
+      display: block;
+      color: #fff;
+      font-size: 0.78rem;
+      margin-bottom: 0.15rem;
+    }
+    .timeline-item time {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.28);
+    }
+    .upgrade-card {
+      margin-top: auto;
+      padding: 1.1rem;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(245,158,11,0.15), rgba(239,68,68,0.08));
+      border: 1px solid rgba(245,158,11,0.2);
+    }
+    .upgrade-card h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .upgrade-card p {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+    .upgrade-card button {
+      width: 100%;
+      padding: 0.55rem;
+      border-radius: 8px;
+      border: none;
+      background: #f59e0b;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.68rem;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">V</div>
+      <div class="brand-text">
+        <strong>Vault</strong>
+        <span>Client Hub</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <p class="nav-label">Hauptmenü</p>
+      <div class="nav-item active"><span class="nav-icon"></span> Dashboard</div>
+      <div class="nav-item"><span class="nav-icon"></span> Kunden</div>
+      <div class="nav-item"><span class="nav-icon"></span> Projekte</div>
+      <div class="nav-item"><span class="nav-icon"></span> Dokumente</div>
+    </div>
+    <div class="nav-section">
+      <p class="nav-label">Verwaltung</p>
+      <div class="nav-item"><span class="nav-icon"></span> Rechnungen</div>
+      <div class="nav-item"><span class="nav-icon"></span> Analytics</div>
+      <div class="nav-item"><span class="nav-icon"></span> Einstellungen</div>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar"></div>
+      <div>
+        <strong>Max Krug</strong>
+        <span>Admin · Pro Plan</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <h1>Willkommen zurück, Max</h1>
+        <p>Montag, 9. Juli 2026 — 12 aktive Kundenprojekte</p>
+      </div>
+      <div class="topbar-right">
+        <div class="search">🔍 Suchen…</div>
+        <div class="notif"></div>
+        <button class="btn-gold">+ Neues Projekt</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="stats-row">
+        <div class="stat-card">
+          <label>Umsatz MTD</label>
+          <strong>€84.7k</strong>
+          <div class="delta">↑ 18.4% vs. Vormonat</div>
+        </div>
+        <div class="stat-card">
+          <label>Aktive Kunden</label>
+          <strong>47</strong>
+          <div class="delta">↑ 6 neue diesen Monat</div>
+        </div>
+        <div class="stat-card">
+          <label>Offene Tasks</label>
+          <strong>23</strong>
+          <div class="delta" style="color:#fbbf24">3 überfällig</div>
+        </div>
+        <div class="stat-card">
+          <label>Zufriedenheit</label>
+          <strong>4.9</strong>
+          <div class="delta">★★★★★ Durchschnitt</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Umsatz & Wachstum</h2>
+          <span>Letzte 30 Tage</span>
+        </div>
+        <div class="chart-area">
+          <div class="chart-grid"></div>
+          <div class="chart-line">
+            <svg viewBox="0 0 400 120" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,90 L50,75 L100,80 L150,55 L200,60 L250,35 L300,40 L350,20 L400,15 L400,120 L0,120 Z" fill="url(#fill)"/>
+              <path d="M0,90 L50,75 L100,80 L150,55 L200,60 L250,35 L300,40 L350,20 L400,15" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="clients-table">
+          <div class="table-row header">
+            <span>Kunde</span>
+            <span>Status</span>
+            <span>Fortschritt</span>
+            <span>Wert</span>
+          </div>
+          <div class="table-row">
+            <div class="client-cell">
+              <div class="client-av" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"></div>
+              <span>Nordwerk GmbH</span>
+            </div>
+            <span class="status active">Aktiv</span>
+            <div><div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div></div>
+            <span>€12.4k</span>
+          </div>
+          <div class="table-row">
+            <div class="client-cell">
+              <div class="client-av" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9)"></div>
+              <span>Studio Lumen</span>
+            </div>
+            <span class="status active">Aktiv</span>
+            <div><div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div></div>
+            <span>€8.9k</span>
+          </div>
+          <div class="table-row">
+            <div class="client-cell">
+              <div class="client-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"></div>
+              <span>Berg & Partner</span>
+            </div>
+            <span class="status pending">Review</span>
+            <div><div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div></div>
+            <span>€6.2k</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="panel" style="flex:1">
+          <div class="panel-head">
+            <h2>Aktivitäten</h2>
+            <span>Heute</span>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div>
+              <strong>Neuer Vertrag unterzeichnet</strong>
+              <p>Nordwerk GmbH — Website Relaunch Phase 2</p>
+              <time>Vor 23 Min.</time>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot" style="background:#38bdf8;box-shadow:0 0 12px rgba(56,189,248,0.5)"></div>
+            <div>
+              <strong>Rechnung bezahlt</strong>
+              <p>Studio Lumen — €4.200,00 erhalten</p>
+              <time>Vor 1 Std.</time>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot" style="background:#a78bfa;box-shadow:0 0 12px rgba(167,139,250,0.5)"></div>
+            <div>
+              <strong>Feedback eingegangen</strong>
+              <p>Berg & Partner — Design-Freigabe erteilt</p>
+              <time>Vor 3 Std.</time>
+            </div>
+          </div>
+        </div>
+        <div class="upgrade-card">
+          <h3>Pro Plan aktiv</h3>
+          <p>Unbegrenzte Kunden, Analytics & White-Label Portal inklusive.</p>
+          <button>Plan verwalten</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

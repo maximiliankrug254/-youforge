@@ -1,0 +1,17 @@
+---
+description: Post-Deploy-Checkliste YouForge — nach Go-Live prüfen
+alwaysApply: true
+---
+
+# Post-Deploy-Checkliste (YouForge)
+
+Nach jedem Deploy auf Vercel / `youforge.de` **unbedingt** prüfen:
+
+## OG-Image & Social Meta (SEHR WICHTIG)
+
+- `metadataBase` in `src/app/layout.tsx` setzen: `new URL(siteConfig.url)` → `https://youforge.de`
+- Build-Warnung zu `metadataBase` darf nach Deploy nicht mehr erscheinen
+- Live testen:
+  - `https://youforge.de/opengraph-image` — Bild lädt (PNG 1200×630)
+  - [opengraph.xyz](https://www.opengraph.xyz/) oder LinkedIn Post Inspector mit `https://youforge.de`
+  - `og:image` und `twitter:image` zeigen absolute URLs auf `youforge.de`, nicht `localhost:3000`

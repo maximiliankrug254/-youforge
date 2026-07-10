@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg4" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#12173a"/>
+      <stop offset="100%" stop-color="#04060f"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#bg4)"/>
+  <text x="90" y="200" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="6">YOUFORGE</text>
+  <text x="90" y="360" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">Fuer Unternehmen,</text>
+  <text x="90" y="430" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">die digital</text>
+  <text x="90" y="500" fill="#c8ff00" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">wachsen wollen.</text>
+  <text x="90" y="640" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="600">Handwerk / Gastro / Coaches</text>
+  <text x="90" y="700" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="600">Immobilien / Fitness / Start-ups</text>
+  <line x1="90" y1="780" x2="200" y2="780" stroke="#c8ff00" stroke-width="4"/>
+  <text x="90" y="880" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="30">Du willst professioneller auftreten,</text>
+  <text x="90" y="930" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="30">Prozesse automatisieren und</text>
+  <text x="90" y="980" fill="#a1a1a1" font-family="Arial, Helvetica, sans-serif" font-size="30">dein Business digital skalieren?</text>
+  <text x="90" y="1060" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Dann bist du hier richtig.</text>
+  <circle cx="1000" cy="1280" r="28" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
+  <text x="1000" y="1288" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="20" opacity="0.5">4/5</text>
+</svg>
