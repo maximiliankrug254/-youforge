@@ -17,7 +17,7 @@ export function DemoChatWidget() {
   }, [closeWidget]);
 
   return (
-    <>
+    <div data-demo-chat-widget>
       <AnimatePresence>
         {isWidgetOpen && (
           <>
@@ -70,6 +70,6 @@ export function DemoChatWidget() {
         id="ki-demo-scroll-trigger"
         aria-hidden
       />
-    </>
+    </div>
   );
 }

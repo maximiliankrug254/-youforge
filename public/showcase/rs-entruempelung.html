@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RS Entrümpelung &amp; Umzug — Gießen | Premium Demo</title>
+  <meta name="description" content="Professionelle Entrümpelung, Haushaltsauflösung und Umzug in Gießen. Kostenlose Besichtigung, Festpreis, besenreine Übergabe. 4,8★ auf Google." />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #0099ff;
+      --blue-dark: #0077cc;
+      --blue-soft: rgba(0, 153, 255, 0.12);
+      --blue-glow: rgba(0, 153, 255, 0.35);
+      --ink: #0b0e11;
+      --ink-soft: #14181d;
+      --fg: #ffffff;
+      --muted-on-dark: rgba(255, 255, 255, 0.62);
+      --text: #1a1d21;
+      --text-muted: #5c6570;
+      --paper: #f4f6f8;
+      --card: #ffffff;
+      --line: rgba(255, 255, 255, 0.1);
+      --line-dark: rgba(11, 14, 17, 0.08);
+      --shadow: 0 18px 50px rgba(11, 14, 17, 0.1);
+      --shadow-hover: 0 28px 60px rgba(0, 153, 255, 0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 76px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .wrap {
+      width: min(1140px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .display {
+      font-family: Archivo, Inter, system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    /* ——— Buttons ——— */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.95rem 1.45rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      border: 1.5px solid transparent;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #33adff 0%, var(--blue) 45%, var(--blue-dark) 100%);
+      color: #fff;
+      box-shadow: 0 10px 28px var(--blue-glow);
+    }
+    .btn-primary:hover { box-shadow: 0 14px 34px rgba(0, 153, 255, 0.45); }
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.35);
+      color: #fff;
+    }
+    .btn-ghost:hover {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .btn-ghost-dark {
+      background: transparent;
+      border-color: rgba(11, 14, 17, 0.15);
+      color: var(--text);
+    }
+    .btn-ghost-dark:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .btn-wa {
+      background: rgba(0, 153, 255, 0.1);
+      border-color: rgba(0, 153, 255, 0.35);
+      color: var(--blue);
+    }
+    .btn-wa:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    /* ——— Nav ——— */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(11, 14, 17, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: #fff;
+      font-family: Archivo, sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #33adff, var(--blue-dark));
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 900;
+      box-shadow: 0 6px 16px var(--blue-glow);
+    }
+    .brand span { color: var(--blue); }
+    .nav-links {
+      display: none;
+      gap: 1.6rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-actions { display: flex; gap: 0.55rem; align-items: center; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.15rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #33adff, var(--blue));
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px var(--blue-glow);
+    }
+    .nav-cta.ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+      color: #fff;
+    }
+    @media (min-width: 900px) {
+      .nav-links { display: flex; }
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 60% at 85% 15%, rgba(0, 153, 255, 0.28), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(0, 119, 204, 0.18), transparent 50%),
+        linear-gradient(165deg, #0b0e11 0%, #12171d 55%, #0b0e11 100%);
+      color: #fff;
+      padding: 4.5rem 0 5.5rem;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 72px;
+      background: var(--paper);
+      clip-path: ellipse(75% 100% at 50% 100%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 2.75rem;
+    }
+    @media (min-width: 960px) {
+      .hero-inner {
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: end;
+        gap: 3rem;
+      }
+    }
+    .hero h1 {
+      font-size: clamp(2.55rem, 6.5vw, 4.4rem);
+      max-width: 13ch;
+      margin-top: 1rem;
+    }
+    .hero h1 .acc { color: var(--blue); }
+    .hero-lead {
+      margin-top: 1.35rem;
+      font-size: 1.08rem;
+      color: var(--muted-on-dark);
+      max-width: 38ch;
+      line-height: 1.65;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.85rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.78rem;
+      color: var(--muted-on-dark);
+      backdrop-filter: blur(8px);
+    }
+    .pill strong { color: #fff; font-weight: 650; }
+
+    .hero-card {
+      border-radius: 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 1.6rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+    .hero-card .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 1.25rem;
+    }
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+    }
+    .ba-box {
+      border-radius: 1.1rem;
+      min-height: 148px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .ba-box.before {
+      background:
+        repeating-linear-gradient(-45deg, transparent, transparent 7px, rgba(255,255,255,0.03) 7px, rgba(255,255,255,0.03) 14px),
+        #1a2028;
+    }
+    .ba-box.after {
+      background:
+        radial-gradient(circle at 70% 25%, rgba(0, 153, 255, 0.35), transparent 55%),
+        #152029;
+      border-color: rgba(0, 153, 255, 0.3);
+    }
+    .ba-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .ba-box.after .ba-tag { color: #7ecbff; }
+    .ba-title {
+      font-family: Archivo, sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+    .hero-card .phone {
+      margin-top: 1.2rem;
+      padding-top: 1.15rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: Archivo, sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-card .phone a:hover { color: var(--blue); }
+    .hero-card .hours {
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ——— Sections ——— */
+    section { padding: 4.75rem 0; }
+    .section-head {
+      max-width: 40rem;
+      margin-bottom: 2.5rem;
+    }
+    .section-head h2 {
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      margin-top: 0.7rem;
+      color: var(--ink);
+    }
+    .section-head h2 .acc { color: var(--blue); }
+    .section-head p {
+      margin-top: 0.9rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 44ch;
+    }
+
+    .on-dark {
+      background:
+        radial-gradient(ellipse 60% 50% at 90% 0%, rgba(0, 153, 255, 0.18), transparent 50%),
+        var(--ink);
+      color: #fff;
+    }
+    .on-dark .section-head h2 { color: #fff; }
+    .on-dark .section-head p { color: var(--muted-on-dark); }
+
+    /* Services */
+    .services {
+      display: grid;
+      gap: 1.1rem;
+    }
+    @media (min-width: 760px) {
+      .services { grid-template-columns: 1fr 1fr; }
+    }
+    .service {
+      background: var(--card);
+      border-radius: 1.35rem;
+      padding: 1.65rem 1.5rem 1.7rem;
+      border: 1px solid var(--line-dark);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .service:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(0, 153, 255, 0.25);
+    }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(0, 153, 255, 0.16), rgba(0, 153, 255, 0.05));
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.1rem;
+    }
+    .service-icon svg { width: 24px; height: 24px; }
+    .service h3 {
+      font-family: Archivo, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 0.55rem;
+    }
+    .service p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Steps */
+    .steps {
+      display: grid;
+      gap: 1.1rem;
+    }
+    @media (min-width: 860px) {
+      .steps { grid-template-columns: repeat(3, 1fr); }
+    }
+    .step {
+      position: relative;
+      border-radius: 1.35rem;
+      padding: 1.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+    .step::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(0, 153, 255, 0.12), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .step:hover::before { opacity: 1; }
+    .step > * { position: relative; }
+    .step-n {
+      font-family: Archivo, sans-serif;
+      font-weight: 900;
+      font-size: 2.6rem;
+      background: linear-gradient(180deg, #7ecbff, var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .step h3 {
+      font-family: Archivo, sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
+    }
+    .step p { color: var(--muted-on-dark); font-size: 0.95rem; }
+
+    /* Why */
+    .why-grid {
+      display: grid;
+      gap: 0.9rem;
+    }
+    @media (min-width: 800px) {
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .why-item {
+      display: flex;
+      gap: 0.95rem;
+      align-items: flex-start;
+      padding: 1.2rem 1.25rem;
+      border-radius: 1.15rem;
+      background: var(--card);
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 8px 24px rgba(11, 14, 17, 0.05);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .why-item:hover {
+      border-color: rgba(0, 153, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    .why-check {
+      flex: none;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.05rem;
+    }
+    .why-item strong {
+      display: block;
+      font-family: Archivo, sans-serif;
+      font-weight: 750;
+      font-size: 0.98rem;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .why-item span { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Areas */
+    .areas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .area {
+      padding: 0.7rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--line-dark);
+      background: var(--card);
+      font-size: 0.88rem;
+      font-weight: 560;
+      color: var(--text-muted);
+      box-shadow: 0 4px 14px rgba(11, 14, 17, 0.04);
+      transition: all 0.18s ease;
+    }
+    .area:hover,
+    .area.hot {
+      background: linear-gradient(135deg, #33adff, var(--blue));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 8px 20px var(--blue-glow);
+    }
+
+    /* Reviews */
+    .reviews {
+      display: grid;
+      gap: 1rem;
+    }
+    @media (min-width: 860px) {
+      .reviews { grid-template-columns: repeat(3, 1fr); }
+    }
+    .review {
+      border-radius: 1.35rem;
+      padding: 1.55rem 1.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .review:hover {
+      border-color: rgba(0, 153, 255, 0.35);
+      transform: translateY(-3px);
+    }
+    .stars { color: #ffc107; letter-spacing: 0.06em; font-size: 0.9rem; }
+    .review q {
+      quotes: "„" "“";
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .review footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .review footer strong {
+      color: #fff;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    /* FAQ */
+    .faq {
+      display: grid;
+      gap: 0.7rem;
+      max-width: 760px;
+    }
+    details {
+      border-radius: 1.1rem;
+      background: var(--card);
+      border: 1px solid var(--line-dark);
+      padding: 1.05rem 1.2rem;
+      box-shadow: 0 6px 18px rgba(11, 14, 17, 0.04);
+    }
+    details[open] { border-color: rgba(0, 153, 255, 0.3); }
+    summary {
+      cursor: pointer;
+      font-family: Archivo, sans-serif;
+      font-weight: 750;
+      font-size: 0.98rem;
+      color: var(--ink);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      color: var(--blue);
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+    details[open] summary::after { content: "–"; }
+    details p {
+      margin-top: 0.8rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Final CTA */
+    .final {
+      position: relative;
+      padding: 5rem 0 5.5rem;
+      background:
+        radial-gradient(ellipse 55% 55% at 50% 0%, rgba(0, 153, 255, 0.22), transparent 60%),
+        var(--ink);
+      color: #fff;
+      overflow: hidden;
+    }
+    .final::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -1px;
+      height: 64px;
+      background: var(--paper);
+      clip-path: ellipse(70% 100% at 50% 0%);
+    }
+    .final-card {
+      position: relative;
+      z-index: 2;
+      border-radius: 1.75rem;
+      padding: clamp(2rem, 5vw, 3.4rem);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(160deg, rgba(0, 153, 255, 0.16), transparent 45%),
+        rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    }
+    .final-card h2 {
+      font-size: clamp(2rem, 4.8vw, 3.2rem);
+      max-width: 14ch;
+      margin: 0.85rem auto 0;
+    }
+    .final-card .lead {
+      margin: 1rem auto 0;
+      color: var(--muted-on-dark);
+      max-width: 38ch;
+    }
+    .final-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.9rem;
+    }
+    .contact-meta {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2.1rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+    @media (min-width: 720px) {
+      .contact-meta {
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+      }
+    }
+    .contact-meta dt {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7ecbff;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+    .contact-meta dd {
+      font-size: 0.95rem;
+      color: var(--muted-on-dark);
+    }
+    .contact-meta a:hover { color: var(--blue); }
+
+    /* Footer */
+    .site-footer {
+      background: #07090b;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 1.6rem 0 1.8rem;
+      font-size: 0.82rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .site-footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .demo-badge {
+      color: #7ecbff;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .demo-badge a { border-bottom: 1px solid rgba(126, 203, 255, 0.4); }
+
+    /* Sticky mobile CTA */
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
+      background: rgba(11, 14, 17, 0.94);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .sticky-cta .btn { width: 100%; padding: 0.88rem 0.7rem; font-size: 0.86rem; }
+    .sticky-cta .btn-wa {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    @media (min-width: 900px) {
+      .sticky-cta { display: none; }
+      body { padding-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true">RS</span>
+        RS <span>Entrümpelung</span>
+      </a>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="#leistungen">Leistungen</a>
+        <a href="#ablauf">Ablauf</a>
+        <a href="#gebiete">Gebiete</a>
+        <a href="#stimmen">Stimmen</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-cta ghost" href="https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a class="nav-cta" href="tel:+491726309503">Jetzt anfragen</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div>
+          <p class="label">Entrümpelung &amp; Umzug · Gießen</p>
+          <h1 class="display">
+            Professionell entrümpeln — <span class="acc">schnell &amp; zuverlässig</span>
+          </h1>
+          <p class="hero-lead">
+            RS Entrümpelung &amp; Umzug — Ihr lokaler Partner für Entrümpelung, Haushaltsauflösung und Umzug. Kostenlose Besichtigung, fairer Festpreis, besenreine Übergabe.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="tel:+491726309503">Kostenlos anfragen</a>
+            <a class="btn btn-ghost" href="https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung." target="_blank" rel="noopener noreferrer">WhatsApp schreiben</a>
+          </div>
+          <div class="trust-row">
+            <span class="pill"><strong>4,8 ★</strong> auf Google · 20 Bewertungen</span>
+            <span class="pill"><strong>Besenrein</strong> garantiert</span>
+            <span class="pill"><strong>Festpreis</strong> ohne Nachforderungen</span>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Kurzinfo">
+          <div class="meta">
+            <span>Gießen &amp; Umgebung</span>
+            <span>Oft am nächsten Tag</span>
+          </div>
+          <div class="before-after">
+            <div class="ba-box before">
+              <span class="ba-tag">Vorher</span>
+              <p class="ba-title">Vollgestellt.<br />Jahre an Ballast.</p>
+            </div>
+            <div class="ba-box after">
+              <span class="ba-tag">Nachher</span>
+              <p class="ba-title">Leer. Sauber.<br />Bereit.</p>
+            </div>
+          </div>
+          <p class="phone"><a href="tel:+491726309503">0172 6309503</a></p>
+          <p class="hours">Mo–Fr 08–18 Uhr · Sa 08–14 Uhr</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="leistungen">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">Leistungen</p>
+          <h2 class="display">Unsere <span class="acc">Leistungen</span></h2>
+          <p>Von der Entrümpelung bis zum Umzug — diskret, zuverlässig und zu einem transparenten Festpreis.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z"/></svg>
+            </div>
+            <h3>Entrümpelung</h3>
+            <p>Wohnung, Keller, Garage, Dachboden oder ganzes Haus — wir räumen schnell, sauber und diskret. Kostenlose Besichtigung inklusive.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17h2a3 3 0 0 0 6 0h4a3 3 0 0 0 6 0h1V9l-4-4H14v4H3v8Z"/><circle cx="8" cy="17" r="1.4"/><circle cx="18" cy="17" r="1.4"/></svg>
+            </div>
+            <h3>Umzug</h3>
+            <p>Privat- und Firmenumzüge im Raum Gießen und überregional. Be- und Entladen, auf Wunsch mit Möbelmontage und Einpackservice.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16l-1.2 12.2A2 2 0 0 1 16.8 22H7.2a2 2 0 0 1-2-1.8L4 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/></svg>
+            </div>
+            <h3>Haushaltsauflösung</h3>
+            <p>Komplette Auflösung inkl. Sortierung, Wertanrechnung und besenreiner Übergabe — fair kalkuliert, ohne Überraschungen.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M5 8h14"/></svg>
+            </div>
+            <h3>Sperrmüll &amp; Schrott</h3>
+            <p>Sperrmüll, Schrott, Elektrogeräte und mehr — Abholung direkt vor Ort, fachgerecht und sauber entsorgt.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ablauf" class="on-dark">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">Ablauf</p>
+          <h2 class="display">In 3 Schritten zum freien Raum</h2>
+          <p>Klar, schnell, ohne versteckte Kosten.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <p class="step-n">01</p>
+            <h3>Kostenlose Besichtigung</h3>
+            <p>Wir kommen zu Ihnen, schauen alles vor Ort an und erstellen ein transparentes Festpreisangebot — unverbindlich.</p>
+          </article>
+          <article class="step">
+            <p class="step-n">02</p>
+            <h3>Professionelle Ausführung</h3>
+            <p>Unser eigenes Team kommt pünktlich und arbeitet schnell, sauber und diskret — kein Subunternehmer.</p>
+          </article>
+          <article class="step">
+            <p class="step-n">03</p>
+            <h3>Besenreine Übergabe</h3>
+            <p>Nach getaner Arbeit übergeben wir das Objekt garantiert besenrein — das bestätigen unsere Google-Bewertungen.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="warum">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">Warum RS</p>
+          <h2 class="display">Vertrauen, das man sieht</h2>
+          <p>Lokales Unternehmen aus Gießen — schnell vor Ort, oft schon am nächsten Tag.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Festpreis ohne Nachforderungen</strong>
+              <span>Verbindliches Angebot nach der kostenlosen Besichtigung.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Eigenes Team</strong>
+              <span>Kein Subunternehmer — direkte Ansprechpartner, klare Verantwortung.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Betriebshaftpflicht</strong>
+              <span>Versichert bei Arbeiten am Objekt — Sicherheit für Sie.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Wertanrechnung</strong>
+              <span>Wiederverwertbare Gegenstände können den Preis reduzieren.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>Besenrein garantiert</strong>
+              <span>Übergabe im sauberen Zustand — versprochen und geliefert.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>4,8 Sterne auf Google</strong>
+              <span>20 echte Bewertungen — pünktlich, sauber, zuverlässig.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gebiete">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">Einsatzgebiete</p>
+          <h2 class="display">Wir kommen zu Ihnen</h2>
+          <p>Vom Standort Gießen aus im ganzen Raum unterwegs — zuverlässig und ohne Anfahrtsaufschlag in der Region.</p>
+        </div>
+        <div class="areas">
+          <span class="area hot">Gießen</span>
+          <span class="area">Marburg</span>
+          <span class="area">Wetzlar</span>
+          <span class="area">Lahn-Dill-Kreis</span>
+          <span class="area">Limburg a. d. Lahn</span>
+          <span class="area">Bad Nauheim</span>
+          <span class="area">Friedberg</span>
+          <span class="area">Butzbach</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="stimmen" class="on-dark">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">Kundenstimmen</p>
+          <h2 class="display">Das sagen echte Kunden</h2>
+          <p>Auszüge aus Google-Bewertungen — ungefiltert und nachvollziehbar.</p>
+        </div>
+        <div class="reviews">
+          <article class="review">
+            <p class="stars" aria-label="5 von 5 Sternen">★★★★★</p>
+            <q>Vom ersten Kontakt bis zum Abschluss hat alles reibungslos funktioniert. Pünktlich, freundlich, sorgfältig — und der vereinbarte Preis wurde eingehalten.</q>
+            <footer>
+              <strong>Enes Karaca</strong>
+              Google-Bewertung
+            </footer>
+          </article>
+          <article class="review">
+            <p class="stars" aria-label="5 von 5 Sternen">★★★★★</p>
+            <q>Mega tolle Kommunikation. Schnelle und saubere Arbeit, immer wieder gern.</q>
+            <footer>
+              <strong>Aylin</strong>
+              Google-Bewertung
+            </footer>
+          </article>
+          <article class="review">
+            <p class="stars" aria-label="5 von 5 Sternen">★★★★★</p>
+            <q>10/10 sehr professionelles Unternehmen. Der Mann weiß was er tut — zuverlässig, saubere Arbeit.</q>
+            <footer>
+              <strong>Elias Aqnouy / Abdelrahman Elzahab</strong>
+              Google-Bewertungen
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">FAQ</p>
+          <h2 class="display">Häufige Fragen</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Was kostet eine Entrümpelung?</summary>
+            <p>Der Preis hängt von Menge, Volumen, Etage und Zugänglichkeit ab. Deshalb besichtigen wir kostenlos und erstellen ein transparentes Festpreisangebot vor Ort.</p>
+          </details>
+          <details>
+            <summary>Wie schnell kommen Sie?</summary>
+            <p>Oft schon am nächsten Tag für die kostenlose Besichtigung. Dringende Fälle versuchen wir noch am selben Tag zu koordinieren.</p>
+          </details>
+          <details>
+            <summary>Bekomme ich einen Festpreis?</summary>
+            <p>Ja. Nach der Besichtigung erhalten Sie ein verbindliches Festpreisangebot — ohne versteckte Kosten oder Nachforderungen.</p>
+          </details>
+          <details>
+            <summary>Ist die Arbeit versichert?</summary>
+            <p>Ja. Wir verfügen über eine Betriebshaftpflichtversicherung, die eventuelle Schäden am Objekt während der Arbeiten abdeckt.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="final">
+      <div class="wrap">
+        <div class="final-card">
+          <p class="label">Kostenloses Angebot</p>
+          <h2 class="display">Bereit für freien Raum?</h2>
+          <p class="lead">Rufen Sie an oder schreiben Sie uns — wir melden uns schnell und erstellen ein unverbindliches Festpreisangebot.</p>
+          <div class="final-ctas">
+            <a class="btn btn-primary" href="tel:+491726309503">0172 6309503 anrufen</a>
+            <a class="btn btn-ghost" href="https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a class="btn btn-ghost" href="mailto:info@rs-entruempelung-umzug.de?subject=Anfrage%20Entr%C3%BCmpelung">E-Mail schreiben</a>
+          </div>
+          <dl class="contact-meta">
+            <div>
+              <dt>Adresse</dt>
+              <dd>Gnauthstraße 34<br />35390 Gießen</dd>
+            </div>
+            <div>
+              <dt>Erreichbarkeit</dt>
+              <dd>Mo–Fr 08–18 Uhr<br />Sa 08–14 Uhr</dd>
+            </div>
+            <div>
+              <dt>Kontakt</dt>
+              <dd>
+                <a href="tel:+491726309503">0172 6309503</a><br />
+                <a href="mailto:info@rs-entruempelung-umzug.de">info@rs-entruempelung-umzug.de</a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer-inner">
+      <p>© 2026 RS Entrümpelung &amp; Umzug · Gießen</p>
+      <p class="demo-badge">Demo von <a href="https://youforge.de" target="_blank" rel="noopener noreferrer">YouForge</a></p>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" aria-label="Schnellkontakt">
+    <a class="btn btn-primary" href="tel:+491726309503">Anrufen</a>
+    <a class="btn btn-wa" href="https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </div>
+</body>
+</html>
