@@ -1,0 +1,22 @@
+export const GPF_CONTACT = {
+  brand: "Gartenpflege Friedberg",
+  short: "Berndt",
+  legalName: "Grünpflege Marius Berndt",
+  owner: "Marius Berndt",
+  tagline: "Vom Rasen bis zum Baumwipfel.",
+  phoneTel: "+4915234377489",
+  phoneDisplay: "01523 4377489",
+  email: "info@gartenpflege-friedberg.de",
+  addressLine1: "Holzhäuser Straße 46",
+  addressLine2: "61191 Rosbach-Rodheim v. d. H.",
+  address: "Holzhäuser Straße 46, 61191 Rosbach-Rodheim v. d. H.",
+  website: "https://gartenpflege-friedberg.de",
+  region: "Friedberg & Wetterau",
+  profession: "Garten- und Landschaftsbau · Gartenpflege",
+  since: 2013,
+  radiusKm: 25,
+  travelRate: "1,80 € pro Kilometer",
+  hours: "Mo–Fr 07:00–18:00 · Sa nach Absprache",
+  whatsapp:
+    "https://wa.me/4915234377489?text=Hallo%20Herr%20Berndt%2C%20ich%20interessiere%20mich%20f%C3%BCr%20Ihre%20Gartenleistungen.",
+} as const;
