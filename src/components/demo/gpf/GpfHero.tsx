@@ -12,9 +12,10 @@ import { GpfButton } from "@/components/demo/gpf/GpfButton";
 import { GPF_EASE } from "@/components/demo/gpf/gpf-motion";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
 import { GPF_IMG } from "@/components/demo/gpf/gpf-content";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 import { useGpfMediaQuery } from "@/components/demo/gpf/useGpfMediaQuery";
 
-const LINES = ["Vom Rasen", "bis zum", "Baumwipfel."] as const;
+const { hero } = GPF_DEMO;
 
 export function GpfHero() {
   const reduceMotion = useReducedMotion();
@@ -88,13 +89,13 @@ export function GpfHero() {
             animate={ready ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, ease: GPF_EASE, delay: 0.1 }}
           >
-            <span>Gartenpflege &amp; Landschaftsbau</span>
+            <span>{hero.eyebrow}</span>
             <span className="h-1 w-1 rounded-full bg-[var(--gpf-accent)]" aria-hidden />
             <span>{GPF_CONTACT.region}</span>
           </motion.p>
 
           <h1 className="font-gpf-display text-[clamp(2.9rem,9.5vw,7rem)] font-bold leading-[0.92] tracking-[-0.035em]">
-            {LINES.map((line, i) => (
+            {hero.lines.map((line, i) => (
               <span key={line} className="block overflow-hidden py-[0.03em]">
                 <motion.span
                   className={`block ${i === 2 ? "italic text-[var(--gpf-accent-hot)]" : ""}`}
@@ -118,9 +119,7 @@ export function GpfHero() {
             animate={ready ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.85, ease: GPF_EASE, delay: 0.56 }}
           >
-            {GPF_CONTACT.owner} und sein Team pflegen, roden und bauen — seit{" "}
-            {GPF_CONTACT.since} im Umkreis von {GPF_CONTACT.radiusKm} Kilometern
-            rund um Rodheim. Vom Vorgarten bis zur Parkanlage.
+            {hero.text}
           </motion.p>
 
           <motion.div

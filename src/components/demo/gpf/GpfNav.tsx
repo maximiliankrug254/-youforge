@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { GpfButton } from "@/components/demo/gpf/GpfButton";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 
 const LINKS = [
   ["#leistungen", "Leistungen"],
   ["#referenzen", "Referenzen"],
   ["#ablauf", "Ablauf"],
-  ["#inhaber", "Inhaber"],
+  [`#${GPF_DEMO.about.sectionId}`, "Über uns"],
   ["#region", "Region"],
   ["#kontakt", "Kontakt"],
 ] as const;
@@ -48,7 +49,7 @@ export function GpfNav() {
             {GPF_CONTACT.short}
           </span>
           <span className="mt-1 text-[9px] font-medium uppercase tracking-[0.24em] text-[var(--gpf-sand)] transition-colors group-hover:text-[var(--gpf-accent-hot)] sm:text-[10px]">
-            Gartenpflege · Wetterau
+            {GPF_CONTACT.navSubtitle}
           </span>
         </a>
 

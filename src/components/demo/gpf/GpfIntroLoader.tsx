@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { GPF_EASE } from "@/components/demo/gpf/gpf-motion";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
 import { GPF_IMG } from "@/components/demo/gpf/gpf-content";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 
 export function GpfIntroLoader() {
   const reduceMotion = useReducedMotion();
@@ -60,7 +61,7 @@ export function GpfIntroLoader() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: GPF_EASE, delay: 0.15 }}
             >
-              Wetterau · seit {GPF_CONTACT.since}
+              {GPF_DEMO.intro.label} · seit {GPF_CONTACT.since}
             </motion.p>
 
             <div className="mt-6 overflow-hidden">

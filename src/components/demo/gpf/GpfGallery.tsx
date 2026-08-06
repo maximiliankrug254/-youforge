@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { GpfReveal } from "@/components/demo/gpf/GpfReveal";
 import { GPF_GALLERY } from "@/components/demo/gpf/gpf-content";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 import { useGpfMediaQuery } from "@/components/demo/gpf/useGpfMediaQuery";
 
 function GalleryCard({
@@ -108,18 +109,17 @@ export function GpfGallery() {
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <GpfReveal className="lg:col-span-7">
             <p className="text-[11px] font-semibold uppercase tracking-[0.36em] text-[var(--gpf-accent)]">
-              Aus der Wetterau
+              {GPF_DEMO.gallery.eyebrow}
             </p>
             <h2 className="mt-5 font-gpf-display text-[clamp(2.4rem,5.6vw,4.5rem)] font-bold leading-[1] tracking-[-0.03em]">
-              Arbeiten, die
+              {GPF_DEMO.gallery.title[0]}
               <br />
-              <span className="italic">stehen geblieben sind.</span>
+              <span className="italic">{GPF_DEMO.gallery.title[1]}</span>
             </h2>
           </GpfReveal>
           <GpfReveal delay={0.08} className="lg:col-span-4 lg:col-start-9">
             <p className="text-[1.05rem] leading-[1.75] text-[var(--gpf-muted)]">
-              Terrassen, Mauern, Zäune, Beete und Parkflächen — fotografiert
-              nach der Abnahme, nicht im Katalog.
+              {GPF_DEMO.gallery.text}
             </p>
           </GpfReveal>
         </div>

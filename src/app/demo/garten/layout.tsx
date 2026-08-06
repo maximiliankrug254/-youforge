@@ -3,11 +3,12 @@ import { GpfLenis } from "@/components/demo/gpf/GpfLenis";
 import { GpfNav } from "@/components/demo/gpf/GpfNav";
 import { GpfIntroLoader } from "@/components/demo/gpf/GpfIntroLoader";
 import { GpfScrollProgress } from "@/components/demo/gpf/GpfScrollProgress";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 
 export const metadata: Metadata = {
-  title: "Gartenpflege Friedberg — Marius Berndt | Living Demo",
+  title: `${GPF_DEMO.brand.full} | Living Demo`,
   description:
-    "Gartenpflege, Baumarbeiten und Landschaftsbau in Friedberg und der Wetterau. Rasen, Hecken, Terrassen, Zäune — aus einer Hand, mit eigenem Team.",
+    "Gartenpflege, Baumarbeiten und Landschaftsbau — Konzept-Demo von YouForge. Rasen, Hecken, Terrassen, Zäune aus einer Hand.",
   robots: { index: false, follow: false },
 };
 
@@ -18,7 +19,7 @@ export const viewport: Viewport = {
   themeColor: "#0f1511",
 };
 
-export default function GpfDemoLayout({
+export default function GartenDemoLayout({
   children,
 }: {
   children: React.ReactNode;

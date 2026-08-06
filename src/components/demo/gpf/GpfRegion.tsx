@@ -4,8 +4,15 @@ import Image from "next/image";
 import { GpfReveal } from "@/components/demo/gpf/GpfReveal";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
 import { GPF_REGION, GPF_IMG } from "@/components/demo/gpf/gpf-content";
+import { GPF_DEMO, GPF_VARS, gpfFill } from "@/components/demo/gpf/gpf-config";
+
+const { region } = GPF_DEMO;
 
 export function GpfRegion() {
+  const regionText = gpfFill(region.text, GPF_VARS);
+  const travelNote = gpfFill(region.travelNote, GPF_VARS);
+  const mapAlt = gpfFill(region.mapAlt, GPF_VARS);
+
   return (
     <section
       id="region"
@@ -19,19 +26,15 @@ export function GpfRegion() {
                 Einsatzgebiet
               </p>
               <h2 className="mt-5 font-gpf-display text-[clamp(2.4rem,5.4vw,4.5rem)] font-bold leading-[1] tracking-[-0.03em]">
-                Aus Rodheim.
+                {region.headline[0]}
                 <br />
-                <span className="italic">Für die Wetterau.</span>
+                <span className="italic">{region.headline[1]}</span>
               </h2>
             </GpfReveal>
 
             <GpfReveal delay={0.06}>
               <p className="mt-8 max-w-lg text-[1.05rem] leading-[1.75] text-[var(--gpf-muted)]">
-                Wir arbeiten von Rodheim aus über Friedberg bis Bad Homburg,
-                Oberursel und Friedrichsdorf — östlich bis Nidda und Altenstadt.
-                Rund {GPF_CONTACT.radiusKm} Kilometer Radius, damit Wege kurz
-                bleiben und wir bei Bedarf schnell wieder da sind. Bei größeren
-                Aufträgen erweitern wir den Radius gerne.
+                {regionText}
               </p>
             </GpfReveal>
 
@@ -65,8 +68,7 @@ export function GpfRegion() {
                     Anfahrtspauschale
                   </dt>
                   <dd className="mt-2 text-[0.95rem] leading-relaxed text-[var(--gpf-muted)]">
-                    {GPF_CONTACT.travelRate} — transparent ab Rodheim
-                    berechnet.
+                    {travelNote}
                   </dd>
                 </div>
               </dl>
@@ -76,11 +78,11 @@ export function GpfRegion() {
           <GpfReveal delay={0.1} className="lg:col-span-6">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[2px] bg-[var(--gpf-paper)] lg:aspect-[4/4.2]">
               <Image
-                src={GPF_IMG.einzugsgebiet}
-                alt={`Einsatzgebiet rund um Rodheim mit etwa ${GPF_CONTACT.radiusKm} Kilometern Radius`}
+                src={GPF_IMG.regionMap}
+                alt={mapAlt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover object-[center_40%]"
               />
               <div
                 className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(15,21,17,0.55)_100%)]"

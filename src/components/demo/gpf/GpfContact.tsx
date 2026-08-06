@@ -5,6 +5,7 @@ import { useState } from "react";
 import { GpfReveal } from "@/components/demo/gpf/GpfReveal";
 import { GpfButton } from "@/components/demo/gpf/GpfButton";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 import { GPF_IMG } from "@/components/demo/gpf/gpf-content";
 
 const TOPICS = [
@@ -232,7 +233,7 @@ export function GpfContact() {
                         value={place}
                         onChange={(e) => setPlace(e.target.value)}
                         className={fieldClass}
-                        placeholder="z. B. Friedberg"
+                        placeholder={GPF_DEMO.form.placePlaceholder}
                       />
                     </div>
                   </div>
@@ -304,8 +305,6 @@ export function GpfContact() {
               <p className="mt-4 leading-relaxed">
                 {GPF_CONTACT.legalName}
                 <br />
-                Inhaber: {GPF_CONTACT.owner}
-                <br />
                 {GPF_CONTACT.addressLine1}
                 <br />
                 {GPF_CONTACT.addressLine2}
@@ -328,8 +327,7 @@ export function GpfContact() {
                 Einsatzgebiet
               </p>
               <p className="mt-4 leading-relaxed">
-                Rodheim · Rosbach · Friedberg · Bad Nauheim · Karben ·
-                Butzbach · Bad Homburg · Friedrichsdorf · Oberursel · Nidda
+                {GPF_DEMO.impressum.regionSummary}
               </p>
             </div>
           </div>
@@ -344,7 +342,7 @@ export function GpfContact() {
         >
           YouForge
         </a>{" "}
-        · noch nicht live
+        · Konzept-Demo
       </p>
     </section>
   );

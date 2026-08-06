@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { GpfReveal } from "@/components/demo/gpf/GpfReveal";
 import { GPF_EASE } from "@/components/demo/gpf/gpf-motion";
 import { GPF_COMPARE } from "@/components/demo/gpf/gpf-content";
+import { GPF_DEMO } from "@/components/demo/gpf/gpf-config";
 
 export function GpfCompare() {
   const reduceMotion = useReducedMotion();
@@ -65,8 +66,7 @@ export function GpfCompare() {
           </GpfReveal>
           <GpfReveal delay={0.08} className="lg:col-span-4 lg:col-start-9">
             <p className="text-[1.05rem] leading-[1.75] text-white/55">
-              Echte Aufträge aus der Wetterau — dieselbe Kameraposition, ein
-              paar Arbeitstage dazwischen.
+              {GPF_DEMO.compare.text}
             </p>
           </GpfReveal>
         </div>

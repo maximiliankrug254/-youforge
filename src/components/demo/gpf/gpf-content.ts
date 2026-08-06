@@ -1,4 +1,6 @@
-const BASE = "/demo/gartenpflege-friedberg";
+import { GPF_DEMO, GPF_VARS, gpfFill } from "@/components/demo/gpf/gpf-config";
+
+const BASE = GPF_DEMO.assetsBase;
 
 export const GPF_IMG = {
   hero: `${BASE}/hero-wide.jpg`,
@@ -41,17 +43,12 @@ export const GPF_IMG = {
   poolanlage: `${BASE}/poolanlage.jpg`,
   gartenWeit: `${BASE}/garten-weit.jpg`,
   detailHoch: `${BASE}/detail-hoch.jpg`,
-  mariusArbeit: `${BASE}/marius-arbeit.jpg`,
-  mariusPortrait: `${BASE}/marius-portrait.jpg`,
-  einzugsgebiet: `${BASE}/einzugsgebiet.jpg`,
+  teamArbeit: `${BASE}/parkanlage.jpg`,
+  teamPortrait: `${BASE}/detail-hoch.jpg`,
+  regionMap: `${BASE}/garten-weit.jpg`,
 } as const;
 
-export const GPF_STATS = [
-  { value: 13, suffix: "", label: "Jahre selbstständig", hint: "seit 2013" },
-  { value: 25, suffix: " km", label: "Einsatzradius", hint: "ab Rodheim" },
-  { value: 20, suffix: "+", label: "Leistungen", hint: "aus einer Hand" },
-  { value: 100, suffix: " %", label: "Eigenes Team", hint: "kein Subunternehmer" },
-] as const;
+export const GPF_STATS = GPF_DEMO.stats;
 
 export const GPF_PILLARS = [
   {
@@ -252,7 +249,7 @@ export const GPF_STANDARDS = [
   },
   {
     title: "Nachbarrecht beachtet",
-    text: "Bei Zäunen und Mauern arbeiten wir nach Hessischem Nachbarrechtsgesetz — kein Ärger im Nachgang.",
+    text: GPF_DEMO.standards.neighborLaw,
   },
 ] as const;
 
@@ -267,18 +264,7 @@ export const GPF_MACHINES = [
   "Kehrmaschine",
 ] as const;
 
-export const GPF_MARQUEE = [
-  "Rasenpflege",
-  "Heckenschnitt",
-  "Baumpflege",
-  "Fällung & Rodung",
-  "Terrassen",
-  "Pflasterwege",
-  "Mauern",
-  "Zaunanlagen",
-  "Beete",
-  "Wetterau",
-] as const;
+export const GPF_MARQUEE = GPF_DEMO.marquee;
 
 export const GPF_GALLERY = [
   {
@@ -343,48 +329,9 @@ export const GPF_GALLERY = [
   },
 ] as const;
 
-export const GPF_REGION = [
-  "Rodheim v. d. H.",
-  "Rosbach",
-  "Friedberg",
-  "Bad Nauheim",
-  "Assenheim",
-  "Niddatal",
-  "Karben",
-  "Wöllstadt",
-  "Ober-Mörlen",
-  "Butzbach",
-  "Bad Homburg",
-  "Friedrichsdorf",
-  "Oberursel",
-  "Nidda",
-  "Altenstadt",
-  "Usingen",
-] as const;
+export const GPF_REGION = GPF_DEMO.region.towns;
 
-export const GPF_FAQ = [
-  {
-    q: "Übernehmen Sie auch kleine Aufträge?",
-    a: "Ja. Vom einzelnen Heckenschnitt über den Vorgarten bis zur Parkanlage — eine Mindestgröße gibt es bei uns nicht.",
-  },
-  {
-    q: "Was kostet die Anfahrt?",
-    a: "Die Anfahrtspauschale beträgt 1,80 € pro Kilometer ab Rodheim. Bei größeren Aufträgen sprechen Sie uns an, dann finden wir eine Lösung.",
-  },
-  {
-    q: "Wie schnell bekomme ich einen Termin?",
-    a: "Pflegearbeiten meist kurzfristig. Für Rodungsarbeiten planen wir rund zwei Wochen Vorlauf ein, und alle Außenarbeiten sind witterungsabhängig.",
-  },
-  {
-    q: "Gibt es feste Pflegepakete?",
-    a: "Die Pakete stellen wir individuell zusammen — aus genau den Leistungen, die Ihr Garten braucht. Sie lassen sich jederzeit erweitern oder reduzieren.",
-  },
-  {
-    q: "Was brauchen Sie für ein Angebot?",
-    a: "Lage und Größe des Objekts, Ihre Telefonnummer oder E-Mail, die gewünschten Leistungen — und gerne ein paar Fotos zur Vorabeinschätzung.",
-  },
-  {
-    q: "Arbeiten Sie mit Subunternehmern?",
-    a: "Nein. Auf Ihrem Grundstück stehen unsere eigenen Mitarbeiter, geschult und mit eigener Technik.",
-  },
-] as const;
+export const GPF_FAQ = GPF_DEMO.faq.map((item) => ({
+  q: item.q,
+  a: gpfFill(item.a, GPF_VARS),
+}));
