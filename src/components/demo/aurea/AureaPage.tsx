@@ -3,6 +3,7 @@
 import { AureaHero } from "@/components/demo/aurea/AureaHero";
 import { AureaMarquee } from "@/components/demo/aurea/AureaMarquee";
 import { AureaTeam } from "@/components/demo/aurea/AureaTeam";
+import { AureaFilmStrip } from "@/components/demo/aurea/AureaFilmStrip";
 import { AureaStatement } from "@/components/demo/aurea/AureaStatement";
 import { AureaServices } from "@/components/demo/aurea/AureaServices";
 import { AureaLooks } from "@/components/demo/aurea/AureaLooks";
@@ -17,6 +18,7 @@ export function AureaPage() {
       <AureaHero />
       <AureaMarquee />
       <AureaTeam />
+      <AureaFilmStrip />
       <AureaStatement />
       <AureaServices />
       <AureaMarquee flip />

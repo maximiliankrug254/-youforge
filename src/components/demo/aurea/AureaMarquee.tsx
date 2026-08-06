@@ -10,11 +10,11 @@ export function AureaMarquee({ flip = false }: { flip?: boolean }) {
 
   return (
     <div
-      className="relative overflow-hidden border-y border-white/8 bg-[var(--aurea-ink)] py-4 text-white"
+      className="relative overflow-hidden border-y border-white/10 bg-[var(--aurea-ink)] py-6 text-white sm:py-7"
       aria-hidden
     >
       <motion.div
-        className={`aurea-marquee flex w-max gap-12 whitespace-nowrap ${flip ? "[animation-direction:reverse]" : ""}`}
+        className={`aurea-marquee flex w-max items-center gap-10 whitespace-nowrap sm:gap-14 ${flip ? "[animation-direction:reverse]" : ""}`}
         initial={reduceMotion ? false : { opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -23,10 +23,10 @@ export function AureaMarquee({ flip = false }: { flip?: boolean }) {
         {row.map((word, i) => (
           <span
             key={`${word}-${i}`}
-            className="inline-flex items-center gap-12 text-[10px] font-medium uppercase tracking-[0.4em] text-white/30"
+            className="inline-flex items-center gap-10 font-aurea-display text-[clamp(1.35rem,3.2vw,2.35rem)] font-semibold tracking-[-0.03em] text-white/25 sm:gap-14"
           >
             {word}
-            <span className="h-px w-4 bg-[var(--aurea-copper)]/70" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--aurea-copper)]" />
           </span>
         ))}
       </motion.div>

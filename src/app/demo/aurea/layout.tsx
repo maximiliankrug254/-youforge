@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { AureaLenis } from "@/components/demo/aurea/AureaLenis";
 import { AureaIntroLoader } from "@/components/demo/aurea/AureaIntroLoader";
 import { AureaScrollProgress } from "@/components/demo/aurea/AureaScrollProgress";
+import { AureaGrain } from "@/components/demo/aurea/AureaGrain";
 
 export const metadata: Metadata = {
   title: "Aurea — Colour Atelier | Living Demo by YouForge",
@@ -71,14 +72,24 @@ export default function AureaDemoLayout({
             to { transform: translateX(-50%); }
           }
           .aurea-marquee {
-            animation: aurea-marquee 42s linear infinite;
+            animation: aurea-marquee 28s linear infinite;
+            will-change: transform;
+          }
+          @keyframes aurea-filmstrip {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+          .aurea-filmstrip {
+            animation: aurea-filmstrip 48s linear infinite;
             will-change: transform;
           }
           @media (prefers-reduced-motion: reduce) {
-            .aurea-marquee { animation: none; }
+            .aurea-marquee,
+            .aurea-filmstrip { animation: none; }
           }
         `}</style>
         <AureaScrollProgress />
+        <AureaGrain />
         <AureaIntroLoader />
         <AureaLenis>{children}</AureaLenis>
       </div>

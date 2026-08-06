@@ -25,7 +25,7 @@ export function AureaHero() {
       setReady(true);
       return;
     }
-    const t = window.setTimeout(() => setReady(true), 3000);
+    const t = window.setTimeout(() => setReady(true), 3700);
     return () => window.clearTimeout(t);
   }, [reduceMotion]);
 
@@ -41,9 +41,10 @@ export function AureaHero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.08, 1]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
   const useParallax = !reduceMotion && parallaxOn;
 
   return (
@@ -53,11 +54,11 @@ export function AureaHero() {
       className="relative isolate min-h-[100svh] overflow-x-hidden bg-[var(--aurea-ink)] text-white"
     >
       <motion.div
-        className="absolute inset-0 lg:inset-[-10%] lg:h-[120%]"
+        className="absolute inset-0 lg:inset-[-12%] lg:h-[124%]"
         style={useParallax ? { y: bgY, scale: bgScale } : undefined}
-        initial={reduceMotion ? false : { scale: 1.12 }}
+        initial={reduceMotion ? false : { scale: 1.18 }}
         animate={ready ? { scale: 1 } : undefined}
-        transition={{ duration: 1.7, ease: AUREA_EASE }}
+        transition={{ duration: 2, ease: AUREA_EASE }}
       >
         <Image
           src="/demo/aurea/01-hero.jpg"
@@ -70,23 +71,36 @@ export function AureaHero() {
         />
       </motion.div>
 
-      <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,7,0.58)_0%,rgba(8,8,7,0.2)_40%,rgba(8,8,7,0.92)_100%)] lg:bg-[linear-gradient(100deg,rgba(8,8,7,0.92)_0%,rgba(8,8,7,0.4)_50%,rgba(8,8,7,0.12)_100%)]"
+      <motion.div
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,7,0.55)_0%,rgba(8,8,7,0.15)_38%,rgba(8,8,7,0.94)_100%)] lg:bg-[linear-gradient(105deg,rgba(8,8,7,0.9)_0%,rgba(8,8,7,0.35)_52%,rgba(8,8,7,0.1)_100%)]"
+        style={useParallax ? { opacity: fade } : undefined}
+        aria-hidden
+      />
+
+      {/* Ambient copper glow */}
+      <motion.div
+        className="pointer-events-none absolute -right-24 top-1/4 h-[50vh] w-[50vh] rounded-full bg-[var(--aurea-copper)]/15 blur-[120px]"
+        animate={
+          reduceMotion
+            ? undefined
+            : { opacity: [0.25, 0.45, 0.25], scale: [1, 1.08, 1] }
+        }
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden
       />
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1500px] flex-col px-5 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-[max(0.9rem,env(safe-area-inset-top))] sm:px-8 lg:px-14 lg:pb-16 lg:pt-8">
         <motion.header
           className="flex shrink-0 items-center justify-between gap-4"
-          initial={reduceMotion ? false : { opacity: 0, y: -10 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -14 }}
           animate={ready ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.8, ease: AUREA_EASE }}
+          transition={{ duration: 0.9, ease: AUREA_EASE }}
         >
           <a href="#top" className="inline-flex flex-col" aria-label={AUREA_CONTACT.brand}>
-            <span className="font-aurea-display text-[1.7rem] font-semibold leading-none tracking-[-0.05em] sm:text-[2rem]">
+            <span className="font-aurea-display text-[1.75rem] font-semibold leading-none tracking-[-0.05em] sm:text-[2.1rem]">
               {AUREA_CONTACT.short}
             </span>
-            <span className="mt-1.5 text-[9px] font-medium uppercase tracking-[0.32em] text-[var(--aurea-copper)]">
+            <span className="mt-1.5 text-[9px] font-medium uppercase tracking-[0.34em] text-[var(--aurea-copper)]">
               Colour Atelier
             </span>
           </a>
@@ -101,7 +115,7 @@ export function AureaHero() {
               <a
                 key={href}
                 href={href}
-                className="transition-colors hover:text-white"
+                className="relative transition-colors hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-[var(--aurea-copper)] after:transition-all hover:after:w-full"
               >
                 {label}
               </a>
@@ -119,29 +133,38 @@ export function AureaHero() {
         </motion.header>
 
         <motion.div
-          className="flex flex-1 flex-col justify-end py-12 sm:py-16 lg:max-w-[880px] lg:py-8 lg:pt-24"
+          className="flex flex-1 flex-col justify-end py-12 sm:py-16 lg:max-w-[920px] lg:py-8 lg:pt-24"
           style={useParallax ? { y: textY } : undefined}
         >
           <motion.p
-            className="mb-5 font-aurea-display text-[clamp(2.8rem,9vw,6rem)] font-semibold leading-[0.88] tracking-[-0.055em]"
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            className="mb-4 text-[10px] font-medium uppercase tracking-[0.42em] text-[var(--aurea-copper)] sm:mb-5"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, ease: AUREA_EASE, delay: 0.08 }}
+            transition={{ duration: 0.85, ease: AUREA_EASE, delay: 0.05 }}
+          >
+            Living Demo · YouForge
+          </motion.p>
+
+          <motion.p
+            className="mb-4 font-aurea-display text-[clamp(3rem,10vw,6.5rem)] font-semibold leading-[0.86] tracking-[-0.055em]"
+            initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+            animate={ready ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 1, ease: AUREA_EASE, delay: 0.1 }}
           >
             {AUREA_CONTACT.short}
           </motion.p>
 
-          <h1 className="font-aurea-display text-[clamp(1.9rem,5.5vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-white/88">
+          <h1 className="font-aurea-display text-[clamp(2rem,5.8vw,3.9rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-white/90">
             {LINES.map((line, i) => (
-              <span key={line} className="block overflow-hidden py-[0.02em]">
+              <span key={line} className="block overflow-hidden py-[0.03em]">
                 <motion.span
                   className={`block ${i === 2 ? "text-[var(--aurea-copper)]" : ""}`}
-                  initial={reduceMotion ? false : { y: "115%" }}
+                  initial={reduceMotion ? false : { y: "118%" }}
                   animate={ready ? { y: "0%" } : undefined}
                   transition={{
-                    duration: 1.05,
+                    duration: 1.1,
                     ease: AUREA_EASE,
-                    delay: 0.2 + i * 0.1,
+                    delay: 0.22 + i * 0.11,
                   }}
                 >
                   {line}
@@ -151,19 +174,19 @@ export function AureaHero() {
           </h1>
 
           <motion.p
-            className="mt-8 max-w-[28rem] text-[1.05rem] leading-[1.7] text-white/55 sm:text-[1.1rem]"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            className="mt-8 max-w-[30rem] text-[1.08rem] leading-[1.7] text-white/58 sm:mt-9 sm:text-[1.15rem]"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.85, ease: AUREA_EASE, delay: 0.58 }}
+            transition={{ duration: 0.9, ease: AUREA_EASE, delay: 0.62 }}
           >
             {AUREA_CONTACT.pitch}
           </motion.p>
 
           <motion.div
-            className="mt-10 flex w-full flex-col gap-3 sm:flex-row sm:gap-4"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            className="mt-10 flex w-full flex-col gap-3 sm:mt-11 sm:flex-row sm:gap-4"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.85, ease: AUREA_EASE, delay: 0.7 }}
+            transition={{ duration: 0.9, ease: AUREA_EASE, delay: 0.75 }}
           >
             <AureaButton
               href={AUREA_CONTACT.calendly}
@@ -175,11 +198,33 @@ export function AureaHero() {
             </AureaButton>
             <AureaButton
               href="#looks"
-              className="inline-flex w-full items-center justify-center rounded-full border border-white/20 px-8 py-4 text-sm font-semibold tracking-wide text-white hover:border-white/40 sm:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-full border border-white/25 bg-white/[0.03] px-8 py-4 text-sm font-semibold tracking-wide text-white backdrop-blur-sm hover:border-white/45 sm:w-auto"
             >
               Looks ansehen
             </AureaButton>
           </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={ready ? { opacity: 1 } : undefined}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          aria-hidden
+        >
+          <span className="text-[9px] font-medium uppercase tracking-[0.38em] text-white/30">
+            Scroll
+          </span>
+          <motion.span
+            className="h-10 w-px bg-gradient-to-b from-[var(--aurea-copper)] to-transparent"
+            animate={
+              reduceMotion
+                ? undefined
+                : { scaleY: [0.35, 1, 0.35], opacity: [0.35, 1, 0.35] }
+            }
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            style={{ originY: 0 }}
+          />
         </motion.div>
       </div>
     </section>

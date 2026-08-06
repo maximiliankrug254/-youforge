@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { AureaReveal } from "@/components/demo/aurea/AureaReveal";
 import { AureaImageReveal } from "@/components/demo/aurea/AureaImageReveal";
 import { AUREA_LOOKS } from "@/components/demo/aurea/aurea-content";
+import { AUREA_EASE } from "@/components/demo/aurea/aurea-motion";
 
 export function AureaLooks() {
   const [hero, ...rest] = AUREA_LOOKS;
@@ -35,7 +37,7 @@ export function AureaLooks() {
           <AureaImageReveal
             src={hero.src}
             alt={hero.alt}
-            className="aspect-[16/10] min-h-[280px] w-full sm:aspect-[21/10] lg:min-h-[520px]"
+            className="aspect-[16/10] min-h-[280px] w-full sm:aspect-[21/10] lg:min-h-[560px]"
             objectPosition="center 28%"
           />
         </AureaReveal>
@@ -43,16 +45,28 @@ export function AureaLooks() {
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {rest.map((look, i) => (
             <AureaReveal key={look.src} delay={0.05 * (i % 3)}>
-              <div className="relative aspect-[3/4] overflow-hidden">
-                <Image
-                  src={look.src}
-                  alt={look.alt}
-                  fill
-                  quality={92}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
-                />
-              </div>
+              <motion.div
+                className="group relative aspect-[3/4] overflow-hidden"
+                whileHover="hover"
+              >
+                <motion.div
+                  className="absolute inset-0"
+                  variants={{
+                    hover: { scale: 1.08 },
+                  }}
+                  transition={{ duration: 0.9, ease: AUREA_EASE }}
+                >
+                  <Image
+                    src={look.src}
+                    alt={look.alt}
+                    fill
+                    quality={92}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              </motion.div>
             </AureaReveal>
           ))}
         </div>

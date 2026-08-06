@@ -14,17 +14,17 @@ export function AureaTeam() {
     >
       <div className="mx-auto max-w-[1500px]">
         <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-          <AureaReveal className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:col-span-7 lg:aspect-auto lg:min-h-[640px]">
+          <AureaReveal className="group relative aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:col-span-7 lg:aspect-auto lg:min-h-[680px]">
             <Image
               src="/demo/aurea/10-team.jpg"
               alt="Junges Colour-Team — ruhig, präzise, präsent"
               fill
               quality={92}
               sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover object-[center_25%]"
+              className="object-cover object-[center_25%] transition-transform duration-[1.4s] ease-out group-hover:scale-[1.05]"
             />
             <div
-              className="absolute inset-0 bg-gradient-to-t from-[var(--aurea-ink)]/75 via-transparent to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-[var(--aurea-ink)]/80 via-[var(--aurea-ink)]/10 to-transparent"
               aria-hidden
             />
             <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
@@ -38,19 +38,19 @@ export function AureaTeam() {
           </AureaReveal>
 
           <div className="flex flex-col gap-4 lg:col-span-5">
-            <AureaReveal className="relative min-h-[240px] flex-1 overflow-hidden sm:min-h-[280px]">
+            <AureaReveal className="group relative min-h-[240px] flex-1 overflow-hidden sm:min-h-[300px]">
               <Image
                 src="/demo/aurea/03-craft.jpg"
                 alt="Colour Craft — Folien und Pinsel"
                 fill
                 quality={92}
                 sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
               />
             </AureaReveal>
             <AureaReveal
               delay={0.08}
-              className="relative min-h-[240px] flex-1 overflow-hidden sm:min-h-[280px]"
+              className="group relative min-h-[240px] flex-1 overflow-hidden sm:min-h-[300px]"
             >
               <Image
                 src="/demo/aurea/08-bowl.jpg"
@@ -58,7 +58,7 @@ export function AureaTeam() {
                 fill
                 quality={92}
                 sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
               />
             </AureaReveal>
           </div>

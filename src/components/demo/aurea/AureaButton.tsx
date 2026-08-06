@@ -20,7 +20,8 @@ export function AureaButton({ children, href, className, target, rel }: Props) {
       target={target}
       rel={rel}
       className={className}
-      whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+      whileHover={reduceMotion ? undefined : { y: -2, scale: 1.015 }}
+      whileTap={reduceMotion ? undefined : { scale: 0.98 }}
       transition={{ ease: AUREA_EASE, duration: 0.28 }}
     >
       {children}
