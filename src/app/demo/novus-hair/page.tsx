@@ -1,5 +1,6 @@
-import { NovusPage } from "@/components/demo/novus/NovusPage";
+import { redirect } from "next/navigation";
 
-export default function NovusHairDemoPage() {
-  return <NovusPage />;
+/** Alte Novus-Demo → generische Pitch-Demo Aurea */
+export default function NovusHairRedirectPage() {
+  redirect("/demo/aurea");
 }
