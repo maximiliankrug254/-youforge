@@ -194,6 +194,32 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "room2build",
+    title: "Room2Build",
+    subtitle: "Masterpiece-Pitch für Handwerk-Marketing",
+    category: "Website · Pitch · Branding",
+    status: "live",
+    description:
+      "Spekulatives Redesign auf Atelier-Niveau — Intro mit Stahl-Schnitt, editorialer Typografie und Cases, die wie ein 10.000-€-Auftritt wirken. Gebaut, um den Auftrag zu gewinnen.",
+    challenge:
+      "Die Live-Seite wirkte wie ein Agentur-Baukasten: leere Zahlen, austauschbare Karten, keine Präsenz. Für einen dicken Pitch braucht es den Holy-Shit-Moment in der ersten Sekunde.",
+    solution:
+      "Void, Bone, Brass. Boska-Display, cinematic Craft-Fotografie, horizontale Case-Reise, kein Fake-Counter. Die Seite ist der Pitch.",
+    result:
+      "Ein Auftritt, der Room2Build so zeigt, wie ihre Kunden online wirken sollen — und YouForge als das Studio, das das bauen kann.",
+    highlights: [
+      "Cinematic Intro mit Stahl-Schnitt",
+      "Sticky Case-Film auf Desktop",
+      "Editorial Atelier-Typografie",
+      "Conversion direkt zu YouForge",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
+    image: "/demo/garten/hero-wide.jpg",
+    href: "/demo/room2build",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "youforge",
     title: "YouForge",
     subtitle: "Digitalagentur-Website",
@@ -393,7 +419,7 @@ export const portfolioProjects: PortfolioProject[] = [
     tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/handwerk-website.png",
     href: "/showcase/handwerk-premium.html",
-    featured: true,
+    featured: false,
     year: "2026",
   },
   {
