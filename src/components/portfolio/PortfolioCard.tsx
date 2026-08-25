@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { PortfolioProject } from "@/lib/constants";
 import { PortfolioPreview } from "@/components/portfolio/PortfolioPreview";
 import { cn } from "@/lib/utils";
@@ -32,8 +31,13 @@ export function PortfolioCard({
     );
   }
 
-  const content = (
-    <>
+  return (
+    <article
+      className={cn(
+        "group rounded-2xl border border-border bg-surface/30 p-4 sm:p-5",
+        isFeatured && "lg:p-6"
+      )}
+    >
       <PortfolioPreview title={project.title} image={project.image} />
       <div className="mt-5">
         <div className="flex flex-wrap items-center gap-2">
@@ -64,35 +68,7 @@ export function PortfolioCard({
             </span>
           ))}
         </div>
-        {isFeatured && (
-          <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent">
-            Case ansehen
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </span>
-        )}
       </div>
-    </>
-  );
-
-  if (project.href) {
-    return (
-      <Link
-        href={project.href}
-        className={cn(
-          "group block rounded-2xl border border-border bg-surface/30 p-4 transition-colors hover:border-accent/30 hover:bg-surface/50 sm:p-5",
-          isFeatured && "lg:p-6"
-        )}
-      >
-        {content}
-      </Link>
-    );
-  }
-
-  return (
-    <article className="group rounded-2xl border border-border bg-surface/30 p-4 sm:p-5">
-      {content}
     </article>
   );
 }

@@ -194,29 +194,107 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
-    slug: "room2build",
-    title: "Room2Build",
-    subtitle: "Masterpiece-Pitch für Handwerk-Marketing",
-    category: "Website · Pitch · Branding",
+    slug: "salon-website",
+    title: "Salon-Website",
+    subtitle: "Premium Colour Atelier",
+    category: "Website · Branding · Salon",
     status: "live",
     description:
-      "Spekulatives Redesign auf Atelier-Niveau — Intro mit Stahl-Schnitt, editorialer Typografie und Cases, die wie ein 10.000-€-Auftritt wirken. Gebaut, um den Auftrag zu gewinnen.",
+      "Editorial Salon-Auftritt auf Atelier-Niveau — Colour, Bridal und Craft als eigene Kapitel. Wirkt wie ein Flagship-Salon, nicht wie ein Buchungs-Template.",
     challenge:
-      "Die Live-Seite wirkte wie ein Agentur-Baukasten: leere Zahlen, austauschbare Karten, keine Präsenz. Für einen dicken Pitch braucht es den Holy-Shit-Moment in der ersten Sekunde.",
+      "Viele Salon-Websites sind austauschbar: Stockfotos, Preisliste, fertig. Ein starker Salon braucht einen Auftritt mit Charakter und Conversion.",
     solution:
-      "Void, Bone, Brass. Boska-Display, cinematic Craft-Fotografie, horizontale Case-Reise, kein Fake-Counter. Die Seite ist der Pitch.",
+      "Bone, Copper, Display-Typografie, Filmstreifen und klare Termin-CTAs — die Seite verkauft das Handwerk, bevor jemand anruft.",
     result:
-      "Ein Auftritt, der Room2Build so zeigt, wie ihre Kunden online wirken sollen — und YouForge als das Studio, das das bauen kann.",
+      "Sofortiger Premium-Eindruck: Besucher sehen Stil, Handwerk und Buchungsweg in einem Flow.",
     highlights: [
-      "Cinematic Intro mit Stahl-Schnitt",
-      "Sticky Case-Film auf Desktop",
-      "Editorial Atelier-Typografie",
-      "Conversion direkt zu YouForge",
+      "Cinematic Colour-Atelier Look",
+      "Looks-, Bridal- und Salon-Kapitel",
+      "Conversion zu Termin & Anfrage",
+      "Mobile Sticky CTA",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
-    image: "/demo/garten/hero-wide.jpg",
-    href: "/demo/room2build",
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    image: "/portfolio/salon-website.png",
+    href: "/demo/aurea",
     featured: true,
+    year: "2026",
+  },
+  {
+    slug: "garten-website",
+    title: "Garten-Website",
+    subtitle: "Gartenpflege & Landschaftsbau",
+    category: "Website · Handwerk · Lokal",
+    status: "live",
+    description:
+      "Lebendige Handwerker-Website für Gartenpflege und Landschaftsbau — Vorher/Nachher, klare Leistungen und direkte Anfrage aus einer Hand.",
+    challenge:
+      "Gartenbetriebe wirken online oft wie Kataloge: unscharfe Fotos, unklare Leistungen, kein Vertrauen vor dem Anruf.",
+    solution:
+      "Editorial Grünwerk-Auftritt mit starken Projektbildern, Service-Pillars und Formular — vom Rasen bis zum Baumwipfel.",
+    result:
+      "Besucher verstehen sofort den Betrieb, die Qualität und den nächsten Schritt.",
+    highlights: [
+      "Vorher/Nachher-Cases",
+      "Leistungen klar strukturiert",
+      "Lokaler Vertrauensaufbau",
+      "Direkte Anfrage-Conversion",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    image: "/portfolio/garten-website.png",
+    href: "/demo/garten",
+    featured: false,
+    year: "2026",
+  },
+  {
+    slug: "bestattungs-website",
+    title: "Bestattungs-Website",
+    subtitle: "Würdevolle Begleitung online",
+    category: "Website · Branding · Vertrauen",
+    status: "live",
+    description:
+      "Ruhiger, würdevoller Online-Auftritt für ein Bestattungshaus — Klarheit in der Trauer, rund um die Uhr erreichbar, ohne Lautstärke.",
+    challenge:
+      "In sensiblen Branchen wirkt Standard-Webdesign oft falsch: zu laut, zu bunt oder zu unpersönlich.",
+    solution:
+      "Dark Editorial mit warmem Akzent, klaren Schritten und sofortiger Erreichbarkeit — Raum für Abschied statt Verkaufsdruck.",
+    result:
+      "Vertrauen in Sekunden: Angehörige finden Orientierung und den richtigen Kontaktweg.",
+    highlights: [
+      "Würdevolles Dark-Design",
+      "Klare Begleitungs-Schritte",
+      "24/7-Erreichbarkeit im Fokus",
+      "Ruhige Typografie & Motion",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    image: "/portfolio/bestattungs-website.png",
+    href: "/demo/bestattung",
+    featured: false,
+    year: "2026",
+  },
+  {
+    slug: "fliesen-website",
+    title: "Fliesen-Website",
+    subtitle: "Meisterbetrieb Bad & Naturstein",
+    category: "Website · Handwerk · Meisterbetrieb",
+    status: "live",
+    description:
+      "Präziser Auftritt für einen Fliesen-Meisterbetrieb — Bad, Terrasse, Naturstein. Handwerk sichtbar, Angebot klar, Anfrage nah.",
+    challenge:
+      "Fliesenleger-Websites bleiben oft stecken zwischen Baustellenfotos und generischen Baukasten-Layouts.",
+    solution:
+      "Modernes Meister-Lookbook mit Craft-Details, Vorher/Nachher und direkter Telefon-Conversion.",
+    result:
+      "Kunden sehen Qualität und Präzision — und wissen, wen sie anrufen.",
+    highlights: [
+      "Craft- und Projektgalerie",
+      "Vorher/Nachher-Stories",
+      "Meister-Positionierung",
+      "Sticky Call-CTA",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    image: "/portfolio/fliesen-website.png",
+    href: "/demo/fliesen",
+    featured: false,
     year: "2026",
   },
   {

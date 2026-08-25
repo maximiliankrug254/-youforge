@@ -46,14 +46,6 @@ export function FeaturedCaseStudy({ project }: { project: PortfolioProject }) {
                 </li>
               ))}
             </ul>
-
-            {project.href && (
-              <div className="mt-8">
-                <Button href={project.href} variant="ghost">
-                  Live ansehen →
-                </Button>
-              </div>
-            )}
           </div>
 
           <div className="lg:sticky lg:top-24 lg:self-start">

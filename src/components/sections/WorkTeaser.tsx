@@ -1,19 +1,13 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
+import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { portfolioProjects, type PortfolioProject } from "@/lib/constants";
-
-const homepageTeaserSlugs = ["youforge", "saas-landing", "studio-website"];
+import { portfolioProjects } from "@/lib/constants";
 
 export function WorkTeaser() {
   const featured = portfolioProjects.find((p) => p.featured && p.status === "live");
-  const liveProjects = portfolioProjects.filter(
-    (p) => p.status === "live" && !p.featured
-  );
-  const teaserProjects = homepageTeaserSlugs
-    .map((slug) => liveProjects.find((p) => p.slug === slug))
-    .filter((p): p is PortfolioProject => Boolean(p));
+  const liveCount = portfolioProjects.filter((p) => p.status === "live").length;
 
   return (
     <section className="border-t border-border px-6 py-32 lg:px-8">
@@ -29,24 +23,18 @@ export function WorkTeaser() {
           </p>
         </FadeIn>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {featured && (
-            <FadeIn className="lg:col-span-2">
-              <PortfolioCard project={featured} size="featured" />
-            </FadeIn>
-          )}
-          <div className="flex flex-col gap-4">
-            {teaserProjects.map((project, i) => (
-              <FadeIn key={project.slug} delay={(i + 1) * 0.08}>
-                <PortfolioCard project={project} />
-              </FadeIn>
-            ))}
-          </div>
-        </div>
+        {featured ? (
+          <FadeIn className="mt-12 max-w-4xl" delay={0.08}>
+            <PortfolioCard project={featured} size="featured" />
+          </FadeIn>
+        ) : null}
 
-        <FadeIn delay={0.3} className="mt-8 flex flex-wrap items-center gap-4">
+        <FadeIn delay={0.2} className="mt-10 flex flex-wrap items-center gap-4">
+          <Button href="/arbeiten" size="lg">
+            Alle {liveCount} Projekte ansehen →
+          </Button>
           <Link href="/arbeiten" className="text-sm text-muted hover:text-accent">
-            Alle {portfolioProjects.filter((p) => p.status === "live").length} Projekte ansehen →
+            Zur Showcase-Reise
           </Link>
         </FadeIn>
       </div>

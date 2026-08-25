@@ -8,12 +8,12 @@ type PortfolioPreviewProps = {
 export function PortfolioPreview({ title, image }: PortfolioPreviewProps) {
   if (image) {
     return (
-      <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-[#e8ecef]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-[#0a0a0a]">
         <Image
           src={image}
           alt={title ? `Screenshot: ${title}` : "Projekt-Vorschau"}
           fill
-          className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
         />
         <div
