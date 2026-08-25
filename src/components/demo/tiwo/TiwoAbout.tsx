@@ -22,9 +22,8 @@ export function TiwoAbout() {
 
           <TiwoReveal delay={0.08}>
             <p className="mt-7 max-w-md text-[1.08rem] leading-[1.7] text-[var(--tiwo-muted)]">
-              Regionaler Meisterbetrieb aus dem Landkreis Marburg-Biedenkopf —
-              traditionelles Handwerk, moderne Ideen, persönliche Beratung von
-              der ersten Skizze bis zur letzten Fuge.
+              Regionaler Meisterbetrieb — traditionelles Handwerk, moderne Ideen,
+              persönliche Beratung von der ersten Skizze bis zur letzten Fuge.
             </p>
             <p className="mt-5 max-w-md text-[1.08rem] leading-[1.7] text-[var(--tiwo-muted)]">
               Wir kennen Materialien, vermeiden typische Fehler und setzen Räume

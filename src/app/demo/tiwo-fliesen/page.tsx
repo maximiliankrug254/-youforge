@@ -1,5 +1,5 @@
-import { TiwoPage } from "@/components/demo/tiwo/TiwoPage";
+import { redirect } from "next/navigation";
 
-export default function TiwoFliesenDemoPage() {
-  return <TiwoPage />;
+export default function TiwoFliesenRedirect() {
+  redirect("/demo/fliesen");
 }

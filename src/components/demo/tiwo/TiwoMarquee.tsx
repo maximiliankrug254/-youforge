@@ -11,7 +11,7 @@ const WORDS = [
   "Terrasse",
   "Naturstein",
   "Mosaik",
-  "Marburg",
+  "Meisterbetrieb",
 ];
 
 export function TiwoMarquee({ flip = false }: { flip?: boolean }) {

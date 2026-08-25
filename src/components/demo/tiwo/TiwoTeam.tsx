@@ -4,7 +4,6 @@ import Image from "next/image";
 import { TiwoReveal } from "@/components/demo/tiwo/TiwoReveal";
 import { TiwoCountUp } from "@/components/demo/tiwo/TiwoCountUp";
 import { TIWO_TEAM } from "@/components/demo/tiwo/tiwo-content";
-import { TIWO_CONTACT } from "@/components/demo/tiwo/tiwo-contact";
 
 export function TiwoTeam() {
   return (
@@ -70,11 +69,9 @@ export function TiwoTeam() {
             </TiwoReveal>
             <TiwoReveal delay={0.1}>
               <p className="mt-7 max-w-lg text-[1.08rem] leading-[1.7] text-[var(--tiwo-muted)]">
-                Wir sind ein kleines, engagiertes Meister-Team um{" "}
-                {TIWO_CONTACT.owner}. Frisch im Auftritt, altmodisch streng bei
-                Qualität. Seit {TIWO_CONTACT.years} Jahren legen wir Flächen, die
-                sich nach fertig anfühlen — privat und gewerblich, in Marburg und
-                Umgebung.
+                Kleines, engagiertes Meister-Team. Frisch im Auftritt, streng bei
+                Qualität. Seit Jahren legen wir Flächen, die sich nach fertig
+                anfühlen — privat und gewerblich, in Ihrer Region.
               </p>
             </TiwoReveal>
 

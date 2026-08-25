@@ -56,7 +56,7 @@ export function TiwoIntroLoader() {
           <motion.div
             className="absolute inset-0 bg-[var(--tiwo-ink)]"
             initial={{ opacity: 0.72 }}
-            animate={{ opacity: 0.45 }}
+            animate={{ opacity: 0.48 }}
             transition={{ duration: 2.2, ease: TIWO_EASE }}
           />
 
@@ -67,7 +67,7 @@ export function TiwoIntroLoader() {
               animate={{ opacity: 1, y: 0, letterSpacing: "0.48em" }}
               transition={{ duration: 0.9, ease: TIWO_EASE, delay: 0.15 }}
             >
-              Marburg · Meisterbetrieb
+              Meisterbetrieb · Fliesen
             </motion.p>
 
             <div className="mt-6 overflow-hidden">

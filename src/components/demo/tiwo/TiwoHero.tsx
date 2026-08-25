@@ -63,7 +63,7 @@ export function TiwoHero() {
       >
         <Image
           src="/demo/tiwo-fliesen/hero-bad.jpg"
-          alt="Modernes Bad mit Natursteinfliesen — Meisterarbeit von TiWo Fliesen"
+          alt="Modernes Bad mit Natursteinfliesen — Meisterarbeit"
           fill
           priority
           sizes="100vw"
@@ -72,7 +72,7 @@ export function TiwoHero() {
       </motion.div>
 
       <motion.div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,11,10,0.5)_0%,rgba(12,11,10,0.22)_38%,rgba(12,11,10,0.88)_100%)] lg:bg-[linear-gradient(105deg,rgba(12,11,10,0.88)_0%,rgba(12,11,10,0.42)_52%,rgba(12,11,10,0.12)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,15,20,0.55)_0%,rgba(11,15,20,0.25)_38%,rgba(11,15,20,0.9)_100%)] lg:bg-[linear-gradient(105deg,rgba(11,15,20,0.9)_0%,rgba(11,15,20,0.45)_52%,rgba(11,15,20,0.12)_100%)]"
         style={useParallax ? { opacity: fade } : undefined}
         aria-hidden
       />
@@ -92,12 +92,12 @@ export function TiwoHero() {
           animate={ready ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.8, ease: TIWO_EASE, delay: 0.05 }}
         >
-          <a href="#top" className="inline-flex flex-col" aria-label={TIWO_CONTACT.brand}>
+          <a href="#top" className="inline-flex flex-col" aria-label="Fliesen Meisterbetrieb">
             <span className="font-tiwo-display text-[1.55rem] font-bold leading-none tracking-[-0.04em] sm:text-[1.9rem]">
               {TIWO_CONTACT.short}
             </span>
             <span className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--tiwo-bronze)]">
-              Fliesen · Marburg
+              Fliesen · Meisterbetrieb
             </span>
           </a>
 
@@ -136,7 +136,7 @@ export function TiwoHero() {
             animate={ready ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, ease: TIWO_EASE, delay: 0.12 }}
           >
-            Junges Meister-Team · {TIWO_CONTACT.region}
+            Junges Meister-Team · vor Ort
           </motion.p>
 
           <h1 className="font-tiwo-display text-[clamp(2.85rem,10vw,7.25rem)] font-bold leading-[0.88] tracking-[-0.045em]">

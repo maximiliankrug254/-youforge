@@ -34,7 +34,7 @@ export function TiwoWhy() {
           <div className="lg:col-span-6 lg:col-start-7">
             <TiwoReveal>
               <p className="text-[11px] font-semibold uppercase tracking-[0.36em] text-[var(--tiwo-accent)]">
-                Warum TiWo
+                Warum wir
               </p>
               <h2 className="mt-5 max-w-[13ch] font-tiwo-display text-[clamp(2.4rem,5vw,4.25rem)] font-bold leading-[0.94] tracking-[-0.04em]">
                 Weniger Show.

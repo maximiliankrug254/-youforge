@@ -24,7 +24,9 @@ export function TiwoContact() {
       setError("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
       return;
     }
-    const subject = encodeURIComponent(`Anfrage TiWo Fliesen — ${name.trim()}`);
+    const subject = encodeURIComponent(
+      `Anfrage Fliesen-Meisterbetrieb — ${name.trim()}`,
+    );
     const body = encodeURIComponent(
       `Name: ${name.trim()}\nE-Mail: ${email.trim()}\n\nNachricht:\n${message.trim()}`,
     );
@@ -48,7 +50,7 @@ export function TiwoContact() {
           sizes="100vw"
           className="object-cover opacity-[0.2]"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,18,16,0.78)_0%,rgba(20,18,16,0.94)_55%,rgba(20,18,16,1)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,15,20,0.78)_0%,rgba(11,15,20,0.94)_55%,rgba(11,15,20,1)_100%)]" />
       </div>
 
       <div className="relative mx-auto max-w-[1480px]">
@@ -65,6 +67,10 @@ export function TiwoContact() {
             <p className="mt-7 max-w-md text-[1.05rem] leading-relaxed text-white/50">
               Kurz anrufen oder schreiben — wir melden uns persönlich. Kein
               Formular-Nirwana.
+            </p>
+            <p className="mt-4 max-w-md text-xs leading-relaxed text-white/30">
+              Platzhalter-Kontaktdaten — in der finalen Version mit echten
+              Angaben des Betriebs.
             </p>
 
             <div className="mt-10 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -88,8 +94,6 @@ export function TiwoContact() {
                   Adresse
                 </dt>
                 <dd className="mt-2 whitespace-pre-line text-sm text-white/60">
-                  {TIWO_CONTACT.brand}
-                  {"\n"}
                   {TIWO_CONTACT.addressLine1}
                   {"\n"}
                   {TIWO_CONTACT.addressLine2}
@@ -97,9 +101,9 @@ export function TiwoContact() {
               </div>
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--tiwo-bronze)]">
-                  Inhaber
+                  Region
                 </dt>
-                <dd className="mt-2 text-sm text-white/60">{TIWO_CONTACT.owner}</dd>
+                <dd className="mt-2 text-sm text-white/60">{TIWO_CONTACT.region}</dd>
               </div>
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--tiwo-bronze)]">
@@ -143,13 +147,13 @@ export function TiwoContact() {
                 <form onSubmit={onSubmit} className="mt-10 space-y-7" noValidate>
                   <div>
                     <label
-                      htmlFor="tiwo-name"
+                      htmlFor="fliesen-name"
                       className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45"
                     >
                       Name *
                     </label>
                     <input
-                      id="tiwo-name"
+                      id="fliesen-name"
                       type="text"
                       autoComplete="name"
                       value={name}
@@ -161,13 +165,13 @@ export function TiwoContact() {
                   </div>
                   <div>
                     <label
-                      htmlFor="tiwo-email"
+                      htmlFor="fliesen-email"
                       className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45"
                     >
                       E-Mail *
                     </label>
                     <input
-                      id="tiwo-email"
+                      id="fliesen-email"
                       type="email"
                       autoComplete="email"
                       value={email}
@@ -179,13 +183,13 @@ export function TiwoContact() {
                   </div>
                   <div>
                     <label
-                      htmlFor="tiwo-message"
+                      htmlFor="fliesen-message"
                       className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45"
                     >
                       Nachricht *
                     </label>
                     <textarea
-                      id="tiwo-message"
+                      id="fliesen-message"
                       rows={4}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
@@ -217,10 +221,10 @@ export function TiwoContact() {
             className="mt-24 border-t border-white/10 pt-12 text-sm text-white/35"
           >
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--tiwo-bronze)]">
-              Impressum
+              Impressum (Demo)
             </p>
             <p className="mt-4 leading-relaxed">
-              {TIWO_CONTACT.brand} · Inhaber: {TIWO_CONTACT.owner}
+              Beispiel-Meisterbetrieb · Platzhalter
               <br />
               {TIWO_CONTACT.address}
               <br />
