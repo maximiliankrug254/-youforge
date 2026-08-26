@@ -27,10 +27,11 @@ export const demoScenarios = [
 export const demoQuickReplies = demoScenarios.map((s) => s.prompt);
 
 export const demoWelcomeMessage =
-  "Ich bin dein Website-Assistent — Demo von YouForge. Frag nach Preis, Ablauf oder KI — oder tipp eine echte Kundenfrage.";
+  "Hinweis: Ich bin ein automatisierter Demo-Assistent von YouForge — kein Mensch. Antworten sind regelbasiert und nur zur Veranschaulichung. Frag nach Preis, Ablauf oder KI.";
 
 export const demoLimitMessage =
-  "Demo-Limit erreicht. In der Vollversion antwortet dein Assistent ohne Limit — mit deinem Wissen, deinem Ton, 24/7.";
+  "Demo-Limit erreicht. In der Vollversion antwortet dein Assistent ohne Limit — mit deinem Wissen, deinem Ton, 24/7. Auch dort gilt: klar als KI gekennzeichnet.";
+
 
 export function getDemoResponse(input: string): string {
   const text = input.toLowerCase().trim();

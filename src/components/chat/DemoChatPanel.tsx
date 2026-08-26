@@ -60,7 +60,7 @@ export function DemoChatPanel({
       >
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-accent">
-            YouForge · Assistant
+            YouForge · KI-Assistent
           </p>
           <p
             className={cn(
@@ -68,7 +68,7 @@ export function DemoChatPanel({
               forge ? "text-white" : "text-foreground"
             )}
           >
-            Live auf deiner Website
+            Automatisierte Demo · kein Mensch
           </p>
         </div>
         <span
@@ -77,7 +77,7 @@ export function DemoChatPanel({
             forge ? "text-white/40" : "text-muted"
           )}
         >
-          Demo
+          KI-Demo
         </span>
       </div>
 

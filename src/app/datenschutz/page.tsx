@@ -211,12 +211,41 @@ export default function DatenschutzPage() {
             <h2 className="text-lg font-semibold text-foreground">
               8. KI-Demo auf der Website
             </h2>
-            <p className="mt-2 text-sm leading-relaxed">
+            <p className="mt-2 text-sm leading-relaxed" id="ki-demo">
               Auf dieser Website befindet sich eine interaktive Demo eines
-              Chat-Assistenten. Diese Demo dient ausschließlich zur Veranschaulichung
-              und läuft regelbasiert im Browser. Ihre Eingaben werden nicht an externe
+              Chat-Assistenten. Es handelt sich um ein{" "}
+              <strong className="font-medium text-foreground">
+                automatisiertes System (kein Mensch)
+              </strong>
+              . Die Demo dient ausschließlich zur Veranschaulichung und läuft
+              regelbasiert im Browser. Ihre Eingaben werden nicht an externe
               KI-Dienste übermittelt und nicht dauerhaft auf unseren Servern
               gespeichert.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed">
+              Damit erfüllen wir die Transparenzanforderungen für Systeme, die
+              direkt mit Nutzern interagieren (EU-KI-Verordnung / AI Act, Art. 50):
+              Nutzer werden klar darüber informiert, dass sie mit einem
+              automatisierten Assistenten und nicht mit einer natürlichen Person
+              kommunizieren.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold text-foreground" id="ki-inhalte">
+              8a. KI-unterstützte Inhalte (Texte, Bilder, Demos)
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed">
+              Texte und Designarbeiten auf dieser Website können unter Einsatz von
+              KI-Tools entstanden sein; die Verantwortung liegt bei YouForge.
+              Illustrative Grafiken (z. B. in der KI-Section) sind synthetische
+              bzw. programmierte Visuals und keine Fotos realer Personen.
+              Portfolio-Vorschaubilder sind in der Regel Screenshots realer
+              Oberflächen. Ausführliche Hinweise:{" "}
+              <a href="/ki-hinweise" className={linkClass}>
+                Hinweise zu KI-Inhalten
+              </a>
+              .
             </p>
           </div>
 

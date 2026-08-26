@@ -7,6 +7,7 @@ import { ForgeBot } from "@/components/animations/ForgeBot";
 import { DemoChatPanel } from "@/components/chat/DemoChatPanel";
 import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { AiContentLabel } from "@/components/ui/AiContentLabel";
 
 const outcomes = [
   {
@@ -85,7 +86,10 @@ export function ChatDemo() {
           <FadeIn>
             <div className="relative">
               <ForgeBot />
-              <ul className="mx-auto mt-2 max-w-sm space-y-4 sm:mt-4">
+              <AiContentLabel className="mx-auto mt-1 max-w-sm text-center">
+                Synthetische Illustration · kein Foto einer Person
+              </AiContentLabel>
+              <ul className="mx-auto mt-4 max-w-sm space-y-4 sm:mt-5">
                 {outcomes.map((item, i) => (
                   <motion.li
                     key={item.title}
@@ -125,7 +129,7 @@ export function ChatDemo() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                   </span>
-                  Online
+                  KI · kein Mensch
                 </span>
               </div>
 
