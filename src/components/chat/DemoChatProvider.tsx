@@ -59,12 +59,6 @@ export function DemoChatProvider({ children }: { children: React.ReactNode }) {
     (text: string) => {
       const trimmed = text.trim();
       if (!trimmed || isTyping) return;
-
-      if (!hasStarted) {
-        setHasStarted(true);
-        setMessages([{ id: createId(), role: "bot", text: demoWelcomeMessage }]);
-      }
-
       if (userMessageCount >= DEMO_MESSAGE_LIMIT) return;
 
       const userMsg: ChatMessage = {
@@ -73,7 +67,17 @@ export function DemoChatProvider({ children }: { children: React.ReactNode }) {
         text: trimmed,
       };
 
-      setMessages((prev) => [...prev, userMsg]);
+      const starting = !hasStarted;
+      if (starting) {
+        setHasStarted(true);
+        setMessages([
+          { id: createId(), role: "bot", text: demoWelcomeMessage },
+          userMsg,
+        ]);
+      } else {
+        setMessages((prev) => [...prev, userMsg]);
+      }
+
       setUserMessageCount((c) => c + 1);
       setIsTyping(true);
 

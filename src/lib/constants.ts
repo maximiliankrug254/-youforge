@@ -82,7 +82,6 @@ export const serviceCards = [
     title: "Intelligenz die hilft",
     problem: "Du hörst überall KI — aber niemand zeigt dir den konkreten Nutzen.",
     solution: "Praktische KI-Integration, die wirklich Arbeit abnimmt.",
-    badge: "Coming Soon" as const,
   },
 ];
 
@@ -112,7 +111,6 @@ export const services = [
     description:
       "Intelligente Prozesse, die Zeit sparen und dein Business skalieren.",
     featured: true,
-    badge: "Coming Soon",
   },
   {
     slug: "prozessoptimierung",
