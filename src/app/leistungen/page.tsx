@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/animations/FadeIn";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { process, services } from "@/lib/constants";
@@ -37,9 +36,6 @@ export default function LeistungenPage() {
                       <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
                         {service.title}
                       </h2>
-                      {"badge" in service && service.badge && (
-                        <Badge>{service.badge}</Badge>
-                      )}
                     </div>
                     <p className="mt-4 max-w-2xl text-lg text-muted">
                       {service.description}
