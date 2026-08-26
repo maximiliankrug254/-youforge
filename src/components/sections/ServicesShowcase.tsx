@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { Badge } from "@/components/ui/Badge";
 import { serviceCards } from "@/lib/constants";
 
 export function ServicesShowcase() {
@@ -23,7 +22,6 @@ export function ServicesShowcase() {
                   <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
                     {card.label}
                   </span>
-                  {card.badge && <Badge>{card.badge}</Badge>}
                 </div>
                 <h3 className="mt-4 text-xl font-bold tracking-tight">{card.title}</h3>
                 <ul className="mt-6 space-y-4">
