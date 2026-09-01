@@ -69,10 +69,12 @@ export default function KiHinweisePage() {
             </h2>
             <p className="mt-2 text-sm leading-relaxed">
               Portfolio-Vorschaubilder sind in der Regel Screenshots realer
-              Website-Oberflächen. Illustrative Grafiken (z. B. die Wireframe-/
-              Roboter-Darstellung in der KI-Section) sind{" "}
+              Website-Oberflächen. Das Gründerfoto auf der Startseite ist ein
+              bearbeitetes Portrait. Die Cyborg-Darstellung daneben sowie
+              illustrative Grafiken (z. B. die Wireframe-/Roboter-Darstellung
+              in der KI-Section) sind{" "}
               <strong className="font-medium text-foreground">
-                synthetische bzw. programmierte Visuals
+                synthetische bzw. KI-generierte Visuals
               </strong>
               {" "}— keine Fotos realer Personen. Wo Inhalte klar KI-generiert
               oder synthetisch sind, kennzeichnen wir sie entsprechend.

@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "YouForge",
   tagline: "Wir schmieden deine Vision.",
+  founder: "Max",
   description:
     "Digitale Lösungen für Unternehmen in DACH. Websites, Landingpages, Web-Apps und KI-Integration — wir verwandeln Ideen in digitale Realität.",
   email: "mk-ventures-360@gmx.net",
