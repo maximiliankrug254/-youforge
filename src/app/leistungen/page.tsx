@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { process, services } from "@/lib/constants";
+import { process, pricingTiers, services } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Leistungen",
@@ -77,19 +77,51 @@ export default function LeistungenPage() {
         </div>
       </section>
 
-      <section className="border-t border-border px-6 py-20 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+      <section
+        id="preise"
+        className="border-t border-border px-6 py-20 lg:px-8"
+      >
+        <div className="mx-auto max-w-7xl">
           <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tight">
-              Individuelles Angebot oder Festpreis-Paket
-            </h2>
-            <p className="mt-4 text-lg text-muted">
-              Jedes Projekt ist anders. Wir finden gemeinsam das passende Modell —
-              fair, transparent und ohne versteckte Kosten.
+            <SectionHeading
+              label="Orientierung"
+              title="Was es ungefähr kostet"
+              description="Keine Katalog-Preisliste. Festpreis nach Briefing — du weißt vorher, was du zahlst. Kein Nachverrechnungs-Theater."
+            />
+          </FadeIn>
+
+          <div className="mt-14 grid gap-4 md:grid-cols-3">
+            {pricingTiers.map((tier, i) => (
+              <FadeIn key={tier.label} delay={i * 0.08}>
+                <article className="flex h-full flex-col rounded-2xl border border-border bg-surface/30 p-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-4 text-xl font-bold tracking-tight">
+                    {tier.label}
+                  </h3>
+                  <p className="mt-3 text-2xl font-bold tracking-tight text-accent">
+                    {tier.price}
+                  </p>
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-muted">
+                    {tier.hint}
+                  </p>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={0.2}>
+            <p className="mt-8 max-w-2xl text-sm text-muted">
+              Ein Ansprechpartner. Von Briefing bis Launch. Hosting und
+              Betreuung optional.
             </p>
-            <div className="mt-8">
-              <Button href="/kontakt" size="lg">
-                Vision schmieden
+            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
+              <Button href="/briefing" size="lg">
+                Briefing starten →
+              </Button>
+              <Button href="/kontakt" variant="ghost" size="lg">
+                Lass uns reden
               </Button>
             </div>
           </FadeIn>

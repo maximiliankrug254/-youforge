@@ -173,6 +173,24 @@ export const process = [
   },
 ];
 
+export const pricingTiers = [
+  {
+    label: "Landingpage",
+    price: "unter 1.000 €",
+    hint: "Eine Seite, ein Ziel. Oft in 1–2 Wochen live.",
+  },
+  {
+    label: "Website",
+    price: "Festpreis",
+    hint: "Mehrere Seiten, klarer Scope. Die Zahl steht nach dem Briefing.",
+  },
+  {
+    label: "Web-App & KI",
+    price: "individuell",
+    hint: "Systeme und Automatisierung — erst verstehen, dann Festpreis.",
+  },
+];
+
 export type PortfolioProject = {
   slug: string;
   title: string;
