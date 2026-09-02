@@ -36,11 +36,12 @@ export function Founder() {
               <figure className="relative w-[78%]">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-[#0a0a0a] shadow-[0_24px_80px_-32px_rgba(0,0,0,0.7)]">
                   <Image
-                    src="/team/founder.png"
+                    src="/team/founder.jpg"
                     alt={`${siteConfig.founder} — Gründer von YouForge`}
                     fill
+                    quality={92}
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 60vw, 720px"
                     className="object-cover object-[center_18%] transition duration-700 group-hover:scale-[1.02]"
-                    sizes="(max-width: 1024px) 70vw, 380px"
                   />
                   <div
                     className="absolute inset-0 origin-right transition-[clip-path] duration-700 ease-[cubic-bezier(0.21,0.47,0.32,0.98)] [clip-path:polygon(100%_0,100%_0,100%_100%,100%_100%)] group-hover:[clip-path:polygon(52%_0,100%_0,100%_100%,38%_100%)] motion-reduce:transition-none"
@@ -51,7 +52,7 @@ export function Founder() {
                       alt=""
                       fill
                       className="object-cover object-center scale-[1.15]"
-                      sizes="(max-width: 1024px) 70vw, 380px"
+                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 60vw, 720px"
                     />
                   </div>
                   <div
