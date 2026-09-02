@@ -1,5 +1,5 @@
 /** Production domain — set NEXT_PUBLIC_SITE_URL when live. */
-export const productionSiteUrl = "https://youforge.de";
+export const productionSiteUrl = "https://you-forge.de";
 
 export function getSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");

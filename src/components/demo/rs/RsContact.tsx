@@ -75,7 +75,7 @@ export function RsContact() {
 
       <p className="relative mt-16 text-center text-[11px] tracking-wide text-[rgba(245,241,235,0.35)]">
         Living Demo von{" "}
-        <a href="https://youforge.de" className="underline-offset-2 hover:underline">
+        <a href="https://you-forge.de" className="underline-offset-2 hover:underline">
           YouForge
         </a>{" "}
         · noch nicht live

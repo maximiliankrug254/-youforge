@@ -63,7 +63,7 @@ OG-Image und Sitemap zeigen auf deine `.vercel.app`-Adresse — kein manuelles A
 **Später mit eigener Domain:** In Vercel unter *Settings → Environment Variables*:
 
 ```
-NEXT_PUBLIC_SITE_URL=https://youforge.de
+NEXT_PUBLIC_SITE_URL=https://you-forge.de
 ```
 
 Dann Domain in Vercel unter *Settings → Domains* verbinden und neu deployen.

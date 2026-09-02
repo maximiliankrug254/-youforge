@@ -99,7 +99,7 @@ export function AureaContact() {
                       href={AUREA_CONTACT.youforge}
                       className="text-white/65 hover:text-[var(--aurea-copper)]"
                     >
-                      youforge.de
+                      you-forge.de
                     </a>
                   </dd>
                 </div>

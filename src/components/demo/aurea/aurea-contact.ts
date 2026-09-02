@@ -5,8 +5,8 @@ export const AUREA_CONTACT = {
   pitch:
     "Das ist eine Living Demo von YouForge — so kann die Website eures Salons wirken.",
   region: "Beispiel-Salon · DACH",
-  youforge: "https://youforge.de",
-  youforgeContact: "https://youforge.de/kontakt",
+  youforge: "https://you-forge.de",
+  youforgeContact: "https://you-forge.de/kontakt",
   calendly: "https://calendly.com/maximiliankrug7/30min",
   email: "mk-ventures-360@gmx.net",
   seats: 8,

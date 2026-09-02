@@ -99,7 +99,7 @@ export function AtlContact() {
       <p className="relative mt-20 text-center text-[11px] tracking-wide text-white/30">
         Living Demo von{" "}
         <a
-          href="https://youforge.de"
+          href="https://you-forge.de"
           className="underline-offset-2 hover:underline"
         >
           YouForge

@@ -238,7 +238,7 @@ export function TiwoContact() {
 
       <p className="relative mt-16 text-center text-[11px] tracking-wide text-white/25">
         Living Demo von{" "}
-        <a href="https://youforge.de" className="underline-offset-2 hover:underline">
+        <a href="https://you-forge.de" className="underline-offset-2 hover:underline">
           YouForge
         </a>{" "}
         · noch nicht live

@@ -74,7 +74,7 @@ export function GpfContact() {
           sizes="100vw"
           className="object-cover opacity-[0.16]"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,21,17,0.82)_0%,rgba(15,21,17,0.95)_58%,rgba(15,21,17,1)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,16,12,0.82)_0%,rgba(10,16,12,0.95)_58%,rgba(10,16,12,1)_100%)]" />
       </div>
 
       <div className="relative mx-auto max-w-[1480px]">
@@ -99,7 +99,7 @@ export function GpfContact() {
             <div className="mt-10 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
               <GpfButton
                 href={`tel:${GPF_CONTACT.phoneTel}`}
-                className="inline-flex w-full items-center justify-center rounded-full bg-[var(--gpf-accent)] px-7 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-[var(--gpf-accent-hot)] sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-sm bg-[var(--gpf-accent)] px-7 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-[var(--gpf-accent-hot)] sm:w-auto"
               >
                 {GPF_CONTACT.phoneDisplay}
               </GpfButton>
@@ -107,7 +107,7 @@ export function GpfContact() {
                 href={GPF_CONTACT.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center rounded-full border border-white/20 px-7 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:border-white/45 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-sm border border-white/20 px-7 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:border-white/45 sm:w-auto"
               >
                 WhatsApp
               </GpfButton>
@@ -283,7 +283,7 @@ export function GpfContact() {
 
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-full bg-[var(--gpf-accent)] px-8 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-[var(--gpf-accent-hot)] sm:w-auto"
+                    className="inline-flex w-full items-center justify-center rounded-sm bg-[var(--gpf-accent)] px-8 py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-[var(--gpf-accent-hot)] sm:w-auto"
                   >
                     Anfrage absenden
                   </button>
@@ -337,7 +337,7 @@ export function GpfContact() {
       <p className="relative mt-16 text-center text-[11px] tracking-wide text-white/25">
         Living Demo von{" "}
         <a
-          href="https://youforge.de"
+          href="https://you-forge.de"
           className="underline-offset-2 hover:underline"
         >
           YouForge

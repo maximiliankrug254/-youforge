@@ -5,7 +5,7 @@ import { legalConfig, siteConfig } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Hinweise zu KI-Inhalten",
   description:
-    "Transparenz zu KI-Demo, automatisierten Assistenten und KI-unterstützten Inhalten auf youforge.de.",
+    "Transparenz zu KI-Demo, automatisierten Assistenten und KI-unterstützten Inhalten auf you-forge.de.",
 };
 
 export default function KiHinweisePage() {
