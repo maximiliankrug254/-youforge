@@ -211,6 +211,32 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "ast-asche",
+    title: "Ast & Asche",
+    subtitle: "Manufaktur für Holz und Ton",
+    category: "Website · Manufaktur · Editorial",
+    status: "live",
+    description:
+      "Cineastischer One-Pager für eine Möbel- und Keramikwerkstatt — Preloader, Linienkunst, Kapitel-Scroll. Kein Shop, ein Atelierbesuch.",
+    challenge:
+      "Manufakturen sterben online im Raster: Produktfotos, Filter, Warenkorb. Wer Unikate baut, braucht eine Seite, die sich anfühlt wie die Werkstatt.",
+    solution:
+      "Zwei Farben, Display-Serif, generative Strich-Grafik, Lenis-Scroll, Ofenklang und Kapitel statt Katalog — gebaut als Living Demo auf Signature-Niveau.",
+    result:
+      "Ein Unikat-Auftritt: Besucher verstehen Material, Zeit und Haltung, bevor sie eine Zahl sehen.",
+    highlights: [
+      "Generative Linien-Engine",
+      "Kapitel-Scroll & Portal-Maske",
+      "Ofentour + Ambient-Klang",
+      "Stücke ohne Shop-Logik",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
+    image: "/demo/ast-asche/hero.jpg",
+    href: "/demo/ast-asche",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "salon-website",
     title: "Salon-Website",
     subtitle: "Premium Colour Atelier",
