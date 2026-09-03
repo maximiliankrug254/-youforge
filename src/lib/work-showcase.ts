@@ -7,6 +7,12 @@ const EXTRA_PANELS: Record<string, string[]> = {
   "garten-website": ["/portfolio/garten-website.png"],
   "bestattungs-website": ["/portfolio/bestattungs-website.png"],
   "fliesen-website": ["/portfolio/fliesen-website.png"],
+  "the-german": [
+    "/demo/the-german/images/home/hero.jpg",
+    "/demo/the-german/images/home/clinic.jpg",
+    "/demo/the-german/images/about/clinic.jpg",
+    "/demo/the-german/images/home/cover-03.jpg",
+  ],
   "handwerk-website": ["/portfolio/handwerk-website.png"],
   "studio-website": ["/portfolio/studio-website.png"],
   "saas-landing": ["/portfolio/saas-landing.png"],

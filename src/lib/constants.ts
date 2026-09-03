@@ -341,6 +341,32 @@ export const portfolioProjects: PortfolioProject[] = [
     year: "2026",
   },
   {
+    slug: "the-german",
+    title: "THE GERMAN",
+    subtitle: "Dental & Skin Aesthetics · Bali",
+    category: "Website · Klinik · Migration",
+    status: "live",
+    description:
+      "Produktionsreife Neuumsetzung der Klinik-Website THE GERMAN in Bali — Zahnmedizin, Kieferorthopädie, Dermatologie und Technologie, inkl. Team, PDFs und WhatsApp-Buchung.",
+    challenge:
+      "Die bestehende HTML-Seite war schwer wartbar: Template-CSS, jQuery, tote Links und Inhalte, die über viele Dateien verstreut lagen.",
+    solution:
+      "Nächste-Generation-Auftritt in Next.js: zentrale Inhalte, originale Texte und Bilder, klare Navigation, SEO und mobile Menüs — visuell treu zur Quelle.",
+    result:
+      "Dieselbe Klinik, sauberer Code: Kontakt, Preise und Behandlungen an einer Stelle pflegbar.",
+    highlights: [
+      "Mehrseitige Klinik-IA originalgetreu",
+      "WhatsApp-Buchung & Preis-PDFs",
+      "Team, Founder, Leistungen zentral",
+      "Dark Editorial mit Gelb-Akzent",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    image: "/demo/the-german/images/home/clinic.jpg",
+    href: "/demo/the-german",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "youforge",
     title: "YouForge",
     subtitle: "Digitalagentur-Website",
