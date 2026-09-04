@@ -11,6 +11,7 @@ import {
   type IntroLayout,
   type IntroParticle,
 } from "@/lib/intro-particles";
+import { RS_CONTACT } from "@/components/demo/rs/rs-contact";
 
 const BLUE = "#0099ff";
 const BLUE_SOFT = "rgba(0, 153, 255, 0.32)";
@@ -153,7 +154,7 @@ export function RsIntroLoader() {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const { particles, layout } = buildIntroScene("RS", { width, height });
+      const { particles, layout } = buildIntroScene(RS_CONTACT.short, { width, height });
 
       const start = performance.now();
       let fadeOut = 0;
@@ -195,7 +196,7 @@ export function RsIntroLoader() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-[100] bg-[#0b0e11]"
-      aria-label="RS Entrümpelung Intro"
+      aria-label={`${RS_CONTACT.brand} Intro`}
       role="presentation"
     />
   );

@@ -1,10 +1,22 @@
+/**
+ * Entrümpelungs-Demo — White-Label.
+ * Für einen neuen Kunden: Werte hier setzen, fertig.
+ * Keine echten Firmendaten.
+ */
 export const RS_CONTACT = {
-  phoneTel: "+491726309503",
-  phoneDisplay: "0172 6309503",
+  brand: "Raumklar",
+  short: "RK",
+  tagline: "Entrümpelung · Haushaltsauflösung · Umzug",
+  profession: "Entrümpelung & Umzug",
+  phoneTel: "+4917000000000",
+  phoneDisplay: "0170 000 0000",
   whatsapp:
-    "https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung.",
-  email: "info@rs-entruempelung-umzug.de",
-  address: "Gnauthstraße 34, 35390 Gießen",
+    "https://wa.me/4917000000000?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung.",
+  email: "demo@youforge.de",
+  address: "Musterstraße 12, 12345 Ihre Stadt",
   hours: "Mo–Fr 08–18 Uhr, Sa 08–14 Uhr",
-  areas: ["Gießen", "Marburg", "Wetzlar", "Lahn-Dill-Kreis"] as const,
+  region: "Stadt & Umland",
+  regionCity: "Ihre Stadt",
+  areas: ["Ihre Stadt", "Umland Nord", "Umland Süd", "Nachbarorte"] as const,
+  youforge: "https://you-forge.de",
 } as const;

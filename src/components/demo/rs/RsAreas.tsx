@@ -13,7 +13,7 @@ export function RsAreas() {
               Einsatzgebiet
             </p>
             <h2 className="mt-4 font-[family-name:var(--font-rs-display)] text-[clamp(1.85rem,4vw,2.6rem)] font-medium leading-tight tracking-[-0.02em] text-[var(--rs-ink)]">
-              Wir kommen zu Ihnen — in Gießen und Umgebung
+              Wir kommen zu Ihnen — in Ihrer Region
             </h2>
             <p className="mt-4 max-w-md text-[var(--rs-muted)]">
               Schnell vor Ort, oft schon am nächsten Tag. Ohne Anfahrtsaufschlag in der Region.
@@ -35,7 +35,6 @@ export function RsAreas() {
               className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-[rgba(28,25,23,0.08)] bg-[var(--rs-cream-deep)] shadow-[0_20px_50px_rgba(28,25,23,0.08)]"
               aria-hidden
             >
-              {/* Stylized map plate — no live map API */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_40%_45%,rgba(196,163,90,0.18),transparent_55%)]" />
               <svg
                 className="absolute inset-6 h-[calc(100%-3rem)] w-[calc(100%-3rem)] opacity-40"
@@ -64,7 +63,7 @@ export function RsAreas() {
               </svg>
               <div className="absolute bottom-6 left-6 right-6">
                 <p className="font-[family-name:var(--font-rs-display)] text-2xl font-medium text-[var(--rs-ink)]">
-                  Gießen
+                  {RS_CONTACT.regionCity}
                 </p>
                 <p className="mt-1 text-sm text-[var(--rs-muted)]">
                   Ausgangspunkt für den gesamten Raum

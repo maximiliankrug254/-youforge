@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-
-const PHONE = "+491726309503";
-const PHONE_DISPLAY = "0172 6309503";
-const WHATSAPP =
-  "https://wa.me/491726309503?text=Hallo%20RS%20Entr%C3%BCmpelung%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20kostenlose%20Besichtigung.";
+import { RS_CONTACT } from "@/components/demo/rs/rs-contact";
 
 /** Headline-Varianten — aktiv: 0 */
 export const HERO_HEADLINES = [
@@ -30,7 +26,6 @@ export function RsHero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        {/* Warm dark gradient — text contrast, not covering the whole story of the room */}
         <div
           className="absolute inset-0 bg-gradient-to-r from-[rgba(28,25,23,0.88)] via-[rgba(28,25,23,0.62)] to-[rgba(28,25,23,0.28)]"
           aria-hidden
@@ -39,7 +34,6 @@ export function RsHero() {
           className="absolute inset-0 bg-gradient-to-t from-[rgba(28,25,23,0.75)] via-transparent to-[rgba(28,25,23,0.35)]"
           aria-hidden
         />
-        {/* Fine film grain */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
           style={{
@@ -58,7 +52,7 @@ export function RsHero() {
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="mb-5 font-[family-name:var(--font-rs-sans)] text-[11px] font-medium uppercase tracking-[0.28em] text-[var(--rs-ochre)]">
-            RS Entrümpelung &amp; Umzug · Gießen
+            {RS_CONTACT.brand} · {RS_CONTACT.profession}
           </p>
 
           <h1 className="font-[family-name:var(--font-rs-display)] text-[clamp(2.35rem,5.5vw,3.85rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--rs-cream)]">
@@ -66,19 +60,19 @@ export function RsHero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[rgba(245,241,235,0.78)] sm:text-lg">
-            Entrümpelung, Haushaltsauflösung und Umzug in Gießen und Umgebung —
-            schnell, diskret, zum fairen Festpreis.
+            Entrümpelung, Haushaltsauflösung und Umzug in Ihrer Region — schnell, diskret, zum
+            fairen Festpreis.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href={`tel:${PHONE}`}
+              href={`tel:${RS_CONTACT.phoneTel}`}
               className="inline-flex items-center justify-center rounded-full bg-[var(--rs-ochre)] px-7 py-3.5 text-sm font-semibold text-[var(--rs-ink)] transition hover:bg-[var(--rs-ochre-hover)]"
             >
-              {PHONE_DISPLAY} anrufen
+              {RS_CONTACT.phoneDisplay} anrufen
             </a>
             <a
-              href={WHATSAPP}
+              href={RS_CONTACT.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full border border-[rgba(245,241,235,0.35)] bg-transparent px-7 py-3.5 text-sm font-semibold text-[var(--rs-cream)] transition hover:border-[var(--rs-cream)] hover:bg-[rgba(245,241,235,0.06)]"
@@ -94,11 +88,11 @@ export function RsHero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.45, duration: 0.7 }}
         >
-          <span>20+ Bewertungen</span>
+          <span>Kostenlose Besichtigung</span>
           <span className="hidden text-[rgba(245,241,235,0.28)] sm:inline" aria-hidden>
             ·
           </span>
-          <span>4,8★ auf Google</span>
+          <span>Festpreis, keine Nachforderungen</span>
           <span className="hidden text-[rgba(245,241,235,0.28)] sm:inline" aria-hidden>
             ·
           </span>
