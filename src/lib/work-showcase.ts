@@ -2,6 +2,12 @@ import type { PortfolioProject } from "@/lib/constants";
 
 /** Eigene Panel-Bilder je Projekt — nie Assets anderer Cases. */
 const EXTRA_PANELS: Record<string, string[]> = {
+  lane: [
+    "/demo/lane/hero.jpg",
+    "/demo/lane/skewer.jpg",
+    "/demo/lane/bar.jpg",
+    "/demo/lane/venue.jpg",
+  ],
   youforge: ["/portfolio/youforge.png"],
   "salon-website": ["/portfolio/salon-website.png"],
   "garten-website": ["/portfolio/garten-website.png"],

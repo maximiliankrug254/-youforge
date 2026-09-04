@@ -211,6 +211,32 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "lane",
+    title: "LANE",
+    subtitle: "Night Kitchen · Streetfood",
+    category: "Website · Gastro · Horizontal",
+    status: "live",
+    description:
+      "Night Kitchen mit zwölf Plätzen am Counter: Bun, Spieß, Ribs — horizontal, Glut-Cursor, Rauch über der Bar.",
+    challenge:
+      "Gastro-Seiten kippen schnell ins Hipster-Bistro oder ins Foodtruck-Template. Streetfood mit teurem Nacht-Charakter braucht eine eigene Sprache.",
+    solution:
+      "Fünf Kapitel von links nach rechts, Ember-Cursor, Fire-Fotografie und Fluid-Rauch über der Bar. Living Demo, fiktive Marke.",
+    result:
+      "Ein Auftritt, der nach Mitternacht und nach Grill aussieht — nicht nach Avocado.",
+    highlights: [
+      "Horizontaler Lenis-Scroll",
+      "Glut-Cursor mit Hitze-Trail",
+      "Rauch-Simulation in der Bar",
+      "Reservierungs-Kapitel",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
+    image: "/demo/lane/hero.jpg",
+    href: "/demo/lane",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "ast-asche",
     title: "Ast & Asche",
     subtitle: "Manufaktur für Holz und Ton",
