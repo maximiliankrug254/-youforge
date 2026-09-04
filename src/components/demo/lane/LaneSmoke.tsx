@@ -10,10 +10,12 @@ export function LaneSmoke() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const surface = canvasRef.current;
-    if (!surface) return;
-    const ctx = surface.getContext("2d", { alpha: true });
-    if (!ctx) return;
+    const node = canvasRef.current;
+    if (!node) return;
+    const surface: HTMLCanvasElement = node;
+    const ctxNode = surface.getContext("2d", { alpha: true });
+    if (!ctxNode) return;
+    const ctx: CanvasRenderingContext2D = ctxNode;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const u = new Float32Array(SIZE);
@@ -30,10 +32,13 @@ export function LaneSmoke() {
     const sim = document.createElement("canvas");
     sim.width = N;
     sim.height = N;
-    const simCtx = sim.getContext("2d", { willReadFrequently: true });
-    if (!simCtx) return;
+    const simNode = sim.getContext("2d", { willReadFrequently: true });
+    if (!simNode) return;
+    const simCtx: CanvasRenderingContext2D = simNode;
     const image = simCtx.createImageData(N, N);
     const pixels = image.data;
+    const viewCtx: CanvasRenderingContext2D = ctx;
+    const bufferCtx: CanvasRenderingContext2D = simCtx;
 
     let raf = 0;
     let running = true;
@@ -232,11 +237,11 @@ export function LaneSmoke() {
           pxl += 4;
         }
       }
-      simCtx.putImageData(image, 0, 0);
-      ctx.clearRect(0, 0, surface.width, surface.height);
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(sim, 0, 0, surface.width, surface.height);
+      bufferCtx.putImageData(image, 0, 0);
+      viewCtx.clearRect(0, 0, surface.width, surface.height);
+      viewCtx.imageSmoothingEnabled = true;
+      viewCtx.imageSmoothingQuality = "high";
+      viewCtx.drawImage(sim, 0, 0, surface.width, surface.height);
     }
 
     const onMove = (e: PointerEvent) => {
