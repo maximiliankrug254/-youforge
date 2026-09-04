@@ -10,6 +10,12 @@ const EXTRA_PANELS: Record<string, string[]> = {
   ],
   youforge: ["/portfolio/youforge.png"],
   "salon-website": ["/portfolio/salon-website.png"],
+  wolff: [
+    "/demo/wolff/00-hero.jpg",
+    "/demo/wolff/02-shop.jpg",
+    "/demo/wolff/03-shave.jpg",
+    "/demo/wolff/08-team.jpg",
+  ],
   "garten-website": ["/portfolio/garten-website.png"],
   "bestattungs-website": ["/portfolio/bestattungs-website.png"],
   "fliesen-website": ["/portfolio/fliesen-website.png"],

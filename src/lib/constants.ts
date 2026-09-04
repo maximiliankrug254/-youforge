@@ -289,6 +289,32 @@ export const portfolioProjects: PortfolioProject[] = [
     year: "2026",
   },
   {
+    slug: "wolff",
+    title: "WOLFF",
+    subtitle: "Herrenbarber · Schwabing",
+    category: "Website · Branding · Barber",
+    status: "live",
+    description:
+      "Herrenbarber im 1970er-Herrenzimmer: Nussbaum, offene Klinge, vier Stühle. Das maskuline Gegenstück zum Colour-Atelier — Lust, Liebe, Freiheit, Gentleman.",
+    challenge:
+      "Salon-Seiten kippen ins Feminine, Helle, Bridal. Ein echter Herrenbarber braucht Holz, Klinge und Haltung — ohne Drogen-Klischee und ohne Gym-Bro-Look.",
+    solution:
+      "Dunkles Nussbaum, Messing, Melodrama-Serif, Preise und Zeiten auf dem Tisch. Ritual statt Bridal, Männer statt Looks.",
+    result:
+      "Ein Auftritt, der nach Herrenzimmer und 1972 riecht — nicht nach Balayage.",
+    highlights: [
+      "1970er Herrenzimmer-Look",
+      "Schnitt, Rasur, Gentleman-Ritual",
+      "Preise, Zeiten, vier Stühle",
+      "Mobile Sticky CTA",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
+    image: "/demo/wolff/00-hero.jpg",
+    href: "/demo/wolff",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "garten-website",
     title: "Garten-Website",
     subtitle: "Gartenpflege & Landschaftsbau",
