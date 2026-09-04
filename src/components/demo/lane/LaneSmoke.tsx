@@ -10,9 +10,9 @@ export function LaneSmoke() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const surface = canvasRef.current;
+    if (!surface) return;
+    const ctx = surface.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -154,7 +154,7 @@ export function LaneSmoke() {
     }
 
     function toGrid(clientX: number, clientY: number) {
-      const rect = canvas.getBoundingClientRect();
+      const rect = surface.getBoundingClientRect();
       const x = ((clientX - rect.left) / rect.width) * N + 1;
       const y = ((clientY - rect.top) / rect.height) * N + 1;
       return { x, y, inside: x >= 1 && x <= N && y >= 1 && y <= N };
@@ -162,9 +162,9 @@ export function LaneSmoke() {
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.round(rect.width * dpr));
-      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      const rect = surface.getBoundingClientRect();
+      surface.width = Math.max(1, Math.round(rect.width * dpr));
+      surface.height = Math.max(1, Math.round(rect.height * dpr));
     }
 
     function seed() {
@@ -233,10 +233,10 @@ export function LaneSmoke() {
         }
       }
       simCtx.putImageData(image, 0, 0);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, surface.width, surface.height);
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(sim, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(sim, 0, 0, surface.width, surface.height);
     }
 
     const onMove = (e: PointerEvent) => {
@@ -254,10 +254,10 @@ export function LaneSmoke() {
       },
       { threshold: 0.05 },
     );
-    io.observe(canvas);
+    io.observe(surface);
 
     const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+    ro.observe(surface);
     resize();
     seed();
 
