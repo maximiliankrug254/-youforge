@@ -5,6 +5,9 @@ import { RsProcess } from "@/components/demo/rs/RsProcess";
 import { RsAreas } from "@/components/demo/rs/RsAreas";
 import { RsContact } from "@/components/demo/rs/RsContact";
 
+/** Keine statische 404-Prerender mehr — die alte notFound()-Seite hing im CDN. */
+export const dynamic = "force-dynamic";
+
 export default function RsEntruempelungDemoPage() {
   return (
     <main>
