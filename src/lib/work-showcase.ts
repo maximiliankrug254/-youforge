@@ -2,6 +2,12 @@ import type { PortfolioProject } from "@/lib/constants";
 
 /** Eigene Panel-Bilder je Projekt — nie Assets anderer Cases. */
 const EXTRA_PANELS: Record<string, string[]> = {
+  syn: [
+    "/demo/syn/street.png",
+    "/demo/syn/look-02.png",
+    "/demo/syn/lips.png",
+    "/demo/syn/film.png",
+  ],
   lane: [
     "/demo/lane/hero.jpg",
     "/demo/lane/skewer.jpg",
@@ -42,6 +48,7 @@ const EXTRA_PANELS: Record<string, string[]> = {
 
 /** Diese Demos immer früh in der Showcase zeigen. */
 const PRIORITY_SLUGS = [
+  "syn",
   "salon-website",
   "garten-website",
   "bestattungs-website",

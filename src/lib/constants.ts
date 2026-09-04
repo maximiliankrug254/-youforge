@@ -211,6 +211,32 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "syn",
+    title: "Pyra",
+    subtitle: "Where glam meets grunge",
+    category: "Website · Fashion · E-Commerce",
+    status: "live",
+    description:
+      "Fashion-E-Commerce mit Preloader, Riss, Custom Cursor, Drag-Arrivals und Overlay-Drawern. Signalrot auf Schwarz.",
+    challenge:
+      "Eine Fashion-Site braucht Bewegung, Emotion und Power — nicht ein stilles Moodboard.",
+    solution:
+      "Prozent-Preloader, Mix-Blend-Header, DRAG CLICK, Lippen-Maske, Bag-Drawer. Living Demo.",
+    result:
+      "Ein Shop, der schlägt.",
+    highlights: [
+      "Preloader 01–100%",
+      "Custom Cursor + Drag-Rails",
+      "Overlay Menu / Bag / Search",
+      "Hover-Swap Produktkarten",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
+    image: "/demo/syn/street.png",
+    href: "/demo/syn",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "lane",
     title: "LANE",
     subtitle: "Night Kitchen · Streetfood",
