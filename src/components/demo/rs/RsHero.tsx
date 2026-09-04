@@ -8,7 +8,10 @@ import { getRsDeskStatus } from "@/components/demo/rs/rs-hours";
 
 export function RsHero() {
   const reduceMotion = useReducedMotion();
-  const [desk, setDesk] = useState({ open: false, label: RS_CONTACT.hours });
+  const [desk, setDesk] = useState<{ open: boolean; label: string }>({
+    open: false,
+    label: RS_CONTACT.hours,
+  });
 
   useEffect(() => {
     setDesk(getRsDeskStatus());
