@@ -5,7 +5,7 @@ import { RS_CONTACT } from "@/components/demo/rs/rs-contact";
 
 export function RsAreas() {
   return (
-    <section className="bg-[var(--rs-cream)] px-6 py-24 sm:px-8 lg:py-28">
+    <section id="gebiet" className="scroll-mt-20 bg-[var(--rs-cream)] px-6 py-24 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <RsReveal>
@@ -13,10 +13,11 @@ export function RsAreas() {
               Einsatzgebiet
             </p>
             <h2 className="mt-4 font-[family-name:var(--font-rs-display)] text-[clamp(1.85rem,4vw,2.6rem)] font-medium leading-tight tracking-[-0.02em] text-[var(--rs-ink)]">
-              Wir kommen zu Ihnen — in Ihrer Region
+              {RS_CONTACT.radiusKm} km um {RS_CONTACT.regionCity} — ohne Anfahrtsaufschlag
             </h2>
             <p className="mt-4 max-w-md text-[var(--rs-muted)]">
-              Schnell vor Ort, oft schon am nächsten Tag. Ohne Anfahrtsaufschlag in der Region.
+              Oft sind wir am nächsten Werktag da. Weiter weg geht auch, dann rechnen wir den
+              Kilometer fair und vorher.
             </p>
             <ul className="mt-8 flex flex-wrap gap-2.5">
               {RS_CONTACT.areas.map((area) => (
@@ -66,7 +67,7 @@ export function RsAreas() {
                   {RS_CONTACT.regionCity}
                 </p>
                 <p className="mt-1 text-sm text-[var(--rs-muted)]">
-                  Ausgangspunkt für den gesamten Raum
+                  {RS_CONTACT.radiusKm} km Radius, eigener Wagen
                 </p>
               </div>
             </div>

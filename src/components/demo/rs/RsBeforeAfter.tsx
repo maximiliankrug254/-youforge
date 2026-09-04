@@ -50,10 +50,11 @@ export function RsBeforeAfter() {
             Vorher / Nachher
           </p>
           <h2 className="mt-4 font-[family-name:var(--font-rs-display)] text-[clamp(1.85rem,4vw,2.75rem)] font-medium leading-tight tracking-[-0.02em] text-[var(--rs-ink)]">
-            Vom vollen Raum zur klaren Fläche
+            So sieht Feierabend bei uns aus
           </h2>
           <p className="mt-4 text-[var(--rs-muted)]">
-            Von voll bis leer — wir übernehmen den kompletten Ablauf.
+            2-Zimmer nach Auszug, 2. OG ohne Aufzug. Morgens voll, abends leer — inklusive
+            Entsorgung und besenreiner Übergabe.
           </p>
         </RsReveal>
 
@@ -123,8 +124,8 @@ export function RsBeforeAfter() {
               </button>
             </div>
           </div>
-          <p className="mt-4 text-center text-xs text-[var(--rs-muted)]">
-            Schieber ziehen oder tippen — auf dem Handy per Wischen.
+          <p className="mt-4 text-center text-xs leading-relaxed text-[var(--rs-muted)]">
+            Drei Mann, ein Nachmittag. Schieber ziehen — auf dem Handy wischen.
           </p>
         </RsReveal>
       </div>

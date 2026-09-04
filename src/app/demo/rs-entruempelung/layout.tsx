@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { RsLenis } from "@/components/demo/rs/RsLenis";
 import { RsIntroLoader } from "@/components/demo/rs/RsIntroLoader";
+import { RsNav } from "@/components/demo/rs/RsNav";
 import { RS_CONTACT } from "@/components/demo/rs/rs-contact";
 
 const rsSans = DM_Sans({
@@ -19,7 +20,7 @@ const rsDisplay = Source_Serif_4({
 export const metadata: Metadata = {
   title: `${RS_CONTACT.brand} — ${RS_CONTACT.profession} | Living Demo`,
   description:
-    "White-Label Living Demo: Entrümpelung, Haushaltsauflösung und Umzug — schnell, diskret, zum fairen Festpreis. So kann Ihr Betrieb online wirken.",
+    "Kostenlose Besichtigung in 24–48 Stunden. Festpreis vor dem ersten Karton. Keller ab 189 €, Wohnung ab 490 € — besenreine Übergabe.",
   robots: { index: false, follow: false },
 };
 
@@ -52,14 +53,25 @@ export default function RsDemoLayout({
       }
     >
       <style>{`
-        body:has(.rs-demo) header,
+        body:has(.rs-demo) header:not([data-rs-nav]),
         body:has(.rs-demo) footer,
         body:has(.rs-demo) [data-demo-chat-widget] {
           display: none !important;
         }
+        html:has(.rs-demo) {
+          scroll-padding-top: 4.5rem;
+        }
         .rs-demo {
           font-family: var(--font-rs-sans), system-ui, sans-serif;
           overflow-x: clip;
+        }
+        .rs-pulse {
+          box-shadow: 0 0 0 0 rgba(125, 154, 98, 0.55);
+          animation: rs-pulse 2.4s ease-out infinite;
+        }
+        @keyframes rs-pulse {
+          70% { box-shadow: 0 0 0 8px rgba(125, 154, 98, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(125, 154, 98, 0); }
         }
         .rs-demo h1,
         .rs-demo h2,
@@ -73,6 +85,7 @@ export default function RsDemoLayout({
         }
       `}</style>
       <RsIntroLoader />
+      <RsNav />
       <RsLenis>{children}</RsLenis>
     </div>
   );

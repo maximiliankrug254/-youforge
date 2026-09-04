@@ -7,7 +7,7 @@ export function RsContact() {
   return (
     <section
       id="kontakt"
-      className="relative overflow-hidden bg-[var(--rs-ink)] px-6 py-28 text-[var(--rs-cream)] sm:px-8 lg:py-36"
+      className="relative scroll-mt-20 overflow-hidden bg-[var(--rs-ink)] px-6 py-28 pb-40 text-[var(--rs-cream)] sm:px-8 lg:py-36 lg:pb-36"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(196,163,90,0.14),transparent_55%)]"
@@ -19,11 +19,11 @@ export function RsContact() {
             Kontakt
           </p>
           <h2 className="mt-5 font-[family-name:var(--font-rs-display)] text-[clamp(2rem,5vw,3.2rem)] font-medium leading-tight tracking-[-0.02em]">
-            Kostenlose Besichtigung anfragen
+            Sagen Sie uns, was voll ist.
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-[rgba(245,241,235,0.68)]">
-            Rufen Sie an oder schreiben Sie uns — wir melden uns zeitnah und schauen uns alles in
-            Ruhe vor Ort an.
+            Anruf oder drei Fotos per WhatsApp. Wir sagen, wann wir da sind — {RS_CONTACT.inspection},
+            Besichtigung kostenlos, {RS_CONTACT.hours}.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -31,7 +31,7 @@ export function RsContact() {
               href={`tel:${RS_CONTACT.phoneTel}`}
               className="inline-flex w-full items-center justify-center rounded-full bg-[var(--rs-ochre)] px-8 py-3.5 text-sm font-semibold text-[var(--rs-ink)] transition hover:bg-[var(--rs-ochre-hover)] sm:w-auto"
             >
-              {RS_CONTACT.phoneDisplay} anrufen
+              {RS_CONTACT.phoneDisplay} — wir heben ab
             </a>
             <a
               href={RS_CONTACT.whatsapp}
@@ -39,7 +39,7 @@ export function RsContact() {
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center rounded-full border border-[rgba(245,241,235,0.3)] px-8 py-3.5 text-sm font-semibold transition hover:border-[var(--rs-cream)] hover:bg-[rgba(245,241,235,0.06)] sm:w-auto"
             >
-              WhatsApp schreiben
+              Fotos schicken
             </a>
           </div>
 
