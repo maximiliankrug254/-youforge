@@ -211,6 +211,32 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "vault",
+    title: "VAULT",
+    subtitle: "Single Malt · Speyside",
+    category: "Website · Spirituosen · HUD",
+    status: "live",
+    description:
+      "Premium-Whisky mit drei Reifestufen: 8 Jahre Glut, 12 Jahre Kern, 21 Jahre Tiefe. Dunkles Raster, Clip-Path-Kapitel, Fass-Karussell.",
+    challenge:
+      "Spirituosen-Seiten kippen schnell ins Gold-Barock oder ins Shop-Raster. Ein Haus mit Reifegraden braucht Zeit, nicht Sortiment.",
+    solution:
+      "HUD-One-Pager: Age-Gate, Intro-Wipe, drei Casks als Karussell, Handwerk und Zuteilung. Living Demo, fiktive Destillerie.",
+    result:
+      "Ein Auftritt, der nach Warehouse und Reife riecht — nicht nach Whisky-Shop-Template.",
+    highlights: [
+      "18+ Age-Gate",
+      "Drei Reifestufen (8 / 12 / 21)",
+      "Scroll-Kapitel mit Clip-Path",
+      "Canvas-Fasskugel",
+    ],
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
+    image: "/demo/vault/poster.jpg",
+    href: "/demo/vault",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "syn",
     title: "Pyra",
     subtitle: "Where glam meets grunge",

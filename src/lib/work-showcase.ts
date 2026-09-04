@@ -2,6 +2,12 @@ import type { PortfolioProject } from "@/lib/constants";
 
 /** Eigene Panel-Bilder je Projekt — nie Assets anderer Cases. */
 const EXTRA_PANELS: Record<string, string[]> = {
+  vault: [
+    "/demo/vault/warehouse.jpg",
+    "/demo/vault/bottle-12.jpg",
+    "/demo/vault/stills.jpg",
+    "/demo/vault/casks-row.jpg",
+  ],
   syn: [
     "/demo/syn/street.png",
     "/demo/syn/look-02.png",
