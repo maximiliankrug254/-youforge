@@ -1,5 +1,18 @@
 import type { PortfolioProject } from "@/lib/constants";
 
+/** Nie auf YouForge-Marketingflächen (Home, Arbeiten, Katalog). Demo unter /demo bleibt. */
+export const YOUFORGE_HIDDEN_SLUGS = new Set(["the-german"]);
+
+export function isYouForgePublicProject(project: PortfolioProject): boolean {
+  return !YOUFORGE_HIDDEN_SLUGS.has(project.slug);
+}
+
+export function getPublicPortfolioProjects(
+  projects: PortfolioProject[]
+): PortfolioProject[] {
+  return projects.filter(isYouForgePublicProject);
+}
+
 /** Eigene Panel-Bilder je Projekt — nie Assets anderer Cases. */
 const EXTRA_PANELS: Record<string, string[]> = {
   vault: [
@@ -8,17 +21,17 @@ const EXTRA_PANELS: Record<string, string[]> = {
     "/demo/vault/stills.jpg",
     "/demo/vault/casks-row.jpg",
   ],
-  syn: [
-    "/demo/syn/street.png",
-    "/demo/syn/look-02.png",
-    "/demo/syn/lips.png",
-    "/demo/syn/film.png",
-  ],
   lane: [
     "/demo/lane/hero.jpg",
     "/demo/lane/skewer.jpg",
     "/demo/lane/bar.jpg",
     "/demo/lane/venue.jpg",
+  ],
+  tukan: [
+    "/demo/tukan/jungle-dusk.jpg",
+    "/demo/tukan/popsicle-hero.jpg",
+    "/demo/tukan/bali-pool.jpg",
+    "/demo/tukan/passion-cut.jpg",
   ],
   youforge: ["/portfolio/youforge.png"],
   "salon-website": ["/portfolio/salon-website.png"],
@@ -31,18 +44,13 @@ const EXTRA_PANELS: Record<string, string[]> = {
   "garten-website": ["/portfolio/garten-website.png"],
   "bestattungs-website": ["/portfolio/bestattungs-website.png"],
   "fliesen-website": ["/portfolio/fliesen-website.png"],
-  "the-german": [
-    "/demo/the-german/images/home/hero.jpg",
-    "/demo/the-german/images/home/clinic.jpg",
-    "/demo/the-german/images/about/clinic.jpg",
-    "/demo/the-german/images/home/cover-03.jpg",
-  ],
   "handwerk-website": ["/portfolio/handwerk-website.png"],
   "studio-website": ["/portfolio/studio-website.png"],
   "saas-landing": ["/portfolio/saas-landing.png"],
   "client-hub": ["/portfolio/client-hub.png"],
   "kunden-portal": ["/portfolio/kunden-portal.png"],
   "rechnungs-app": [
+    "/portfolio/rechnungs-app-website.png",
     "/portfolio/rechnungs-app-preview.png",
     "/portfolio/rechnungs-app.png",
   ],
@@ -52,14 +60,20 @@ const EXTRA_PANELS: Record<string, string[]> = {
   "ki-studio": ["/portfolio/ki-studio.png"],
 };
 
-/** Diese Demos immer früh in der Showcase zeigen. */
-const PRIORITY_SLUGS = [
-  "syn",
-  "salon-website",
-  "garten-website",
-  "bestattungs-website",
-  "fliesen-website",
+/** Arbeiten-Showcase: wenige Website-Cases, Rest Produkte/Apps — Living-Demos leben im Katalog. */
+const SHOWCASE_MIX_ORDER = [
+  "lane",
+  "rechnungs-app",
+  "kunden-portal",
+  "coaching-website",
+  "ki-studio",
+  "rechnungs-landing",
+  "youforge",
+  "ki-bildproduktion",
 ] as const;
+
+/** Homepage-Teaser: bewusste Kachel statt erstes featured. */
+export const HOMEPAGE_FEATURED_SLUG = "lane";
 
 export type PanelLayout = {
   src: string;
@@ -92,18 +106,22 @@ function uniquePreserveOrder(paths: string[]): string[] {
 
 export function getLiveShowcaseProjects(
   projects: PortfolioProject[],
-  max = 14
+  max = 8
 ): PortfolioProject[] {
-  const live = projects.filter((p) => p.status === "live");
-  const featured = live.filter((p) => p.featured);
-  const priority = PRIORITY_SLUGS.map((slug) =>
-    live.find((p) => p.slug === slug && !p.featured)
-  ).filter((p): p is PortfolioProject => Boolean(p));
-  const prioritySet = new Set(priority.map((p) => p.slug));
-  const rest = live.filter(
-    (p) => !p.featured && !prioritySet.has(p.slug)
+  const live = projects.filter(
+    (p) => p.status === "live" && isYouForgePublicProject(p)
   );
-  return [...featured, ...priority, ...rest].slice(0, max);
+  const bySlug = new Map(live.map((p) => [p.slug, p]));
+  const ordered: PortfolioProject[] = [];
+
+  for (const slug of SHOWCASE_MIX_ORDER) {
+    const project = bySlug.get(slug);
+    if (!project) continue;
+    ordered.push(project);
+    if (ordered.length >= max) return ordered;
+  }
+
+  return ordered;
 }
 
 function panelsFromSources(sources: string[]): PanelLayout[] {

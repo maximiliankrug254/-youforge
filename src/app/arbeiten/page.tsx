@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { WorkDiveShowcase } from "@/components/portfolio/WorkDiveShowcase";
 import { portfolioProjects } from "@/lib/constants";
+import { getPublicPortfolioProjects } from "@/lib/work-showcase";
 
 export const metadata: Metadata = {
   title: "Arbeiten",
@@ -9,5 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function ArbeitenPage() {
-  return <WorkDiveShowcase projects={portfolioProjects} />;
+  const projects = getPublicPortfolioProjects(portfolioProjects);
+  return <WorkDiveShowcase projects={projects} />;
 }

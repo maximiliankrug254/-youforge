@@ -22,7 +22,7 @@ type WorkDiveShowcaseProps = {
 };
 
 export function WorkDiveShowcase({ projects }: WorkDiveShowcaseProps) {
-  const live = useMemo(() => getLiveShowcaseProjects(projects, 12), [projects]);
+  const live = useMemo(() => getLiveShowcaseProjects(projects, 8), [projects]);
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -31,9 +31,9 @@ export function WorkDiveShowcase({ projects }: WorkDiveShowcaseProps) {
     offset: ["start start", "end end"],
   });
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 36,
-    damping: 34,
-    mass: 0.6,
+    stiffness: 48,
+    damping: 32,
+    mass: 0.5,
   });
 
   // Kurzes Intro, dann moderate Projekt-Segmente
@@ -41,15 +41,15 @@ export function WorkDiveShowcase({ projects }: WorkDiveShowcaseProps) {
   const ctaStart = 0.91;
   const projectSpan = (ctaStart - introEnd) / Math.max(live.length, 1);
 
-  const vh = 130 + live.length * 145 + 130;
+  const vh = 110 + live.length * 120 + 110;
 
   return (
     <ReactLenis
       root
       options={{
-        lerp: reduceMotion ? 1 : 0.04,
+        lerp: reduceMotion ? 1 : 0.07,
         smoothWheel: !reduceMotion,
-        wheelMultiplier: reduceMotion ? 1 : 0.62,
+        wheelMultiplier: reduceMotion ? 1 : 0.88,
       }}
     >
       <div
@@ -225,20 +225,20 @@ function ProjectPlane({
               {project.title}
             </span>
           </div>
-          <div className="relative aspect-[16/10] overflow-hidden">
+          <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0a0a]">
             {project.image ? (
               <Image
                 src={project.image}
                 alt={`Website-Vorschau: ${project.title}`}
                 fill
-                className="object-cover object-top"
+                className="object-contain"
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 priority={index < 2}
+                quality={92}
               />
             ) : (
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-black" />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
           </div>
         </div>
 

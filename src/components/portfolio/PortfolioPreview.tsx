@@ -13,8 +13,9 @@ export function PortfolioPreview({ title, image }: PortfolioPreviewProps) {
           src={image}
           alt={title ? `Screenshot: ${title}` : "Projekt-Vorschau"}
           fill
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          className="object-contain transition-opacity duration-500 group-hover:opacity-95"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+          quality={90}
         />
         <div
           className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/5"

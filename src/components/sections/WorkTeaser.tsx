@@ -4,10 +4,20 @@ import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
 import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { portfolioProjects } from "@/lib/constants";
+import {
+  getLiveShowcaseProjects,
+  getPublicPortfolioProjects,
+  HOMEPAGE_FEATURED_SLUG,
+} from "@/lib/work-showcase";
 
 export function WorkTeaser() {
-  const featured = portfolioProjects.find((p) => p.featured && p.status === "live");
-  const liveCount = portfolioProjects.filter((p) => p.status === "live").length;
+  const publicWork = getPublicPortfolioProjects(portfolioProjects);
+  const showcase = getLiveShowcaseProjects(publicWork);
+  const featured =
+    publicWork.find(
+      (p) => p.slug === HOMEPAGE_FEATURED_SLUG && p.status === "live"
+    ) ?? publicWork.find((p) => p.featured && p.status === "live");
+  const liveCount = showcase.length;
 
   return (
     <section className="border-t border-border px-6 py-32 lg:px-8">
