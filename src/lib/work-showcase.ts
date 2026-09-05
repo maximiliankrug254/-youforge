@@ -60,12 +60,15 @@ const EXTRA_PANELS: Record<string, string[]> = {
   "ki-studio": ["/portfolio/ki-studio.png"],
 };
 
-/** Arbeiten-Showcase: wenige Website-Cases, Rest Produkte/Apps — Living-Demos leben im Katalog. */
+/** Arbeiten-Showcase: gemischt Website / Produkt / App — Living-Demos leben im Katalog. */
 const SHOWCASE_MIX_ORDER = [
   "lane",
   "rechnungs-app",
+  "garten-website",
   "kunden-portal",
+  "fliesen-website",
   "coaching-website",
+  "client-hub",
   "ki-studio",
   "rechnungs-landing",
   "youforge",
@@ -106,7 +109,7 @@ function uniquePreserveOrder(paths: string[]): string[] {
 
 export function getLiveShowcaseProjects(
   projects: PortfolioProject[],
-  max = 8
+  max = 11
 ): PortfolioProject[] {
   const live = projects.filter(
     (p) => p.status === "live" && isYouForgePublicProject(p)

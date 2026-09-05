@@ -22,7 +22,7 @@ type WorkDiveShowcaseProps = {
 };
 
 export function WorkDiveShowcase({ projects }: WorkDiveShowcaseProps) {
-  const live = useMemo(() => getLiveShowcaseProjects(projects, 8), [projects]);
+  const live = useMemo(() => getLiveShowcaseProjects(projects), [projects]);
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
 
