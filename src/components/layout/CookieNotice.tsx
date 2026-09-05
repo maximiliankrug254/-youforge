@@ -27,14 +27,16 @@ export function CookieNotice() {
       className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-2xl rounded-2xl border border-border bg-background/95 p-4 shadow-lg backdrop-blur-sm sm:inset-x-6 sm:p-5"
     >
       <p className="text-sm leading-relaxed text-muted">
-        Wir nutzen{" "}
-        <span className="text-foreground">Vercel Analytics</span> ohne Cookies.
         Beim Klick auf{" "}
-        <span className="text-foreground">Termin buchen</span> öffnet sich Calendly
-        — dort können Cookies gesetzt werden.{" "}
-        <Link href="/datenschutz" className="text-accent underline-offset-2 hover:underline">
+        <span className="text-foreground">Termin buchen</span> öffnet sich
+        Calendly — dort können Cookies gesetzt werden. Details:{" "}
+        <Link
+          href="/datenschutz"
+          className="text-accent underline-offset-2 hover:underline"
+        >
           Datenschutz
         </Link>
+        .
       </p>
       <button
         type="button"

@@ -49,6 +49,12 @@ export function Footer() {
             Impressum
           </Link>
           <Link
+            href="/agb"
+            className="font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-foreground"
+          >
+            AGB
+          </Link>
+          <Link
             href="/datenschutz"
             className="font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-foreground"
           >

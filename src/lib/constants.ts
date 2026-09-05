@@ -13,7 +13,8 @@ export const legalConfig = {
   street: "30 N Gould St Ste N",
   cityLine: "Sheridan, WY 82801",
   country: "USA",
-  asOf: "Juli 2026",
+  ein: "38-4371876",
+  asOf: "September 2026",
 };
 
 export const navLinks = [

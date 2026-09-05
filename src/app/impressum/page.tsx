@@ -18,7 +18,7 @@ export default function ImpressumPage() {
         <section className="mt-12 space-y-8 text-muted">
           <div>
             <h2 className="text-lg font-semibold text-foreground">
-              Angaben gemäß § 5 TMG
+              Angaben gemäß § 5 TMG / DDG
             </h2>
             <p className="mt-2">
               {legalConfig.company}
@@ -35,10 +35,20 @@ export default function ImpressumPage() {
             <h2 className="text-lg font-semibold text-foreground">Kontakt</h2>
             <p className="mt-2">
               E-Mail:{" "}
-              <a href={`mailto:${siteConfig.email}`} className="text-accent hover:underline">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-accent hover:underline"
+              >
                 {siteConfig.email}
               </a>
             </p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">
+              Steuernummer / EIN
+            </h2>
+            <p className="mt-2">{legalConfig.ein}</p>
           </div>
 
           <div>

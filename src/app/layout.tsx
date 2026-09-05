@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { DemoChatProvider } from "@/components/chat/DemoChatProvider";
 import { ClientEffects } from "@/components/layout/ClientEffects";
@@ -68,10 +67,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="dns-prefetch" href="https://calendly.com" />
-        <link rel="preconnect" href="https://calendly.com" crossOrigin="anonymous" />
-      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider>
           <DemoChatProvider>
@@ -81,7 +76,6 @@ export default function RootLayout({
             <Footer />
           </DemoChatProvider>
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );

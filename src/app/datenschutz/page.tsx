@@ -36,6 +36,11 @@ export default function DatenschutzPage() {
                 {siteConfig.email}
               </a>
             </p>
+            <p className="mt-4 text-sm leading-relaxed">
+              Der Verantwortliche hat keine Niederlassung in der Europäischen
+              Union. Ein EU-Vertreter nach Art. 27 DSGVO ist in Klärung bzw. noch
+              nicht bestellt.
+            </p>
           </div>
 
           <div>
@@ -250,25 +255,12 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-foreground">9. Vercel Analytics</h2>
+            <h2 className="text-lg font-semibold text-foreground">
+              9. Kein Reichweiten-Tracking
+            </h2>
             <p className="mt-2 text-sm leading-relaxed">
-              Wir nutzen Vercel Analytics, um die Nutzung unserer Website in
-              aggregierter Form auszuwerten. Dabei werden keine Cookies gesetzt und
-              keine personenbezogenen Profile erstellt. Die Verarbeitung erfolgt auf
-              Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der
-              technischen Optimierung unseres Webauftritts).
-            </p>
-            <p className="mt-2 text-sm leading-relaxed">
-              Weitere Informationen finden Sie in der Datenschutzerklärung von{" "}
-              <a
-                href="https://vercel.com/legal/privacy-policy"
-                className={linkClass}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Vercel
-              </a>
-              .
+              Es wird derzeit kein Reichweiten-Tracking und keine Vercel Analytics
+              eingesetzt.
             </p>
           </div>
 
@@ -322,7 +314,7 @@ export default function DatenschutzPage() {
               Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie
               stets den aktuellen rechtlichen Anforderungen entspricht oder Änderungen
               unserer Leistungen bzw. der eingesetzten Technologien abbildet. Für Ihren
-              erneuten Besuch gilt dann die jeweils aktuelle Fassung.
+              erneuten Besuch gilt dann die jeweilige aktuelle Fassung.
             </p>
           </div>
         </section>
