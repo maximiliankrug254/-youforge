@@ -18,6 +18,7 @@ export const legalConfig = {
 
 export const navLinks = [
   { href: "/leistungen", label: "Leistungen" },
+  { href: "/katalog", label: "Katalog" },
   { href: "/arbeiten", label: "Arbeiten" },
   { href: "/kontakt", label: "Kontakt" },
 ];
@@ -202,7 +203,6 @@ export type PortfolioProject = {
   solution: string;
   result: string;
   highlights: string[];
-  tech: string[];
   href?: string;
   image?: string;
   featured: boolean;
@@ -210,6 +210,56 @@ export type PortfolioProject = {
 };
 
 export const portfolioProjects: PortfolioProject[] = [
+  {
+    slug: "syn",
+    title: "Pyra",
+    subtitle: "Where glam meets grunge",
+    category: "Website · Fashion · E-Commerce",
+    status: "live",
+    description:
+      "Rekonstruktion einer Awwwards-Fashion-Site: Preloader, Riss, Custom Cursor, Drag-Arrivals, Overlay-Drawer, Signalrot auf Schwarz.",
+    challenge:
+      "Die Referenz lebt von Motion und Attitude — nicht von einem stillen Wintergarten.",
+    solution:
+      "Gleiche Maschine: Prozent-Preloader, Mix-Blend-Header, DRAG CLICK, Lippen-Maske, Bag-Drawer. Living Demo.",
+    result:
+      "Ein Shop, der schlägt — nicht ein Moodboard.",
+    highlights: [
+      "Preloader 01–100%",
+      "Custom Cursor + Drag-Rails",
+      "Overlay Menu / Bag / Search",
+      "Hover-Swap Produktkarten",
+    ],
+    image: "/demo/syn/street.png",
+    href: "/demo/syn",
+    featured: true,
+    year: "2026",
+  },
+  {
+    slug: "pomeranze",
+    title: "Pomeranze",
+    subtitle: "Wintergarten für Tafel und Glas",
+    category: "Website · Manufaktur · Shop",
+    status: "live",
+    description:
+      "Heller Wintergarten-Shop: Bitterorangen, Leinen, Glas. Stillleben statt Nacht, Tablett statt Warenkorb, Fokus statt Reißnaht.",
+    challenge:
+      "Fashion-E-Commerce auf Awwwards-Niveau kippt schnell in Latex, Rot und Custom-Cursor. Ein Manufaktur-Tisch braucht dieselbe Sorgfalt — und eine eigene Welt.",
+    solution:
+      "Fiktives Haus in Lindenwerder: Fraunces, Glaslicht, Stillleben mit Hover-Zweitbild, Katalog und PDP, Tablett von unten. Living Demo.",
+    result:
+      "Ein Shop, der nach Wintergarten riecht — nicht nach Club, nicht nach Template.",
+    highlights: [
+      "Glas-Fokus statt Paper-Tear",
+      "Tablett-Warenkorb von unten",
+      "Stillleben-PDP mit Lagerzahl",
+      "Besuch mit Tisch (8 Plätze)",
+    ],
+    image: "/portfolio/pomeranze-website.png",
+    href: "/demo/pomeranze",
+    featured: false,
+    year: "2026",
+  },
   {
     slug: "vault",
     title: "VAULT",
@@ -230,35 +280,8 @@ export const portfolioProjects: PortfolioProject[] = [
       "Scroll-Kapitel mit Clip-Path",
       "Canvas-Fasskugel",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
     image: "/demo/vault/poster.jpg",
     href: "/demo/vault",
-    featured: true,
-    year: "2026",
-  },
-  {
-    slug: "syn",
-    title: "Pyra",
-    subtitle: "Where glam meets grunge",
-    category: "Website · Fashion · E-Commerce",
-    status: "live",
-    description:
-      "Fashion-E-Commerce mit Preloader, Riss, Custom Cursor, Drag-Arrivals und Overlay-Drawern. Signalrot auf Schwarz.",
-    challenge:
-      "Eine Fashion-Site braucht Bewegung, Emotion und Power — nicht ein stilles Moodboard.",
-    solution:
-      "Prozent-Preloader, Mix-Blend-Header, DRAG CLICK, Lippen-Maske, Bag-Drawer. Living Demo.",
-    result:
-      "Ein Shop, der schlägt.",
-    highlights: [
-      "Preloader 01–100%",
-      "Custom Cursor + Drag-Rails",
-      "Overlay Menu / Bag / Search",
-      "Hover-Swap Produktkarten",
-    ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
-    image: "/demo/syn/street.png",
-    href: "/demo/syn",
     featured: true,
     year: "2026",
   },
@@ -277,14 +300,38 @@ export const portfolioProjects: PortfolioProject[] = [
     result:
       "Ein Auftritt, der nach Mitternacht und nach Grill aussieht — nicht nach Avocado.",
     highlights: [
-      "Horizontaler Lenis-Scroll",
+      "Horizontaler Kapitel-Scroll",
       "Glut-Cursor mit Hitze-Trail",
       "Rauch-Simulation in der Bar",
       "Reservierungs-Kapitel",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
     image: "/portfolio/lane-website.png",
     href: "/demo/lane",
+    featured: true,
+    year: "2026",
+  },
+  {
+    slug: "tukan",
+    title: "TUKAN",
+    subtitle: "Maracuja Protein-Eis",
+    category: "Website · Food · Onepager",
+    status: "live",
+    description:
+      "Tropischer Launch-Onepager: Maracuja-Protein-Eis am Stiel, 0 g Zucker, 14 g Protein, Bali-Licht und Glas-Hero.",
+    challenge:
+      "Ein neues Eis braucht mehr als ein Packshot. Protein und Zero Sugar klingen nach Diät — das Produkt will nach Urlaub schmecken.",
+    solution:
+      "Glas-UI über Dschungel, Tukan-Marke, harte Nährwerte und ein 4er-Pack für 9,90 €. Living Demo, fiktive Marke.",
+    result:
+      "In zehn Sekunden klar: was es ist, was drin ist, was es kostet, wie man bestellt.",
+    highlights: [
+      "Glas-Hero mit Produktkomposition",
+      "14 g Protein / 0 g Zucker als Leitwerte",
+      "Bali-Kapitel + Kühlversand-Bestellung",
+      "Sticky CTA auf Mobile",
+    ],
+    image: "/demo/tukan/popsicle-hero.jpg",
+    href: "/demo/tukan",
     featured: true,
     year: "2026",
   },
@@ -299,7 +346,7 @@ export const portfolioProjects: PortfolioProject[] = [
     challenge:
       "Manufakturen sterben online im Raster: Produktfotos, Filter, Warenkorb. Wer Unikate baut, braucht eine Seite, die sich anfühlt wie die Werkstatt.",
     solution:
-      "Zwei Farben, Display-Serif, generative Strich-Grafik, Lenis-Scroll, Ofenklang und Kapitel statt Katalog — gebaut als Living Demo auf Signature-Niveau.",
+      "Zwei Farben, Display-Serif, generative Strich-Grafik, Kapitel-Scroll, Ofenklang und Kapitel statt Katalog — gebaut als Living Demo auf Signature-Niveau.",
     result:
       "Ein Unikat-Auftritt: Besucher verstehen Material, Zeit und Haltung, bevor sie eine Zahl sehen.",
     highlights: [
@@ -308,7 +355,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Ofentour + Ambient-Klang",
       "Stücke ohne Shop-Logik",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis", "Canvas"],
     image: "/demo/ast-asche/hero.jpg",
     href: "/demo/ast-asche",
     featured: true,
@@ -334,7 +380,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Conversion zu Termin & Anfrage",
       "Mobile Sticky CTA",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion"],
     image: "/portfolio/salon-website.png",
     href: "/demo/aurea",
     featured: true,
@@ -360,7 +405,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Preise, Zeiten, vier Stühle",
       "Mobile Sticky CTA",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion", "Lenis"],
     image: "/demo/wolff/00-hero.jpg",
     href: "/demo/wolff",
     featured: true,
@@ -386,7 +430,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Lokaler Vertrauensaufbau",
       "Direkte Anfrage-Conversion",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion"],
     image: "/portfolio/garten-website.png",
     href: "/demo/garten",
     featured: false,
@@ -412,7 +455,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "24/7-Erreichbarkeit im Fokus",
       "Ruhige Typografie & Motion",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion"],
     image: "/portfolio/bestattungs-website.png",
     href: "/demo/bestattung",
     featured: false,
@@ -438,7 +480,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Meister-Positionierung",
       "Sticky Call-CTA",
     ],
-    tech: ["Next.js", "TypeScript", "Framer Motion"],
     image: "/portfolio/fliesen-website.png",
     href: "/demo/fliesen",
     featured: false,
@@ -464,7 +505,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Dark/Light Mode",
       "Scroll-Animationen & Wireframe-Hero",
     ],
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     image: "/portfolio/youforge.png",
     href: "/",
     featured: false,
@@ -490,8 +530,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "Kein Abo-Modell",
       "Lokale Datenverarbeitung",
     ],
-    tech: ["HTML", "JavaScript", "PDF-Export"],
-    image: "/portfolio/rechnungs-app-preview.png",
+    image: "/portfolio/rechnungs-app-website.png",
     featured: false,
     year: "2026",
   },
@@ -515,7 +554,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Conversion-orientiert",
       "Mobile-first Design",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/rechnungs-landing.png",
     href: "https://rechnungdesk.netlify.app",
     featured: false,
@@ -541,7 +579,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Mobile-first Design",
       "Vertrauensaufbau durch Storytelling",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/coaching-website.png",
     featured: false,
     year: "2026",
@@ -553,20 +590,19 @@ export const portfolioProjects: PortfolioProject[] = [
     category: "Web-App · Backend",
     status: "live",
     description:
-      "Next.js Web-App mit Benutzer-Login, Datenbank-Anbindung und interaktivem Dashboard für ein Beratungsunternehmen.",
+      "Web-App mit Benutzer-Login, Datenbank-Anbindung und interaktivem Dashboard für ein Beratungsunternehmen.",
     challenge:
       "Ein wachsendes Beratungsbusiness braucht mehr als eine statische Website — Kunden und Inhalte müssen digital verwaltet werden.",
     solution:
-      "Moderne Web-App mit Supabase-Backend, Authentifizierung und skalierbarer Architektur.",
+      "Moderne Web-App mit sicherem Backend, Authentifizierung und skalierbarer Architektur.",
     result:
       "Digitale Plattform statt Zettelwirtschaft — bereit für Wachstum.",
     highlights: [
       "Login & Authentifizierung",
-      "Supabase-Datenbank",
+      "Zentrale Kundendatenbank",
       "Responsive Dashboard",
       "Skalierbare Architektur",
     ],
-    tech: ["Next.js", "Supabase", "Tailwind CSS"],
     image: "/portfolio/kunden-portal.png",
     featured: false,
     year: "2026",
@@ -591,7 +627,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Qualitäts-Checklisten",
       "LinkedIn & Instagram Fokus",
     ],
-    tech: ["HTML", "JavaScript", "KI-Workflow"],
     image: "/portfolio/ki-bildproduktion.png",
     featured: false,
     year: "2026",
@@ -603,7 +638,7 @@ export const portfolioProjects: PortfolioProject[] = [
     category: "KI · Web-App",
     status: "live",
     description:
-      "Lokale Mini-App: Prompt-Vorlagen, Referenzbilder und KI-gestützte Bild-Erzeugung über eine Gemini-API.",
+      "Lokale Mini-App: Prompt-Vorlagen, Referenzbilder und KI-gestützte Bild-Erzeugung über eine Bild-API.",
     challenge:
       "KI-Bilder brauchen gute Prompts und Referenzen — das soll nicht jedes Mal bei null starten.",
     solution:
@@ -611,12 +646,11 @@ export const portfolioProjects: PortfolioProject[] = [
     result:
       "Wiederholbarer KI-Workflow — von der Idee zum Bild in Minuten.",
     highlights: [
-      "Gemini API Integration",
+      "KI-Bild-API angebunden",
       "Prompt-Vorlagen",
       "Referenzbilder",
       "Lokales Studio-Interface",
     ],
-    tech: ["Node.js", "Gemini API", "HTML/CSS"],
     image: "/portfolio/ki-studio.png",
     featured: false,
     year: "2026",
@@ -641,7 +675,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Große Display-Typografie",
       "Conversion-starke CTAs",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/handwerk-website.png",
     href: "/showcase/handwerk-premium.html",
     featured: false,
@@ -667,7 +700,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Asymmetrisches Grid-Layout",
       "Subtile Micro-Animationen",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/studio-website.png",
     href: "/showcase/studio-editorial.html",
     featured: false,
@@ -693,7 +725,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Social Proof & Trust-Bar",
       "Conversion-Funnel optimiert",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/saas-landing.png",
     href: "/showcase/saas-launch.html",
     featured: false,
@@ -719,7 +750,6 @@ export const portfolioProjects: PortfolioProject[] = [
       "Kunden- & Projektübersicht",
       "Activity Timeline",
     ],
-    tech: ["HTML", "CSS", "JavaScript"],
     image: "/portfolio/client-hub.png",
     href: "/showcase/client-hub.html",
     featured: false,
@@ -736,7 +766,6 @@ export const portfolioProjects: PortfolioProject[] = [
     solution: "",
     result: "",
     highlights: [],
-    tech: [],
     featured: false,
     year: "2026",
   },

@@ -58,16 +58,6 @@ export function PortfolioCard({
         >
           {project.description}
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.tech.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
       </div>
     </article>
   );

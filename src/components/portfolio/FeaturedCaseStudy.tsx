@@ -50,16 +50,6 @@ export function FeaturedCaseStudy({ project }: { project: PortfolioProject }) {
 
           <div className="lg:sticky lg:top-24 lg:self-start">
             <PortfolioPreview title={project.title} image={project.image} />
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-border px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-muted"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
