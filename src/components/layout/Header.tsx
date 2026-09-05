@@ -47,12 +47,17 @@ export function Header() {
           {siteConfig.name}
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-foreground"
+              className={cn(
+                "font-mono text-xs uppercase tracking-wider transition-colors",
+                link.href === "/katalog"
+                  ? "text-accent hover:text-accent-hover"
+                  : "text-muted hover:text-foreground"
+              )}
             >
               {link.label}
             </Link>
@@ -92,7 +97,10 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-mono text-sm uppercase tracking-wider text-muted"
+                className={cn(
+                  "font-mono text-sm uppercase tracking-wider",
+                  link.href === "/katalog" ? "text-accent" : "text-muted"
+                )}
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}

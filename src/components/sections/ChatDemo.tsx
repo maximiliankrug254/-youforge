@@ -66,7 +66,7 @@ export function ChatDemo() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <FadeIn className="mb-14 text-center lg:mb-16">
           <SectionLabel
-            number="07"
+            number="08"
             title="KI · AUTOMATISIERUNG"
             align="center"
             className="text-white/45"

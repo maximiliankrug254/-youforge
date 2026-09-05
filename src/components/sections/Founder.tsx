@@ -19,15 +19,15 @@ export function Founder() {
     >
       <div className="mx-auto max-w-7xl">
         <FadeIn>
-          <SectionLabel number="08" title="GRÜNDER" />
-          <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          <SectionLabel number="09" title="GRÜNDER" className="text-sm" />
+          <h2 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
             Ich bin {siteConfig.founder}.
           </h2>
         </FadeIn>
 
-        <div className="mt-16 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
-          <FadeIn>
-            <div className="group relative mx-auto w-full max-w-[28rem] lg:mx-0 lg:max-w-none">
+        <div className="mt-16 flex flex-col items-center gap-10 lg:flex-row lg:items-start lg:gap-12 xl:gap-14">
+          <FadeIn className="w-full max-w-[20rem] shrink-0 sm:max-w-[22rem] lg:w-[22rem]">
+            <div className="group relative mx-auto w-full lg:mx-0">
               <div
                 className="pointer-events-none absolute -right-6 top-10 h-40 w-40 rounded-full bg-accent/15 blur-3xl transition-opacity duration-500 group-hover:opacity-90 sm:h-56 sm:w-56"
                 aria-hidden
@@ -39,9 +39,9 @@ export function Founder() {
                     src="/team/founder.jpg"
                     alt={`${siteConfig.founder} — Gründer von YouForge`}
                     fill
-                    quality={92}
-                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 60vw, 720px"
-                    className="object-cover object-[center_18%] transition duration-700 group-hover:scale-[1.02]"
+                    quality={95}
+                    sizes="(max-width: 640px) 80vw, 352px"
+                    className="object-cover object-[center_18%]"
                   />
                   <div
                     className="absolute inset-0 origin-right transition-[clip-path] duration-700 ease-[cubic-bezier(0.21,0.47,0.32,0.98)] [clip-path:polygon(100%_0,100%_0,100%_100%,100%_100%)] group-hover:[clip-path:polygon(52%_0,100%_0,100%_100%,38%_100%)] motion-reduce:transition-none"
@@ -64,7 +64,7 @@ export function Founder() {
                     aria-hidden
                   />
                 </div>
-                <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                <figcaption className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-muted">
                   Foto · {siteConfig.founder}
                   <span className="hidden sm:inline">
                     {" "}
@@ -93,47 +93,44 @@ export function Founder() {
               </figure>
             </div>
 
-            <p className="mt-8 max-w-xs font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted/70">
+            <p className="mt-8 max-w-xs font-mono text-xs uppercase leading-relaxed tracking-[0.18em] text-muted/70">
               Links der, mit dem du sprichst. Rechts das, was ich baue.
             </p>
-            <AiContentLabel className="mt-2 text-muted/60">
+            <AiContentLabel className="mt-2 text-[11px] text-muted/60">
               Illustration · KI-generiert
             </AiContentLabel>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <p className="text-lg leading-relaxed text-foreground/90 sm:text-xl">
+          <FadeIn delay={0.1} className="w-full min-w-0 max-w-xl lg:max-w-2xl">
+            <p className="text-xl leading-snug text-foreground/90 sm:text-2xl">
               YouForge ist kein anonymes Studio. Ich bin {siteConfig.founder}.
             </p>
-            <p className="mt-5 max-w-md text-muted leading-relaxed">
+            <p className="mt-5 text-lg text-muted leading-relaxed">
               Ich baue digitale Auftritte für Betriebe, die zu gut sind für eine
               Website, die nach 2014 aussieht — und zu beschäftigt, um sich
-              selbst drum zu kümmern.
+              selbst drum zu kümmern. Schmieden heißt: zuhören, klar denken,
+              dann bauen.
             </p>
-            <p className="mt-5 max-w-md text-foreground/80 leading-relaxed">
-              Ich mag Betriebe, die anpacken — und Websites, die das auch tun.
-            </p>
-            <p className="mt-5 max-w-md text-muted leading-relaxed">
-              Schmieden heißt hier: zuhören, klar denken, dann bauen. Du
-              sprichst mit dem, der die Seite macht. Nicht mit einer
+            <p className="mt-4 text-lg text-foreground/80 leading-relaxed">
+              Du sprichst mit dem, der die Seite macht. Nicht mit einer
               Folien-Agentur.
             </p>
-            <p className="mt-6 font-mono text-xs uppercase tracking-[0.16em] text-accent">
+            <p className="mt-5 font-mono text-sm uppercase tracking-[0.16em] text-accent">
               Ein Ansprechpartner. Von Briefing bis Launch.
             </p>
 
-            <ul className="mt-8 flex flex-wrap gap-2">
+            <ul className="mt-6 flex flex-wrap gap-2">
               {trustChips.map((chip) => (
                 <li
                   key={chip}
-                  className="rounded-full border border-border bg-surface/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted"
+                  className="rounded-full border border-border bg-surface/50 px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-muted"
                 >
                   {chip}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
               <Button href={siteConfig.calendly} size="lg">
                 Lass uns reden →
               </Button>
