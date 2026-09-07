@@ -42,6 +42,16 @@ export const catalogStyles: CatalogStyle[] = [
     height: 1125,
   },
   {
+    slug: "tukan",
+    industry: "Food",
+    title: "Protein-Eis",
+    line: "Maracuja, 0 g Zucker, 14 g Protein.",
+    href: "/demo/tukan",
+    image: "/demo/tukan/jungle-dusk.jpg",
+    width: 1920,
+    height: 1080,
+  },
+  {
     slug: "ast-asche",
     industry: "Manufaktur",
     title: "Holz & Ton",
