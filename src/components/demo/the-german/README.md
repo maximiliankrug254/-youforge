@@ -3,6 +3,8 @@
 Produktionsreife Neuumsetzung der Klinik-Website [the-german.clinic](https://www.the-german.clinic/).  
 Living Demo in YouForge: `/demo/the-german`
 
+**Status:** aktuell **offline** (`GERMAN_DEMO_LIVE = false` + Redirects in `next.config.ts`). Code und Assets bleiben. Wieder online: Flag auf `true`, Offline-Redirect-Block entfernen, deployen.
+
 Alle Texte, Namen, Preise (PDFs), Bilder und Kontaktdaten stammen von der Live-Quelle. Es wurden keine medizinischen Claims, Ärzte, Preise oder Leistungen erfunden.
 
 ## 1. Installieren

@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import { Cormorant_Garamond, Poppins } from "next/font/google";
-import { germanAsset } from "@/components/demo/the-german/german-config";
+import {
+  GERMAN_DEMO_LIVE,
+  germanAsset,
+} from "@/components/demo/the-german/german-config";
 import { GERMAN_SEO } from "@/components/demo/the-german/german-content";
 import { GermanFooter } from "@/components/demo/the-german/GermanFooter";
 import { GermanHeader } from "@/components/demo/the-german/GermanHeader";
@@ -50,6 +54,8 @@ export default function TheGermanLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (!GERMAN_DEMO_LIVE) notFound();
+
   return (
     <>
       <link rel="stylesheet" href="https://use.typekit.net/ung5hcx.css" />

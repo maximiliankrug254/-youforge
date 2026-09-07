@@ -3,45 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // THE GERMAN offline — Code bleibt. Online: Block entfernen + GERMAN_DEMO_LIVE = true
       {
-        source: "/demo/the-german/index.html",
-        destination: "/demo/the-german",
-        permanent: true,
+        source: "/demo/the-german",
+        destination: "/404",
+        permanent: false,
       },
       {
-        source: "/demo/the-german/dental-care-bali.html",
-        destination: "/demo/the-german/dental-care-bali",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/orthodontics-bali.html",
-        destination: "/demo/the-german/orthodontics-bali",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/skin-aesthetics-dermatology-bali.html",
-        destination: "/demo/the-german/skin-aesthetics-dermatology-bali",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/skin-aesthetics-bali.html",
-        destination: "/demo/the-german/skin-aesthetics-dermatology-bali",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/technology.html",
-        destination: "/demo/the-german/technology",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/about-us.html",
-        destination: "/demo/the-german/about-us",
-        permanent: true,
-      },
-      {
-        source: "/demo/the-german/home-1.html",
-        destination: "/demo/the-german",
-        permanent: true,
+        source: "/demo/the-german/:path*",
+        destination: "/404",
+        permanent: false,
       },
       // Alte Client-Assets der Garten-Demo — nie wieder ausliefern
       {

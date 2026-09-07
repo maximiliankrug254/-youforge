@@ -1,7 +1,13 @@
 /**
  * THE GERMAN – Dental & Skin Aesthetics
  * Zentrale Klinik-Konfiguration. Kontakt, URLs und Analytics nur hier ändern.
+ *
+ * Öffentlich online: `GERMAN_DEMO_LIVE = true` und Offline-Redirects in
+ * `next.config.ts` entfernen (Kommentar „THE GERMAN offline“).
  */
+
+/** false = Routen liefern 404, Code & Assets bleiben im Repo. */
+export const GERMAN_DEMO_LIVE = false;
 
 export const GERMAN_BASE = "/demo/the-german";
 export const GERMAN_ASSETS = `${GERMAN_BASE}/images`;
