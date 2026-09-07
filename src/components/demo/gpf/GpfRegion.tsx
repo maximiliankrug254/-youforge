@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { GpfReveal } from "@/components/demo/gpf/GpfReveal";
 import { GPF_CONTACT } from "@/components/demo/gpf/gpf-contact";
-import { GPF_REGION, GPF_IMG } from "@/components/demo/gpf/gpf-content";
+import { GPF_REGION } from "@/components/demo/gpf/gpf-content";
 import { GPF_DEMO, GPF_VARS, gpfFill } from "@/components/demo/gpf/gpf-config";
 
 const { region } = GPF_DEMO;
@@ -12,6 +11,7 @@ export function GpfRegion() {
   const regionText = gpfFill(region.text, GPF_VARS);
   const travelNote = gpfFill(region.travelNote, GPF_VARS);
   const mapAlt = gpfFill(region.mapAlt, GPF_VARS);
+  const r = GPF_CONTACT.radiusKm;
 
   return (
     <section
@@ -39,11 +39,11 @@ export function GpfRegion() {
             </GpfReveal>
 
             <GpfReveal delay={0.1}>
-              <ul className="mt-10 flex flex-wrap gap-2">
+              <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-2">
                 {GPF_REGION.map((town) => (
                   <li
                     key={town}
-                    className="rounded-full border border-[var(--gpf-ink)]/15 bg-[var(--gpf-paper)] px-4 py-2 text-[12px] font-medium tracking-tight text-[var(--gpf-muted)]"
+                    className="border-l border-[var(--gpf-accent)]/50 pl-3 text-[0.95rem] tracking-tight text-[var(--gpf-muted)]"
                   >
                     {town}
                   </li>
@@ -76,21 +76,90 @@ export function GpfRegion() {
           </div>
 
           <GpfReveal delay={0.1} className="lg:col-span-6">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[2px] bg-[var(--gpf-paper)] lg:aspect-[4/4.2]">
-              <Image
-                src={GPF_IMG.regionMap}
-                alt={mapAlt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-[center_40%]"
-              />
-              <div
-                className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(15,21,17,0.55)_100%)]"
+            <div
+              className="relative aspect-[4/3] overflow-hidden rounded-[2px] border border-[var(--gpf-ink)]/8 bg-[var(--gpf-paper)] lg:aspect-[4/4.2]"
+              role="img"
+              aria-label={mapAlt}
+            >
+              <svg
+                viewBox="0 0 400 400"
+                className="absolute inset-0 h-full w-full"
                 aria-hidden
-              />
-              <p className="absolute bottom-5 left-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-white">
-                ~ {GPF_CONTACT.radiusKm} km Radius
-              </p>
+              >
+                <defs>
+                  <radialGradient id="gpf-radius-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#3d6b2f" stopOpacity="0.22" />
+                    <stop offset="55%" stopColor="#3d6b2f" stopOpacity="0.08" />
+                    <stop offset="100%" stopColor="#3d6b2f" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                <rect width="400" height="400" fill="#eef1ec" />
+                <circle cx="200" cy="200" r="168" fill="url(#gpf-radius-glow)" />
+                <circle
+                  cx="200"
+                  cy="200"
+                  r="148"
+                  fill="none"
+                  stroke="#3d6b2f"
+                  strokeOpacity="0.18"
+                  strokeWidth="1"
+                  strokeDasharray="4 8"
+                />
+                <circle
+                  cx="200"
+                  cy="200"
+                  r="98"
+                  fill="none"
+                  stroke="#3d6b2f"
+                  strokeOpacity="0.28"
+                  strokeWidth="1.25"
+                />
+                <circle
+                  cx="200"
+                  cy="200"
+                  r="48"
+                  fill="none"
+                  stroke="#3d6b2f"
+                  strokeOpacity="0.4"
+                  strokeWidth="1.5"
+                />
+                <circle cx="200" cy="200" r="7" fill="#3d6b2f" />
+                <circle
+                  cx="200"
+                  cy="200"
+                  r="14"
+                  fill="none"
+                  stroke="#3d6b2f"
+                  strokeOpacity="0.55"
+                  strokeWidth="1.5"
+                />
+                {/* Soft terrain hints */}
+                <path
+                  d="M40 290 C90 250, 140 310, 200 270 C260 230, 310 300, 360 255"
+                  fill="none"
+                  stroke="#0a100c"
+                  strokeOpacity="0.06"
+                  strokeWidth="18"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M55 120 C110 95, 160 140, 210 110 C270 75, 320 130, 355 100"
+                  fill="none"
+                  stroke="#0a100c"
+                  strokeOpacity="0.05"
+                  strokeWidth="14"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(10,16,12,0.78)] via-[rgba(10,16,12,0.35)] to-transparent px-6 pb-5 pt-16 text-white">
+                <p className="font-gpf-display text-[clamp(2rem,4vw,2.75rem)] font-bold leading-none tracking-[-0.03em]">
+                  ~{r} km
+                </p>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/70">
+                  Einsatzradius
+                </p>
+              </div>
             </div>
           </GpfReveal>
         </div>

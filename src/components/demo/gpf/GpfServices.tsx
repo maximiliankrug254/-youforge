@@ -16,7 +16,7 @@ export function GpfServices() {
   return (
     <section
       id="leistungen"
-      className="relative overflow-x-hidden bg-[var(--gpf-paper)] px-5 py-24 text-[var(--gpf-ink)] sm:px-8 sm:py-32 lg:py-40"
+      className="relative bg-[var(--gpf-paper)] px-5 py-24 text-[var(--gpf-ink)] sm:px-8 sm:py-32 lg:py-40"
     >
       <div className="mx-auto max-w-[1480px]">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
@@ -38,37 +38,43 @@ export function GpfServices() {
           </GpfReveal>
         </div>
 
+        {/*
+          Sticky pattern: grid STRETCHES both columns to equal height.
+          Do NOT use items-start on the grid — that shrinks the sticky
+          column and kills sticky after ~halfway through the list.
+        */}
         <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-14">
-          <div className="hidden lg:col-span-5 lg:block">
-            <div className="sticky top-28">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-[var(--gpf-paper-deep)]">
-                <AnimatePresence mode="popLayout" initial={false}>
+          <div className="relative hidden lg:col-span-5 lg:block">
+            <div className="sticky top-28 z-10">
+              <div className="relative aspect-[4/5] max-h-[min(70vh,620px)] w-full overflow-hidden rounded-[2px] bg-[var(--gpf-paper-deep)]">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.div
-                    key={current.image}
+                    key={current.title}
                     className="absolute inset-0"
-                    initial={reduceMotion ? false : { opacity: 0, scale: 1.06 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={reduceMotion ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.7, ease: GPF_EASE }}
+                    transition={{ duration: 0.35, ease: GPF_EASE }}
                   >
                     <Image
                       src={current.image}
                       alt={current.alt}
                       fill
-                      sizes="45vw"
+                      sizes="42vw"
                       className="object-cover"
+                      priority={active < 2}
                     />
                   </motion.div>
                 </AnimatePresence>
                 <div
-                  className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(15,21,17,0.85)_100%)]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_42%,rgba(10,16,12,0.9)_100%)]"
                   aria-hidden
                 />
-                <div className="absolute inset-x-0 bottom-0 p-7">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--gpf-sand)]">
-                    {current.group}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--gpf-moss)]">
+                    {String(active + 1).padStart(2, "0")} · {current.group}
                   </span>
-                  <p className="mt-2 font-gpf-display text-2xl font-bold tracking-[-0.02em] text-white">
+                  <p className="mt-2 font-gpf-display text-xl font-bold tracking-[-0.02em] text-white sm:text-2xl">
                     {current.title}
                   </p>
                 </div>
@@ -82,17 +88,20 @@ export function GpfServices() {
                 const isActive = active === i;
                 const isOpen = openMobile === i;
                 return (
-                  <li key={item.title} className="border-b border-[var(--gpf-ink)]/12">
+                  <li
+                    key={item.title}
+                    className="border-b border-[var(--gpf-ink)]/12"
+                    onMouseEnter={() => setActive(i)}
+                  >
                     <button
                       type="button"
-                      className="group flex w-full items-start gap-4 py-6 text-left sm:py-7"
-                      onMouseEnter={() => setActive(i)}
+                      className="group flex w-full items-start gap-4 py-4 text-left sm:py-5"
                       onFocus={() => setActive(i)}
                       onClick={() => {
                         setActive(i);
                         setOpenMobile(isOpen ? null : i);
                       }}
-                      aria-expanded={isOpen}
+                      aria-expanded={isOpen || isActive}
                     >
                       <span
                         className={`mt-1 font-gpf-display text-xs font-bold tracking-[0.16em] transition-colors ${
@@ -104,10 +113,10 @@ export function GpfServices() {
                         {String(i + 1).padStart(2, "0")}
                       </span>
 
-                      <span className="flex-1">
+                      <span className="min-w-0 flex-1">
                         <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                           <span
-                            className={`font-gpf-display text-[1.4rem] font-bold leading-tight tracking-[-0.02em] transition-colors sm:text-[1.7rem] ${
+                            className={`font-gpf-display text-[1.3rem] font-bold leading-tight tracking-[-0.02em] transition-colors sm:text-[1.5rem] ${
                               isActive ? "text-[var(--gpf-accent)]" : ""
                             }`}
                           >
@@ -124,9 +133,12 @@ export function GpfServices() {
                           animate={
                             reduceMotion
                               ? undefined
-                              : { height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }
+                              : {
+                                  height: isOpen ? "auto" : 0,
+                                  opacity: isOpen ? 1 : 0,
+                                }
                           }
-                          transition={{ duration: 0.5, ease: GPF_EASE }}
+                          transition={{ duration: 0.4, ease: GPF_EASE }}
                         >
                           <span className="relative mt-5 block aspect-[16/10] w-full overflow-hidden">
                             <Image
@@ -142,9 +154,23 @@ export function GpfServices() {
                           </span>
                         </motion.span>
 
-                        <span className="mt-3 hidden text-[0.95rem] leading-[1.7] text-[var(--gpf-muted)] lg:block">
-                          {item.text}
-                        </span>
+                        <motion.span
+                          className="hidden overflow-hidden lg:block"
+                          initial={false}
+                          animate={
+                            reduceMotion
+                              ? undefined
+                              : {
+                                  height: isActive ? "auto" : 0,
+                                  opacity: isActive ? 1 : 0,
+                                }
+                          }
+                          transition={{ duration: 0.35, ease: GPF_EASE }}
+                        >
+                          <span className="mt-3 block pb-1 text-[0.95rem] leading-[1.7] text-[var(--gpf-muted)]">
+                            {item.text}
+                          </span>
+                        </motion.span>
                       </span>
 
                       <span

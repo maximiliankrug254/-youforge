@@ -69,14 +69,14 @@ export function GpfNav() {
           <GpfButton
             href={`tel:${GPF_CONTACT.phoneTel}`}
             strength={0.18}
-            className="hidden rounded-full bg-white px-5 py-2.5 text-xs font-semibold tracking-wide text-[var(--gpf-ink)] transition-colors hover:bg-[var(--gpf-accent)] hover:text-white sm:inline-flex"
+            className="hidden rounded-sm bg-white px-5 py-2.5 text-xs font-semibold tracking-wide text-[var(--gpf-ink)] transition-colors hover:bg-[var(--gpf-accent)] hover:text-white sm:inline-flex"
           >
             {GPF_CONTACT.phoneDisplay}
           </GpfButton>
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-white lg:hidden"
             aria-expanded={open}
             aria-controls="gpf-mobile-nav"
             aria-label={open ? "Menü schließen" : "Menü öffnen"}
@@ -115,7 +115,7 @@ export function GpfNav() {
             ))}
             <a
               href={`tel:${GPF_CONTACT.phoneTel}`}
-              className="mt-4 mb-2 inline-flex items-center justify-center rounded-full bg-[var(--gpf-accent)] py-3.5 text-sm font-semibold text-white"
+              className="mt-4 mb-2 inline-flex items-center justify-center rounded-sm bg-[var(--gpf-accent)] py-3.5 text-sm font-semibold text-white"
             >
               {GPF_CONTACT.phoneDisplay}
             </a>

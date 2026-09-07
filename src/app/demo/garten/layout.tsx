@@ -16,7 +16,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0f1511",
+  themeColor: "#0a100c",
 };
 
 export default function GartenDemoLayout({
@@ -34,14 +34,15 @@ export default function GartenDemoLayout({
         className="gpf-demo min-h-dvh bg-[var(--gpf-paper)] text-[var(--gpf-ink)] antialiased"
         style={
           {
-            "--gpf-ink": "#0f1511",
-            "--gpf-panel": "#17201a",
-            "--gpf-paper": "#f5f3ec",
-            "--gpf-paper-deep": "#e9e5d8",
-            "--gpf-accent": "#5d8a3a",
-            "--gpf-accent-hot": "#7cae4c",
-            "--gpf-sand": "#c8b189",
-            "--gpf-muted": "#6a6a5e",
+            "--gpf-ink": "#0a100c",
+            "--gpf-panel": "#121a15",
+            "--gpf-paper": "#f1f3f0",
+            "--gpf-paper-deep": "#e4e8e2",
+            "--gpf-accent": "#3d6b2f",
+            "--gpf-accent-hot": "#4f853c",
+            "--gpf-sand": "#a8b09e",
+            "--gpf-moss": "#9aaa8c",
+            "--gpf-muted": "#5c655c",
             "--gpf-ease": "cubic-bezier(0.16, 1, 0.3, 1)",
             "--font-gpf-display": "'Zodiak', Georgia, serif",
             "--font-gpf-sans": "'Satoshi', system-ui, sans-serif",

@@ -9,7 +9,7 @@ export function GpfStandards() {
     <section className="relative isolate overflow-x-hidden bg-[var(--gpf-panel)] px-5 py-24 text-white sm:px-8 sm:py-32 lg:py-40">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <Image
-          src={GPF_IMG.baumAeste}
+          src={GPF_IMG.baumDetail}
           alt=""
           fill
           sizes="100vw"

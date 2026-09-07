@@ -15,7 +15,7 @@ export function GpfIntroLoader() {
 
   useEffect(() => {
     if (reduceMotion) return;
-    const t = window.setTimeout(() => setDismissed(true), 2700);
+    const t = window.setTimeout(() => setDismissed(true), 2400);
     return () => window.clearTimeout(t);
   }, [reduceMotion]);
 

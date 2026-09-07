@@ -43,6 +43,42 @@ const nextConfig: NextConfig = {
         destination: "/demo/the-german",
         permanent: true,
       },
+      // Alte Client-Assets der Garten-Demo — nie wieder ausliefern
+      {
+        source: "/demo/garten/marius-portrait.jpg",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/garten/marius-arbeit.jpg",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/garten/logo-mark.png",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/garten/logo-schriftzug.png",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/garten/einzugsgebiet.jpg",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/gartenpflege-friedberg",
+        destination: "/404",
+        permanent: true,
+      },
+      {
+        source: "/demo/gartenpflege-friedberg/:path*",
+        destination: "/404",
+        permanent: true,
+      },
     ];
   },
   images: {

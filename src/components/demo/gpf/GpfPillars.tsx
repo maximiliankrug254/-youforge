@@ -122,7 +122,7 @@ export function GpfPillars() {
                       {pillar.items.map((item) => (
                         <li
                           key={item}
-                          className="rounded-full border border-white/20 px-3.5 py-1.5 text-[11px] font-medium tracking-wide text-white/70"
+                          className="rounded-sm border border-white/20 px-3 py-1.5 text-[11px] font-medium tracking-wide text-white/70"
                         >
                           {item}
                         </li>

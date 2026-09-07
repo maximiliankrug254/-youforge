@@ -21,10 +21,10 @@ export function GpfAbout() {
           <GpfReveal className="lg:col-span-5">
             <GpfImageReveal
               src={GPF_IMG.teamArbeit}
-              alt="Gärtner bei der Arbeit an einer gepflegten Außenfläche"
+              alt="Detailaufnahme einer gepflegten Gartenfläche mit klarer Struktur"
               className="aspect-[4/5]"
               sizes="(max-width: 1024px) 100vw, 42vw"
-              objectClassName="object-[center_35%]"
+              objectClassName="object-cover object-center"
             />
             <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-[var(--gpf-ink)]/12 pt-5">
               <p className="font-gpf-display text-lg font-bold tracking-[-0.02em]">

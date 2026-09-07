@@ -12,7 +12,7 @@ export const GPF_DEMO = {
     short: "Grünwerk",
     /** Vollständiger Name, Impressum */
     full: "Grünwerk Garten & Landschaft",
-    legalName: "Muster Garten & Landschaft GmbH",
+    legalName: "Grünwerk Garten & Landschaft GmbH",
     tagline: "Vom Rasen bis zum Baumwipfel.",
     navSubtitle: "Garten · Landschaft",
     profession: "Garten- und Landschaftsbau · Gartenpflege",
@@ -23,7 +23,7 @@ export const GPF_DEMO = {
     ownerLabel: "Ihr Ansprechpartner",
     phoneTel: "+4917000000000",
     phoneDisplay: "0170 000 0000",
-    email: "anfrage@beispiel-garten.de",
+    email: "anfrage@gruenwerk-demo.de",
     addressLine1: "Musterstraße 12",
     addressLine2: "12345 Musterstadt",
     hours: "Mo–Fr 07:00–18:00 · Sa nach Absprache",
@@ -41,7 +41,9 @@ export const GPF_DEMO = {
 
   hero: {
     eyebrow: "Gartenpflege & Landschaftsbau",
-    lines: ["Vom Rasen", "bis zum", "Baumwipfel."] as const,
+    /** Markenname als Hero-Signal — nicht nur Nav */
+    brandLine: "Grünwerk",
+    headline: "Vom Rasen bis zum Baumwipfel.",
     text:
       "Pflege, Rodung und Neubau — mit eigenem Team, klarer Planung und einem Ansprechpartner von der ersten Besichtigung bis zur letzten Fläche.",
   },
@@ -61,7 +63,7 @@ export const GPF_DEMO = {
     sectionId: "ueber-uns",
     sectionLabel: "Über uns",
     headline: "Handwerk mit Haltung.",
-    imageCaption: "Team vor Ort",
+    imageCaption: "Arbeit am Detail",
     imageCaptionHint: "seit {since}",
     paragraphs: [
       "Gärten brauchen Kontinuität — nicht nur im Frühjahr, sondern über alle Jahreszeiten. Deshalb denken wir Pflege, Baumarbeit und Neubau zusammen, statt jeden Bereich isoliert zu betrachten.",
@@ -93,7 +95,7 @@ export const GPF_DEMO = {
       "Altbestand",
     ] as const,
     travelNote: "{travelRate} — transparent ab {travelFrom} berechnet",
-    mapAlt: "Einsatzgebiet mit etwa {radiusKm} Kilometern Radius",
+    mapAlt: "Schematischer Einsatzradius von etwa {radiusKm} Kilometern",
   },
 
   gallery: {
@@ -105,7 +107,7 @@ export const GPF_DEMO = {
 
   compare: {
     text:
-      "Echte Projekte — dieselbe Kameraposition, ein paar Arbeitstage dazwischen.",
+      "Drei echte Umbauten — dieselbe Kameraposition, vorher und nachher.",
   },
 
   faq: [

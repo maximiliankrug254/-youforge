@@ -88,11 +88,11 @@ export function GpfProcess() {
               des Objekts, Ihre Kontaktdaten und die gewünschten Arbeiten.
               Fotos helfen bei der Vorabeinschätzung.
             </p>
-            <ul className="mt-8 flex flex-wrap gap-2">
+            <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 sm:max-w-md">
               {["Saisonal", "Monatlich", "Auf Abruf", "Einmalig"].map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full border border-[var(--gpf-ink)]/15 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--gpf-muted)]"
+                  className="border-l border-[var(--gpf-accent)]/50 pl-3 text-[0.9rem] tracking-tight text-[var(--gpf-muted)]"
                 >
                   {tag}
                 </li>
@@ -101,8 +101,8 @@ export function GpfProcess() {
           </GpfReveal>
           <GpfReveal delay={0.1} className="lg:col-span-6 lg:col-start-7">
             <GpfImageReveal
-              src={GPF_IMG.parkanlage}
-              alt="Mitarbeiter bei Pflegearbeiten entlang einer alten Natursteinmauer"
+              src={GPF_IMG.heckeClean}
+              alt="Formschön gepflegte Hecken und Rasenflächen"
               className="aspect-[16/11] lg:min-h-[420px]"
             />
           </GpfReveal>

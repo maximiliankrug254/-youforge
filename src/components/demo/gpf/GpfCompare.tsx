@@ -81,7 +81,7 @@ export function GpfCompare() {
                 setPosition(50);
               }}
               aria-pressed={index === i}
-              className={`rounded-full border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors ${
+              className={`rounded-sm border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors ${
                 index === i
                   ? "border-[var(--gpf-accent)] bg-[var(--gpf-accent)] text-white"
                   : "border-white/20 text-white/55 hover:border-white/45 hover:text-white"
@@ -135,10 +135,10 @@ export function GpfCompare() {
               </motion.div>
             </AnimatePresence>
 
-            <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-[var(--gpf-ink)]/80 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
+            <span className="pointer-events-none absolute left-4 top-4 rounded-sm bg-[var(--gpf-ink)]/80 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
               Vorher
             </span>
-            <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-[var(--gpf-accent)]/90 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
+            <span className="pointer-events-none absolute right-4 top-4 rounded-sm bg-[var(--gpf-accent)]/90 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
               Nachher
             </span>
 
