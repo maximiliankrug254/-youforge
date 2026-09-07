@@ -79,22 +79,30 @@ export default function TukanDemoLayout({
           font-family: var(--font-tukan-sans), system-ui, sans-serif;
           overflow: hidden;
           height: 100dvh;
+          hyphens: none;
+          overflow-wrap: normal;
+          word-break: normal;
         }
         .tukan-demo .font-tukan-display {
           font-family: var(--font-tukan-display), Impact, sans-serif;
           text-transform: uppercase;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.06em;
+          line-height: 1;
+          padding-inline-end: 0.08em;
           font-kerning: normal;
         }
         .tukan-demo h1.font-tukan-display {
-          letter-spacing: 0.16em;
+          letter-spacing: 0.07em;
+          line-height: 0.98;
+          padding-inline-end: 0.1em;
         }
         .tukan-demo .tukan-headline {
           font-family: var(--font-tukan-sans), system-ui, sans-serif;
           text-transform: none;
           letter-spacing: -0.015em;
           line-height: 1.28;
-          text-wrap: pretty;
+          text-wrap: unset;
+          overflow-wrap: normal;
           font-kerning: normal;
         }
         .tukan-demo .font-tukan-mono {
@@ -276,7 +284,7 @@ export default function TukanDemoLayout({
           overflow: hidden;
           background: linear-gradient(180deg, #1a2621 0%, #0d1612 100%);
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-          height: 3.5rem;
+          height: 3.75rem;
           transition: height 0.62s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
         }
         .tukan-drawer.is-open {
@@ -286,11 +294,15 @@ export default function TukanDemoLayout({
             0 18px 40px rgba(0,0,0,0.35);
         }
         .tukan-drawer-body {
-          height: calc(100% - 3.5rem);
+          height: calc(100% - 3.75rem);
           overflow: hidden;
           opacity: 0;
           pointer-events: none;
           transition: opacity 0.2s ease;
+        }
+        .tukan-drawer.is-open .tukan-drawer-body.tukan-bin-scroll {
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
         .tukan-drawer.is-open .tukan-drawer-body {
           opacity: 1;
@@ -306,8 +318,9 @@ export default function TukanDemoLayout({
           animation: none !important;
         }
         .tukan-handle {
-          height: 3.5rem;
-          min-height: 3.5rem;
+          height: 3.75rem;
+          min-height: 3.75rem;
+          overflow: visible;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background:
             linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.015) 100%);
@@ -367,11 +380,12 @@ export default function TukanDemoLayout({
         }
         .tukan-pull {
           display: inline-block;
+          padding-block: 2px;
           animation: tukan-pull 1.6s ease-in-out infinite;
         }
         @keyframes tukan-pull {
           0%, 100% { transform: translateY(0); opacity: 0.7; }
-          50% { transform: translateY(3px); opacity: 1; }
+          50% { transform: translateY(1px); opacity: 1; }
         }
         .tukan-cta {
           box-shadow: 0 0 0 0 rgba(255,122,24,0.55);

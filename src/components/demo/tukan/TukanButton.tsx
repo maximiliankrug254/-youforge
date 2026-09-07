@@ -39,7 +39,7 @@ export function TukanButton({
     transition: { type: "spring" as const, stiffness: 240, damping: 20, mass: 0.45 },
   };
 
-  const cls = `inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] ${className}`;
+  const cls = `inline-flex max-w-full items-center justify-center gap-2 rounded-full px-5 py-3 pr-6 text-[11px] font-semibold uppercase leading-none tracking-[0.08em] ${className}`;
 
   if (href) {
     return (

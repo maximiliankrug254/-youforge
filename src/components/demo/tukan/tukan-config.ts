@@ -15,7 +15,7 @@ export const TUKAN = {
     packPrice: "9,90 €",
     packPriceValue: 9.9,
     stickPrice: "2,48 €",
-    ship: "Kühlversand in 2–4 Werktagen",
+    ship: "2\u2060–\u20604\u00A0Werktage",
   },
   youforge: {
     label: "Living Demo",

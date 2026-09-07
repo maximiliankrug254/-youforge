@@ -16,7 +16,7 @@ function isDrawerId(value: string): value is DrawerId {
   return TUKAN_DRAWERS.some((d) => d.id === value);
 }
 
-const HANDLE = 56;
+const HANDLE = 60;
 const GAP = 8;
 
 export function TukanFreezer() {
@@ -73,7 +73,7 @@ export function TukanFreezer() {
       <header className="relative z-[2] flex shrink-0 items-center justify-between gap-3 px-1 py-2">
         <p className="flex items-center gap-2 text-white">
           <TukanMark className="h-7 w-7" />
-          <span className="font-tukan-display text-[1.35rem] leading-none">{TUKAN.brand.short}</span>
+          <span className="font-tukan-display text-[1.35rem] leading-none tracking-[0.06em]">{TUKAN.brand.short}</span>
         </p>
         <p className="font-tukan-mono text-[11px] uppercase tracking-[0.16em] text-white/55">
           <span className="tukan-led">−18 °C</span>
@@ -88,9 +88,6 @@ export function TukanFreezer() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: TUKAN_EASE }}
       >
-        <span className="tukan-drip left-[12%] top-3" />
-        <span className="tukan-drip left-[38%] top-5" style={{ animationDelay: "1.4s" }} />
-        <span className="tukan-drip right-[18%] top-4" style={{ animationDelay: "2.6s" }} />
         <div ref={gasket} className="tukan-gasket flex min-h-0 flex-1 flex-col gap-2 p-2 sm:p-2.5">
           {TUKAN_DRAWERS.map((drawer) => {
             const active = open === drawer.id;
@@ -109,7 +106,9 @@ export function TukanFreezer() {
                 <DrawerHandle drawer={drawer} open={active} onOpen={() => openDrawer(drawer.id)} />
                 <div
                   id={`${drawer.id}-bin`}
-                  className="tukan-drawer-body tukan-bin"
+                  className={`tukan-drawer-body tukan-bin ${
+                    drawer.id === "zahlen" || drawer.id === "bestellen" ? "tukan-bin-scroll" : ""
+                  }`}
                   aria-hidden={!active}
                   inert={!active}
                 >
@@ -126,7 +125,7 @@ export function TukanFreezer() {
                         <BaliBin reduce={!!reduce} onBuy={() => openDrawer("bestellen")} />
                       ) : null}
                       {drawer.id === "bestellen" ? (
-                        <div className="relative h-full px-4 py-4 sm:px-6 sm:py-5">
+                        <div className="relative min-h-full px-4 py-4 pb-6 sm:px-6 sm:py-5">
                           <TukanOrder />
                         </div>
                       ) : null}
@@ -190,15 +189,15 @@ function DrawerHandle({
       onClick={onOpen}
     >
       <span className="tukan-grip" aria-hidden />
-      <span className="min-w-0 flex-1">
-        <span className="block font-tukan-mono text-[12px] uppercase tracking-[0.22em] text-white">
+      <span className="min-w-0 flex-1 pr-2">
+        <span className="block font-tukan-mono text-[12px] uppercase leading-none tracking-[0.18em] text-white">
           {drawer.label}
         </span>
-        <span className="mt-0.5 block truncate font-tukan-mono text-[10px] uppercase tracking-[0.14em] text-white/45">
+        <span className="mt-1 block font-tukan-mono text-[10px] uppercase leading-none tracking-[0.08em] text-white/45">
           {drawer.meta}
         </span>
       </span>
-      <span className="font-tukan-mono text-[10px] uppercase tracking-[0.16em] text-[var(--tukan-sun)]">
+      <span className="shrink-0 font-tukan-mono text-[10px] uppercase leading-none tracking-[0.12em] text-[var(--tukan-sun)]">
         {open ? "Offen" : <span className="tukan-pull">Ziehen</span>}
       </span>
     </button>
@@ -254,42 +253,42 @@ function EisBin({ reduce, onBuy }: { reduce: boolean; onBuy: () => void }) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_58%_42%,transparent_12%,rgba(7,20,14,0.28)_48%,rgba(7,20,14,0.78)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(7,20,14,0.92)] via-[rgba(7,20,14,0.28)] to-transparent" />
 
-      <div className="relative z-[3] flex h-full flex-col justify-end gap-5 p-4 sm:p-6 lg:flex-row lg:items-end lg:justify-between lg:p-8">
-        <div className="tukan-poster-type max-w-[34rem]">
-          <p className="font-tukan-mono text-[11px] uppercase tracking-[0.22em] text-[var(--tukan-sun)]">
+      <div className="relative z-[3] flex h-full min-h-0 flex-col justify-end gap-4 overflow-y-auto overscroll-contain px-5 py-4 sm:gap-5 sm:p-6 lg:flex-row lg:items-end lg:justify-between lg:p-8">
+        <div className="tukan-poster-type min-w-0 max-w-[34rem]">
+          <p className="font-tukan-mono text-[11px] uppercase tracking-[0.18em] text-[var(--tukan-sun)]">
             {TUKAN_COPY.heroKicker}
           </p>
-          <h1 className="font-tukan-display mt-2 text-[clamp(2.6rem,8vw,6.4rem)] leading-[0.88] text-white">
+          <h1 className="font-tukan-display mt-2 text-[clamp(2.2rem,10vw,4.8rem)] text-white">
             {TUKAN_COPY.heroTitle}
           </h1>
-          <p className="tukan-headline mt-3 max-w-[22rem] text-[1.08rem] font-medium text-white">
-            {TUKAN_COPY.heroLine}
+          <p className="tukan-headline mt-3 text-[1.05rem] font-medium text-white sm:text-[1.08rem]">
+            <span className="block">{TUKAN_COPY.heroLine}</span>
+            <span className="mt-0.5 block">{TUKAN_COPY.heroLine2}</span>
           </p>
-          <p className="mt-3 max-w-[26rem] text-[0.95rem] leading-relaxed text-white/78">
+          <p className="mt-3 max-w-[28rem] text-[0.95rem] leading-relaxed text-pretty text-white/78">
             {TUKAN_COPY.drawerLead}
           </p>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <TukanButton onClick={onBuy} className="tukan-cta bg-[var(--tukan-sun)] text-[var(--tukan-void)]">
               {TUKAN_COPY.heroCta}
             </TukanButton>
-            <p className="font-tukan-mono text-[10px] uppercase tracking-[0.16em] text-white/55">
+            <p className="font-tukan-mono text-[10px] uppercase leading-snug tracking-[0.08em] text-white/55">
               {TUKAN_COPY.rating} · {TUKAN_COPY.ratingNote}
             </p>
           </div>
         </div>
 
-        <ul className="flex gap-2 lg:flex-col lg:items-end">
+        <ul className="flex w-full min-w-0 shrink-0 gap-2 pb-1 lg:w-auto lg:flex-col lg:items-end">
           {TUKAN_COPY.facts.slice(0, 3).map((item) => (
             <li
               key={item.label}
-              className="rounded-full border border-white/18 bg-black/35 px-3 py-2 backdrop-blur-md lg:px-4"
+              className="min-w-0 flex-1 rounded-full border border-white/18 bg-black/35 px-2.5 py-2.5 backdrop-blur-md sm:flex-none sm:px-3 lg:px-4"
             >
-              <p className="font-tukan-display text-[1.15rem] leading-none text-[var(--tukan-sun)] lg:text-[1.45rem]">
+              <p className="font-tukan-display pt-[0.08em] text-[1.05rem] leading-none text-[var(--tukan-sun)] sm:text-[1.15rem] lg:text-[1.45rem]">
                 {item.value}
               </p>
-              <p className="mt-1 text-[9px] uppercase tracking-[0.16em] text-white/70">
+              <p className="mt-1 whitespace-nowrap text-[9px] uppercase tracking-[0.1em] text-white/70">
                 {item.label}
-                <span className="text-white/40"> · {item.hint}</span>
               </p>
             </li>
           ))}
@@ -301,22 +300,22 @@ function EisBin({ reduce, onBuy }: { reduce: boolean; onBuy: () => void }) {
 
 function ZahlenBin({ reduce, onBuy }: { reduce: boolean; onBuy: () => void }) {
   return (
-    <div className="relative flex h-full flex-col justify-center px-4 py-5 sm:px-6">
-      <p className="font-tukan-mono text-[11px] uppercase tracking-[0.22em] text-[var(--tukan-sun)]">
+    <div className="relative flex h-full min-h-0 flex-col justify-center px-4 py-5 sm:px-6">
+      <p className="font-tukan-mono text-[11px] uppercase tracking-[0.18em] text-[var(--tukan-sun)]">
         {TUKAN_COPY.factsKicker}
       </p>
-      <h2 className="tukan-headline mt-2 max-w-[22rem] text-[clamp(1.5rem,3vw,2.1rem)] font-semibold text-white">
+      <h2 className="tukan-headline mt-2 text-[clamp(1.28rem,5.2vw,2.1rem)] font-semibold text-white">
         {TUKAN_COPY.factsTitle}
       </h2>
-      <p className="mt-3 max-w-lg text-[0.98rem] leading-relaxed text-white/75">{TUKAN_COPY.packLead}</p>
+      <p className="mt-3 max-w-lg text-[0.98rem] leading-relaxed text-pretty text-white/75">{TUKAN_COPY.packLead}</p>
       <ul className="mt-5 grid max-w-xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {TUKAN_COPY.facts.map((item) => (
-          <li key={item.label} className="rounded-xl border border-white/12 bg-black/20 px-3 py-3">
-            <p className="font-tukan-display text-[1.55rem] leading-none text-[var(--tukan-sun)]">
+          <li key={item.label} className="min-w-0 rounded-xl border border-white/12 bg-black/20 px-3 py-3">
+            <p className="font-tukan-display pt-[0.08em] text-[1.4rem] leading-none text-[var(--tukan-sun)] sm:text-[1.55rem]">
               <CountIn text={item.value} reduce={reduce} />
             </p>
-            <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-white/70">{item.label}</p>
-            <p className="mt-0.5 text-[11px] text-white/45">{item.hint}</p>
+            <p className="mt-2 whitespace-nowrap text-[10px] uppercase tracking-[0.1em] text-white/70">{item.label}</p>
+            <p className="mt-0.5 text-[11px] leading-snug text-white/45">{item.hint}</p>
           </li>
         ))}
       </ul>
@@ -402,19 +401,19 @@ function BaliBin({ reduce, onBuy }: { reduce: boolean; onBuy: () => void }) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_42%_38%,transparent_18%,rgba(7,20,14,0.22)_52%,rgba(7,20,14,0.72)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(7,20,14,0.92)] via-[rgba(7,20,14,0.35)] to-transparent" />
 
-      <div className="relative z-[3] flex h-full flex-col justify-end p-4 sm:p-6 lg:p-8">
-        <div className="tukan-poster-type max-w-[36rem]">
-          <p className="font-tukan-mono text-[11px] uppercase tracking-[0.22em] text-[var(--tukan-sun)]">
+      <div className="relative z-[3] flex h-full min-h-0 flex-col justify-end overflow-y-auto overscroll-contain px-5 py-4 sm:p-6 lg:overflow-hidden lg:p-8">
+        <div className="tukan-poster-type min-w-0 max-w-[36rem]">
+          <p className="font-tukan-mono text-[11px] uppercase tracking-[0.18em] text-[var(--tukan-sun)]">
             Bali
           </p>
-          <h2 className="tukan-headline mt-2 text-[clamp(1.7rem,3.6vw,2.7rem)] font-semibold text-white">
-            <span className="block">Es schmeckt nach Bali.</span>
-            <span className="mt-1 block">Den Flug kannst du dir sparen.</span>
+          <h2 className="tukan-headline mt-2 text-[clamp(1.35rem,5.4vw,2.7rem)] font-semibold text-white">
+            <span className="block">{TUKAN_COPY.baliTitle}</span>
+            <span className="mt-1 block">{TUKAN_COPY.baliTitle2}</span>
           </h2>
-          <p className="mt-3 max-w-[28rem] text-[0.98rem] leading-relaxed text-white/82">
+          <p className="mt-3 max-w-[32rem] text-[0.95rem] leading-relaxed text-pretty text-white/82 sm:text-[0.98rem]">
             {TUKAN_COPY.baliLead}
           </p>
-          <p className="mt-2 max-w-[28rem] text-[0.95rem] leading-relaxed text-white/68">
+          <p className="mt-2 max-w-[32rem] text-[0.92rem] leading-relaxed text-pretty text-white/68 sm:text-[0.95rem]">
             {TUKAN_COPY.baliBody}
           </p>
           <div className="mt-5">

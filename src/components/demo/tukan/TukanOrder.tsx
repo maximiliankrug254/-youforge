@@ -17,7 +17,7 @@ export function TukanOrder() {
 
   if (sent) {
     return (
-      <div className="flex h-full max-w-lg flex-col justify-center">
+      <div className="flex min-h-full max-w-lg flex-col justify-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--tukan-sun)]">
           Living Demo
         </p>
@@ -36,32 +36,32 @@ export function TukanOrder() {
   }
 
   return (
-    <div className="grid h-full gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(16rem,1fr)] lg:items-center">
+    <div className="grid min-h-full gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(16rem,1fr)] lg:items-center lg:gap-6">
       <div>
-        <h2 className="tukan-headline text-[clamp(1.5rem,3vw,2.1rem)] font-semibold text-white">
+        <h2 className="tukan-headline text-[clamp(1.4rem,3vw,2.1rem)] font-semibold text-white">
           {TUKAN_COPY.orderTitle}
         </h2>
-        <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-white/75">
+        <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-pretty text-white/75">
           {TUKAN_COPY.orderLead}
         </p>
-        <dl className="mt-4 grid gap-3 sm:grid-cols-3">
+        <dl className="mt-3 grid grid-cols-3 gap-2 sm:mt-4 sm:gap-3">
           <div>
-            <dt className="text-[10px] uppercase tracking-[0.16em] text-white/45">Packung</dt>
-            <dd className="mt-1 text-sm text-white">4er-Pack · Maracuja</dd>
+            <dt className="text-[10px] uppercase tracking-[0.12em] text-white/45">Packung</dt>
+            <dd className="mt-1 text-sm text-white">4er&#8209;Pack · Maracuja</dd>
           </div>
           <div>
-            <dt className="text-[10px] uppercase tracking-[0.16em] text-white/45">Preis</dt>
+            <dt className="text-[10px] uppercase tracking-[0.12em] text-white/45">Preis</dt>
             <dd className="mt-1 text-sm text-white">{TUKAN.product.packPrice}</dd>
           </div>
           <div>
-            <dt className="text-[10px] uppercase tracking-[0.16em] text-white/45">Versand</dt>
-            <dd className="mt-1 text-sm text-white">{TUKAN.product.ship}</dd>
+            <dt className="text-[10px] uppercase tracking-[0.12em] text-white/45">Versand</dt>
+            <dd className="mt-1 text-sm leading-snug text-white sm:whitespace-nowrap">{TUKAN.product.ship}</dd>
           </div>
         </dl>
       </div>
 
-      <form
-        className="flex flex-col gap-4"
+        <form
+        className="flex flex-col gap-3 sm:gap-4"
         onSubmit={(e) => {
           e.preventDefault();
           setSent(true);
@@ -76,7 +76,7 @@ export function TukanOrder() {
           >
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <option key={n} value={n}>
-                {n} × 4er-Pack
+                {n} × 4er&#8209;Pack
               </option>
             ))}
           </select>
@@ -103,7 +103,7 @@ export function TukanOrder() {
             {TUKAN_COPY.orderCta}
           </TukanButton>
         </div>
-        <p className="text-[12px] leading-relaxed text-white/45">{TUKAN_COPY.orderNote}</p>
+      <p className="pb-1 text-[12px] leading-relaxed text-pretty text-white/45">{TUKAN_COPY.orderNote}</p>
       </form>
     </div>
   );
