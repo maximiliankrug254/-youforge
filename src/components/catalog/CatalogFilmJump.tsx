@@ -44,7 +44,8 @@ export function CatalogFilmJump({ className }: { className?: string }) {
                 />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-1.5 pb-1 pt-4">
                   <span className="block font-mono text-[8px] uppercase tracking-[0.14em] text-white/85">
-                    {String(i + 1).padStart(2, "0")} · {style.industry}
+                    {String(i + 1).padStart(2, "0")} ·{" "}
+                    {style.format ?? style.industry}
                   </span>
                 </span>
               </a>

@@ -37,6 +37,11 @@ export function CatalogLookbook() {
                     </span>
                     <span className="flex-1 text-sm font-medium tracking-tight transition-colors group-hover:text-accent">
                       {style.industry}
+                      {style.format ? (
+                        <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                          · {style.format}
+                        </span>
+                      ) : null}
                     </span>
                     <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-muted/70 sm:block">
                       {style.title}
@@ -80,7 +85,9 @@ export function CatalogLookbook() {
                     />
                   </span>
                   <span className="pointer-events-none absolute bottom-3 left-3 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/80 backdrop-blur-sm">
-                    Living Demo
+                    {style.format
+                      ? `Living Demo · ${style.format}`
+                      : "Living Demo"}
                   </span>
                 </Link>
 
@@ -93,6 +100,7 @@ export function CatalogLookbook() {
                   <div>
                     <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">
                       {style.industry}
+                      {style.format ? ` · ${style.format}` : ""}
                     </p>
                     <p className="mt-8 font-mono text-[clamp(3.5rem,8vw,6.5rem)] font-bold leading-none tracking-tighter text-foreground/8">
                       {String(i + 1).padStart(2, "0")}
@@ -107,7 +115,9 @@ export function CatalogLookbook() {
                       {style.line}
                     </p>
                     <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-                      Living Demo · frei klickbar
+                      {style.format
+                        ? `Living Demo · ${style.format} · frei klickbar`
+                        : "Living Demo · frei klickbar"}
                     </p>
                     <Link
                       href={style.href}

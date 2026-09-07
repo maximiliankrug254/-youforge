@@ -7,6 +7,8 @@ export type CatalogStyle = {
   image: string;
   width: number;
   height: number;
+  /** z. B. Onepager — zusätzlich zur Branche */
+  format?: string;
 };
 
 /** Lookbook: eine Live-Demo pro Branche. Kein Filter, kein Portfolio. */
@@ -44,12 +46,13 @@ export const catalogStyles: CatalogStyle[] = [
   {
     slug: "tukan",
     industry: "Food",
-    title: "Protein-Eis",
+    title: "TUKAN",
     line: "Maracuja, 0 g Zucker, 14 g Protein.",
     href: "/demo/tukan",
-    image: "/demo/tukan/jungle-dusk.jpg",
+    image: "/demo/tukan/popsicle-hero.jpg",
     width: 1920,
     height: 1080,
+    format: "Onepager",
   },
   {
     slug: "ast-asche",
