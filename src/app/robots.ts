@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/impressum", "/datenschutz"],
+      disallow: ["/impressum", "/datenschutz", "/demo/raumkontrast"],
     },
     sitemap: `${getSiteUrl()}/sitemap.xml`,
   };
