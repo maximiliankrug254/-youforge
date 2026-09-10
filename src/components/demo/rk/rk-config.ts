@@ -1,3 +1,12 @@
+/**
+ * Raumkontrast-Pitch. Code und Assets bleiben im Repo.
+ * Öffentlich online: `RK_DEMO_LIVE = true` und Offline-Redirects in
+ * `next.config.ts` entfernen (Kommentar „Raumkontrast offline“).
+ */
+
+/** false = Routen liefern 404, Code & Assets bleiben. */
+export const RK_DEMO_LIVE = false;
+
 export const RK_BASE = "/demo/raumkontrast";
 
 export const RK_DEMO = {

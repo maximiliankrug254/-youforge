@@ -36,6 +36,17 @@ const nextConfig: NextConfig = {
         destination: "/404",
         permanent: false,
       },
+      // Raumkontrast offline — Code bleibt. Online: Block entfernen + RK_DEMO_LIVE = true
+      {
+        source: "/demo/raumkontrast",
+        destination: "/404",
+        permanent: false,
+      },
+      {
+        source: "/demo/raumkontrast/:path*",
+        destination: "/404",
+        permanent: false,
+      },
       // Alte Client-Assets der Garten-Demo — nie wieder ausliefern
       {
         source: "/demo/garten/marius-portrait.jpg",

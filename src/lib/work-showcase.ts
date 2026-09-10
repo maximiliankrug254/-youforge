@@ -1,6 +1,6 @@
 import type { PortfolioProject } from "@/lib/constants";
 
-/** Nie auf YouForge-Marketingflächen (Home, Arbeiten, Katalog). THE GERMAN auch unter /demo offline. */
+/** Nie auf YouForge-Marketingflächen (Home, Arbeiten, Katalog). THE GERMAN und Raumkontrast unter /demo offline. */
 export const YOUFORGE_HIDDEN_SLUGS = new Set(["the-german", "raumkontrast"]);
 
 export function isYouForgePublicProject(project: PortfolioProject): boolean {
