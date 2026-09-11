@@ -124,4 +124,15 @@ export const catalogStyles: CatalogStyle[] = [
     width: 1800,
     height: 1125,
   },
+  {
+    slug: "kfz",
+    industry: "KFZ",
+    title: "Spurwerk",
+    line: "Karosserie, Werkstatt, Tuning.",
+    href: "/demo/kfz",
+    image: "/demo/kfz/hero-workshop.jpg",
+    width: 1920,
+    height: 1080,
+    format: "Onepager",
+  },
 ];

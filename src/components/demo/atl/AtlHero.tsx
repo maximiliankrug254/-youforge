@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { AtlButton } from "@/components/demo/atl/AtlButton";
 import { ATL_EASE } from "@/components/demo/atl/atl-motion";
-import { ATL_CONTACT } from "@/components/demo/atl/atl-contact";
+import { ATL_ASSETS, ATL_CONTACT } from "@/components/demo/atl/atl-contact";
 
 export function AtlHero() {
   const reduceMotion = useReducedMotion();
@@ -45,7 +45,7 @@ export function AtlHero() {
         style={useParallax ? { y: bgY } : undefined}
       >
         <Image
-          src="/demo/atl-lauber/hero-workshop.jpg"
+          src={ATL_ASSETS.hero}
           alt="Werkstattatmosphäre — Präzisionsarbeit an Fahrzeugen"
           fill
           priority
@@ -67,14 +67,17 @@ export function AtlHero() {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1400px] flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-8 lg:px-10 lg:pb-16 lg:pt-7">
-        <header className="flex shrink-0 items-center justify-between gap-3">
-          <a href="#top" className="group inline-flex flex-col" aria-label={ATL_CONTACT.brand}>
-            <span className="font-atl-display text-[1.65rem] font-semibold leading-none tracking-[0.06em] text-white sm:text-3xl">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1400px] flex-col px-5 pb-[max(5.5rem,env(safe-area-inset-bottom))] pt-20 sm:px-8 lg:px-10 lg:pb-16 lg:pt-16">
+        <header
+          data-atl-nav
+          className="flex shrink-0 items-center justify-between gap-3 md:pr-52"
+        >
+          <a href="#top" className="group inline-flex min-w-0 flex-col" aria-label={ATL_CONTACT.brand}>
+            <span className="font-atl-display text-[1.35rem] font-semibold leading-none tracking-[0.04em] text-white sm:text-3xl sm:tracking-[0.06em]">
               {ATL_CONTACT.short}
             </span>
             <span className="mt-1 hidden text-[10px] font-medium uppercase tracking-[0.18em] text-white/45 sm:block">
-              Automobil-Technik Lauber
+              {ATL_CONTACT.navSubtitle}
             </span>
           </a>
 
@@ -83,7 +86,7 @@ export function AtlHero() {
               Leistungen
             </a>
             <a href="#warum" className="transition-colors hover:text-white">
-              Warum ATL
+              Anspruch
             </a>
             <a href="#kontakt" className="transition-colors hover:text-white">
               Kontakt
@@ -93,7 +96,7 @@ export function AtlHero() {
           <AtlButton
             href={`tel:${ATL_CONTACT.phoneTel}`}
             strength={0}
-            className="shrink-0 rounded-sm bg-[var(--atl-red)] px-3.5 py-2 text-xs font-semibold uppercase tracking-wide text-white sm:px-5 sm:py-2.5 sm:text-sm"
+            className="hidden shrink-0 rounded-sm bg-[var(--atl-red)] px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white md:inline-flex"
           >
             Anrufen
           </AtlButton>
@@ -109,7 +112,7 @@ export function AtlHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: ATL_EASE, delay: 0.2 }}
           >
-            {ATL_CONTACT.region} · Karosserie · KFZ · Tuning
+            {ATL_CONTACT.region}
           </motion.p>
 
           <motion.h1
@@ -118,11 +121,11 @@ export function AtlHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.95, ease: ATL_EASE, delay: 0.28 }}
           >
-            Pole Position
+            Karosserie.
             <br />
-            <span className="text-white/88">in Leistung</span>
+            <span className="text-white/88">Technik.</span>
             <br />
-            <span className="text-[var(--atl-red)]">und Qualität.</span>
+            <span className="text-[var(--atl-red)]">Charakter.</span>
           </motion.h1>
 
           <motion.p
@@ -131,8 +134,8 @@ export function AtlHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: ATL_EASE, delay: 0.55 }}
           >
-            Vom Unfallschaden bis zum Chip-Tuning — Meisterbetrieb in Grünberg.
-            Präzise. Direkt. Aus einer Hand.
+            Vom Unfallschaden bis zum Chip-Tuning — Karosserie, Service und
+            Umbau aus einer Hand. Präzise. Direkt. Ohne Umwege.
           </motion.p>
 
           <motion.div
@@ -168,7 +171,7 @@ export function AtlHero() {
             <span>Karosserie</span>
             <span>KFZ-Technik</span>
             <span>Tuning</span>
-            <span>Grünberg</span>
+            <span>Meisterbetrieb</span>
           </motion.div>
         </motion.div>
       </div>

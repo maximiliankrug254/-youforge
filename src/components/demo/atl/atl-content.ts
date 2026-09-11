@@ -6,7 +6,7 @@ export const ATL_PILLARS = [
     tagline: "Form, die hält.",
     description:
       "Unfallschaden, Rost oder Restauration — wir bringen Blech und Lack wieder auf Linie.",
-    image: "/demo/atl-lauber/pillar-karosserie.jpg",
+    image: "/demo/kfz/pillar-karosserie.jpg",
     imageAlt: "Präzisionsarbeit an einer Fahrzeugkarosserie",
     items: [
       "Unfallreparaturen aller Art",
@@ -26,7 +26,7 @@ export const ATL_PILLARS = [
     tagline: "Technik, die läuft.",
     description:
       "Service, Diagnose und Instandhaltung — damit Ihr Fahrzeug sicher und zuverlässig bleibt.",
-    image: "/demo/atl-lauber/pillar-kfz.jpg",
+    image: "/demo/kfz/pillar-kfz.jpg",
     imageAlt: "Sportwagen in der Werkstatt — Fokus auf Technik",
     items: [
       "Allgemeiner Service",
@@ -45,7 +45,7 @@ export const ATL_PILLARS = [
     tagline: "Leistung, die spürbar ist.",
     description:
       "Vom Chip bis zum Komplettumbau — mehr Charakter, mehr Power, sauber eingetragen.",
-    image: "/demo/atl-lauber/pillar-tuning.jpg",
+    image: "/demo/kfz/pillar-tuning.jpg",
     imageAlt: "Performance-Fahrzeug mit markanter Front",
     items: [
       "Teile von A–Z",
@@ -68,7 +68,7 @@ export const ATL_WHY = [
     text: "Richtbank, Messung, Eintragung: wir arbeiten sauber, nachvollziehbar und ergebnisorientiert.",
   },
   {
-    title: "Lokal in Grünberg",
+    title: "Direkt vor Ort",
     text: "Kurze Wege, direkte Kommunikation — kein Callcenter, sondern echte Werkstatt.",
   },
 ] as const;

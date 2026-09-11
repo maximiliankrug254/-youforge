@@ -27,7 +27,7 @@ export function AtlPillars() {
             Drei Disziplinen. Ein Anspruch.
           </h2>
           <p className="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-white/55 sm:text-base">
-            Ob Blech, Technik oder Performance — bei ATL bekommen Sie Handwerk
+            Ob Blech, Technik oder Performance — hier bekommen Sie Handwerk
             mit Haltung. Klar, präzise, ohne Umwege.
           </p>
         </AtlReveal>

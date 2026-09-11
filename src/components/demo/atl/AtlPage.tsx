@@ -11,7 +11,7 @@ export function AtlPage() {
       <AtlHero />
       <AtlRoadPass label="Karosserie · KFZ · Tuning" />
       <AtlPillars />
-      <AtlRoadPass label="Grünberg · Meisterqualität" flip />
+      <AtlRoadPass label="Meisterqualität · aus einer Hand" flip />
       <AtlWhy />
       <AtlRoadPass label="Bereit für den nächsten Kilometer" />
       <AtlContact />

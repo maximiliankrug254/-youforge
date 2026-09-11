@@ -1,15 +1,20 @@
+/** Fiktive White-Label-Demo für die KFZ-Branche — keine echte Werkstatt. */
+export const ATL_ASSETS = {
+  hero: "/demo/kfz/hero-workshop.jpg",
+  why: "/demo/kfz/why-car.jpg",
+} as const;
+
 export const ATL_CONTACT = {
-  brand: "Automobil-Technik Lauber",
-  short: "ATL",
-  slogan: "Pole Position in Leistung und Qualität",
-  phoneTel: "+4964012107559",
-  phoneDisplay: "06401 2107559",
-  mobileTel: "+491607262788",
-  mobileDisplay: "0160 7262788",
+  brand: "Spurwerk Karosserie & Technik",
+  short: "SPURWERK",
+  navSubtitle: "Karosserie · KFZ · Tuning",
+  slogan: "Karosserie. Technik. Charakter.",
+  phoneTel: "+4917000000000",
+  phoneDisplay: "0170 000 0000",
+  hours: "Montag–Freitag 07:30–17:00 · Samstag nach Absprache",
   whatsapp:
-    "https://wa.me/491607262788?text=Hallo%20ATL%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Anfrage.",
-  email: "info@atl-lauber.de",
-  address: "Alsfelder Str. 55, 35305 Grünberg",
-  website: "https://www.atl-lauber.de",
-  region: "Grünberg & Umgebung",
+    "https://wa.me/4917000000000?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Anfrage.",
+  email: "anfrage@spurwerk-demo.de",
+  address: "Musterstraße 12, 12345 Musterstadt",
+  region: "Karosserie · KFZ · Tuning",
 } as const;

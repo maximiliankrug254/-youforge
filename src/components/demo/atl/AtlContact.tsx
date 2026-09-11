@@ -17,7 +17,7 @@ export function AtlContact() {
               Kontakt
             </p>
             <h2 className="mt-5 font-atl-display text-[clamp(2.4rem,6vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.02em]">
-              Bereit für Pole Position?
+              Bereit für den nächsten Kilometer?
             </h2>
             <p className="mt-6 max-w-lg text-white/60">
               Rufen Sie an oder schreiben Sie uns — wir besprechen Ihr Fahrzeug
@@ -67,16 +67,9 @@ export function AtlContact() {
               </div>
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--atl-red)]">
-                  Mobil
+                  Öffnungszeiten
                 </dt>
-                <dd className="mt-2 text-sm text-white/65">
-                  <a
-                    href={`tel:${ATL_CONTACT.mobileTel}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {ATL_CONTACT.mobileDisplay}
-                  </a>
-                </dd>
+                <dd className="mt-2 text-sm text-white/65">{ATL_CONTACT.hours}</dd>
               </div>
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--atl-red)]">
@@ -104,7 +97,7 @@ export function AtlContact() {
         >
           YouForge
         </a>{" "}
-        · noch nicht live
+        · fiktive Marke · so kann eine Werkstatt online wirken
       </p>
     </section>
   );
