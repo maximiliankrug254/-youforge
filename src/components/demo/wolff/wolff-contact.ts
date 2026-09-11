@@ -14,5 +14,5 @@ export const WOLFF_CONTACT = {
   youforge: "https://you-forge.de",
   youforgeContact: "https://you-forge.de/kontakt",
   calendly: "https://calendly.com/maximiliankrug7/30min",
-  email: "mk-ventures-360@gmx.net",
+  email: "youforge@gmx.de",
 } as const;
