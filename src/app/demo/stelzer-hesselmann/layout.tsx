@@ -16,7 +16,7 @@ const display = Instrument_Serif({
 
 const sans = Syne({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "500",
   variable: "--font-aa-sans",
   display: "swap",
 });

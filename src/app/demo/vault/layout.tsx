@@ -4,7 +4,7 @@ import { VAULT } from "@/components/demo/vault/vault-config";
 
 const sans = Outfit({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500"],
+  weight: "400",
   variable: "--font-vault",
   display: "swap",
 });
