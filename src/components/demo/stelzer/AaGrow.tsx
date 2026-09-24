@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { AA_FILM_CHAPTERS } from "@/components/demo/stelzer/aa-content";
 
 export function AaGrow() {
@@ -84,23 +84,14 @@ function CinemaCaption({
   const index = useTransform(progress, (v) =>
     Math.min(AA_FILM_CHAPTERS.length - 1, Math.floor(v * AA_FILM_CHAPTERS.length)),
   );
-  const title = useTransform(index, (i) => AA_FILM_CHAPTERS[i]?.title ?? "");
-  const note = useTransform(index, (i) => AA_FILM_CHAPTERS[i]?.note ?? "");
-
-  if (reduce) {
-    const chapter = AA_FILM_CHAPTERS[0];
-    return (
-      <>
-        <p className="text-[10px] uppercase tracking-[0.28em] opacity-80">{chapter.title}</p>
-        <p className="mt-1 font-aa-display text-3xl">{chapter.note}</p>
-      </>
-    );
-  }
+  const [chapter, setChapter] = useState(0);
+  useMotionValueEvent(index, "change", (value) => setChapter(value));
+  const current = AA_FILM_CHAPTERS[reduce ? 0 : chapter] ?? AA_FILM_CHAPTERS[0];
 
   return (
     <>
-      <motion.p className="text-[10px] uppercase tracking-[0.28em] opacity-80">{title}</motion.p>
-      <motion.p className="mt-1 font-aa-display text-3xl sm:text-4xl">{note}</motion.p>
+      <p className="text-[10px] uppercase tracking-[0.28em] opacity-80">{current.title}</p>
+      <p className="mt-1 font-aa-display text-3xl sm:text-4xl">{current.note}</p>
     </>
   );
 }
