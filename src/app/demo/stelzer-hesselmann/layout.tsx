@@ -4,6 +4,7 @@ import { AaLenis } from "@/components/demo/stelzer/AaLenis";
 import { AaNav } from "@/components/demo/stelzer/AaNav";
 import { AaScrollProgress } from "@/components/demo/stelzer/AaScrollProgress";
 import { AaGrain } from "@/components/demo/stelzer/AaGrain";
+import { AaCursor } from "@/components/demo/stelzer/AaCursor";
 import { AA } from "@/components/demo/stelzer/aa-config";
 
 const display = Instrument_Serif({
@@ -101,10 +102,21 @@ export default function StelzerHesselmannLayout({
           animation: aa-marquee 38s linear infinite;
           will-change: transform;
         }
+        html.aa-cursor,
+        html.aa-cursor * {
+          cursor: none !important;
+        }
+        @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+          html.aa-cursor,
+          html.aa-cursor * {
+            cursor: auto !important;
+          }
+        }
         @media (prefers-reduced-motion: reduce) {
           .aa-marquee, .aa-glitch, .aa-breathe { animation: none; }
         }
       `}</style>
+      <AaCursor />
       <AaScrollProgress />
       <AaGrain />
       <AaNav />
