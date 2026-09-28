@@ -9,7 +9,7 @@ export const REPORT_DIR = join(OUT_DIR, "berichte");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.2";
+export const VERSION = "1.3";
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },

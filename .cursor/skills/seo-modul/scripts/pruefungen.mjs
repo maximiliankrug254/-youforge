@@ -16,11 +16,17 @@ function words(text) {
 const pfadVon = (url) => new URL(url).pathname;
 const istNoindex = (p) => /noindex/i.test(`${p.robots || ""} ${p.xRobots || ""}`);
 
-/** Canonical, der auf eine andere Adresse zeigt – sonst null. */
+/** Canonical, der auf eine andere Adresse zeigt – sonst null. Zusätze wie ?variant=… (Shopify) zählen nicht. */
 function fremderCanonical(p) {
   if (!p.canonical) return null;
+  const ohneZusatz = (u) => {
+    const x = new URL(normalizeUrl(u));
+    x.search = "";
+    return x.href;
+  };
   try {
-    return normalizeUrl(p.canonical) !== normalizeUrl(p.finalUrl || p.url) ? p.canonical : null;
+    const ziel = ohneZusatz(p.canonical);
+    return [p.url, p.finalUrl].filter(Boolean).some((u) => ohneZusatz(u) === ziel) ? null : p.canonical;
   } catch {
     return null;
   }
@@ -111,6 +117,11 @@ function findeAdresse(text, firma) {
   const { plz } = adresseTeile(firma?.daten.address);
   if (plz && typeof plz === "string" && plz.length <= 10 && text.includes(plz)) return plz;
   return null;
+}
+
+function istShop(p, pfad) {
+  if (p.plattform === "shopify" || /\/(collections|products|produkte?|kategorie|shop)(\/|$)/i.test(pfad)) return true;
+  return flattenJsonLd(p.jsonLd.filter((b) => !b.__fehler)).some((n) => typesOf(n).some((t) => t === "Product" || t === "ItemList"));
 }
 
 export function hatFaq(p) {
@@ -282,7 +293,17 @@ export function pruefeSeite(p, site, opts) {
   const h1 = p.headings.filter((h) => h.level === 1);
   if (voll) {
     out.push(
-      h1.length === 1
+      h1.length === 1 && h1[0].nurBild
+        ? r(
+            "h1",
+            "technik",
+            "wichtig",
+            "Hauptüberschrift (H1)",
+            "warnung",
+            `Die H1 enthält nur ein Bild bzw. Logo${h1[0].text ? ` („${h1[0].text}“)` : ""} – sie sagt Google nicht, worum es auf der Seite geht.`,
+            "Eine echte Text-Überschrift als H1 setzen und das Logo nicht als H1 auszeichnen.",
+          )
+        : h1.length === 1
         ? r("h1", "technik", "wichtig", "Hauptüberschrift (H1)", "ok", `„${h1[0].text}“`)
         : h1.length === 0
           ? r("h1", "technik", "wichtig", "Hauptüberschrift (H1)", "fehler", "Keine H1 gefunden.", "Genau eine H1 pro Seite, die sagt, worum es geht.")
@@ -324,7 +345,9 @@ export function pruefeSeite(p, site, opts) {
     );
   }
 
-  const messungen = p.lcpMessungen?.length > 1 ? ` – mittlerer Wert aus ${p.lcpMessungen.length} Messungen (${p.lcpMessungen.map(sek).join(", ")})` : "";
+  const messungen =
+    (p.lcpMessungen?.length > 1 ? ` – mittlerer Wert aus ${p.lcpMessungen.length} Messungen (${p.lcpMessungen.map(sek).join(", ")})` : "") +
+    (p.lcpSlider ? "; spätere Bildwechsel im Slider nicht mitgezählt" : "");
   // Bewertet wird der angezeigte Wert (auf 0,1 s gerundet), damit „2,5 s“ nicht als Warnung erscheint.
   const lcp = p.lcp == null ? null : Math.round(p.lcp / 100) * 100;
   if (lcp == null) out.push(r("lcp", "technik", "wichtig", "Ladezeit (LCP)", "info", "Nicht messbar."));
@@ -380,7 +403,11 @@ export function pruefeSeite(p, site, opts) {
         "Textumfang",
         wc >= 300 ? "ok" : wc >= 150 ? "warnung" : "fehler",
         `${wc} Wörter sichtbarer Text.`,
-        wc >= 300 ? "" : "Mehr echten Inhalt: Leistungen erklären, Ablauf, Einsatzgebiet, Fragen & Antworten.",
+        wc >= 300
+          ? ""
+          : istShop(p, pfad)
+            ? "Eigenen Einleitungstext ergänzen: was es hier gibt, für wen, was es besonders macht – plus Fragen & Antworten."
+            : "Mehr echten Inhalt: Leistungen erklären, Ablauf, Einsatzgebiet, Fragen & Antworten.",
       ),
     );
 

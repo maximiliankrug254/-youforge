@@ -73,6 +73,7 @@ async function nachmessen(browser, url, page, opts) {
   for (let i = 0; i < 2; i++) {
     const m = await collectPage(browser, url, { drosseln: true, nurMessen: true });
     if (m.ok && m.lcp != null) werte.push(m.lcp);
+    if (m.lcpSlider) page.lcpSlider = true;
     if (werte.length === 2 && Math.max(...werte) / Math.min(...werte) < 1.5) break;
   }
   if (werte.length > 1) {

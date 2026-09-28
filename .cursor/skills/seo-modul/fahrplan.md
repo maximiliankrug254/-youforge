@@ -2,7 +2,7 @@
 
 ## Aktuelle Version
 
-**1.2** vom 28.09.2026
+**1.3** vom 28.09.2026
 
 ## Was das Modul kann
 
@@ -24,6 +24,8 @@ Nach jeder Änderung diese Läufe wiederholen und mit den Werten vergleichen. **
 | `--url https://isabellmerklinger.de/ --site --max 10 --keyword Finanzcoaching --ort Deutschland` | – | Start 98, Website 87 (teils Abbruch) | Start 98, Website 92 |
 | `--url https://you-forge.de/demo/raumkontrast --ignoriere-noindex` | 60 (Fehlerseite bewertet) | 0, nur „nicht erreichbar“ | 0 |
 
+Gegenprobe 1.3: gleiche Befunde wie 1.2, nur die Ladezeiten lagen bei allen drei Seiten gleichzeitig höher (Website 94 / 87 / 91). Die eigene Messung hängt von der Internetverbindung des Rechners ab – bei Abweichungen erst die Ladezeit-Zeilen vergleichen.
+
 - room2build.com: typische WordPress-Agenturseite (Sitemap-Index, verknüpfter Firmeneintrag).
 - you-forge.de: überregionale Next.js-Seite mit Rechtstexten und verborgenen Demos.
 - isabellmerklinger.de: selbst gebaute HTML-Seite, zweisprachig (de/en), `index.html` als Kopie der Startseite, Landingpage nur in der Sitemap, Server mit gelegentlichen Aussetzern.
@@ -37,11 +39,16 @@ Erwartete echte Befunde bei isabellmerklinger.de: hreflang-Rückverweis von `/in
 | 28.09.2026 | room2build.com | WordPress, Agentur, lokal | Sitemap-Index, verknüpfter Firmeneintrag, Rechtstexte (1.1) |
 | 28.09.2026 | you-forge.de | Next.js, überregional | verborgene Demos, überregionaler Modus (1.1) |
 | 28.09.2026 | isabellmerklinger.de | statisches HTML, zweisprachig, Coaching | Kopien per Canonical, Sprachfassungen, Sitemap als Quelle, Wiederholung bei Aussetzern (1.2) |
+| 28.09.2026 | grizzlyfoods.de | Shopify-Onlineshop, deutschlandweit | Slider verfälscht Ladezeit, Shopify-Adresszusätze (?variant=), Logo als H1, Shop-Tipps (1.3) |
+
+Erwartete echte Befunde bei grizzlyfoods.de: H1 der Startseite ist nur das Logo; kein Organization-Eintrag (nur BreadcrumbList); Suchbegriff „Beef Jerky“ nicht in Titel/H1 der Startseite; wenig eigener Text auf Kategorieseiten; 2,5–3 MB pro Seite. Ladezeiten der Unterseiten schwanken dort zwischen Läufen stark (unter 2,5 s bis 7 s) – für Aussagen gegenüber Kunden mit echten Nutzerdaten gegenprüfen.
 
 ## Geplante Verbesserungen
 
 - Texte, Seitentitel und FAQ nicht nur prüfen, sondern auf Wunsch Vorschläge schreiben (mit Lektorat).
 - Google Search Console anbinden, um echte Platzierungen und Klicks zu zeigen.
+- Echte Ladezeiten von Google-Nutzern (Chrome-Nutzerdaten über die PageSpeed-Insights-Schnittstelle) zusätzlich zur eigenen Messung zeigen – die eigene Messung schwankt je nach Verbindung.
+- Shop-Modus: Produkt-Einträge (Preis, Verfügbarkeit, Bewertungen) auf Produktseiten prüfen.
 - Prüfung in die Post-Deploy-Checkliste aufnehmen.
 - Weitere echte Seiten testen: alte Handwerker-WordPress-Seiten, Jimdo, Wix, Betriebe mit mehreren Standorten, Österreich/Schweiz.
 
@@ -52,6 +59,13 @@ Erwartete echte Befunde bei isabellmerklinger.de: hreflang-Rückverweis von `/in
 - Verkauf an Agenturen: Nutzungsrecht, einmaliger Preis (noch offen), kein Update-Paket. Details: `public/docs/SEO.docx` (intern).
 
 ## Änderungsprotokoll
+
+- **1.3 – 28.09.2026** – Nach Test mit grizzlyfoods.de (Shopify):
+  - Ladezeit: Wechselt ein Slider nach dem Laden ein fast gleich großes Bild ein, zählt das nicht mehr als Hauptinhalt (vorher 14 s statt 2,6 s).
+  - Canonical-Vergleich ohne Adresszusätze wie `?variant=…` – Shopify-Produktseiten gelten nicht mehr fälschlich als Kopie.
+  - Neu: H1, die nur ein Bild bzw. Logo enthält, wird gemeldet (häufig bei Shopify-Themes).
+  - Shopify-Tipps für Titel, Beschreibung, Vorschaubild, Firmeneintrag, Ladezeit, Sitemap, robots.txt.
+  - Bei Shops und Kategorieseiten passender Texttipp statt „Leistungen, Ablauf, Einsatzgebiet“.
 
 - **1.2 – 28.09.2026** – Nach Test mit isabellmerklinger.de:
   - Seiten, die per Canonical auf eine andere Adresse zeigen (z. B. `/index.html` → `/`), gelten als Kopie und zählen nicht zur Gesamtnote. Zeigt der Canonical einer gewerteten Seite woanders hin, ist das ein Fehler.

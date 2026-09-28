@@ -58,10 +58,13 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
   }
 
   await page.addInitScript(() => {
-    window.__seo = { lcp: null, cls: 0 };
+    window.__seo = { lcp: null, cls: 0, lcpListe: [] };
     try {
       new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) window.__seo.lcp = entry.startTime;
+        for (const entry of list.getEntries()) {
+          window.__seo.lcp = entry.startTime;
+          window.__seo.lcpListe.push({ t: entry.startTime, size: entry.size });
+        }
       }).observe({ type: "largest-contentful-paint", buffered: true });
       new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
@@ -94,7 +97,24 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
   const ladezeitMs = Date.now() - started;
 
   const vitals = await page.evaluate(() => ({
-    lcp: window.__seo?.lcp ?? null,
+    // Slider: Wechselt nach dem Laden ein fast gleich großes Bild ein, zählt der Browser das als neuen
+    // „größten Inhalt“. Besucher sehen den Hauptinhalt aber schon beim ersten Bild – spätere Wechsel ignorieren.
+    ...(() => {
+      const liste = window.__seo?.lcpListe || [];
+      const geladen = performance.getEntriesByType("navigation")[0]?.loadEventEnd || 0;
+      let wert = null;
+      let groesse = 0;
+      let slider = false;
+      for (const e of liste) {
+        if (wert != null && geladen && e.t > geladen && e.size <= groesse * 1.1) {
+          slider = true;
+          continue;
+        }
+        wert = e.t;
+        groesse = e.size;
+      }
+      return { lcp: wert ?? window.__seo?.lcp ?? null, lcpSlider: slider };
+    })(),
     cls: window.__seo?.cls ?? 0,
     fallbackBytes: performance
       .getEntriesByType("resource")
@@ -104,7 +124,7 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
 
   if (nurMessen) {
     await context.close();
-    return { url, ok: true, lcp: vitals.lcp, cls: vitals.cls };
+    return { url, ok: true, lcp: vitals.lcp, lcpSlider: vitals.lcpSlider, cls: vitals.cls };
   }
 
   const dom = await page.evaluate(() => {
@@ -113,10 +133,11 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
     const prop = (p) => q(`meta[property="${p}"]`)?.getAttribute("content") ?? null;
     const clean = (t) => (t || "").replace(/\s+/g, " ").trim();
 
-    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => ({
-      level: Number(h.tagName[1]),
-      text: clean(h.textContent).slice(0, 140),
-    }));
+    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => {
+      const text = clean(h.textContent).slice(0, 140);
+      const bildAlt = text ? "" : clean([...h.querySelectorAll("img[alt],svg[aria-label]")].map((b) => b.getAttribute("alt") || b.getAttribute("aria-label")).join(" "));
+      return { level: Number(h.tagName[1]), text: text || bildAlt, nurBild: !text && Boolean(h.querySelector("img,svg")) };
+    });
 
     const imgs = [...document.images].filter((img) => {
       const hidden = img.closest("[aria-hidden='true']");
@@ -196,6 +217,7 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
     zweiterVersuch,
     ladezeitMs,
     lcp: vitals.lcp,
+    lcpSlider: vitals.lcpSlider,
     cls: vitals.cls,
     bytes: bytes || vitals.fallbackBytes,
     screenshot,

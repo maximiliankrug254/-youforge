@@ -27,7 +27,7 @@ Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen),
 
 Ausgabe: `.seo/berichte/seo-<zeit>.html|.md|.json` (+ `.pdf`/`.png`). Der HTML-Bericht öffnet sich automatisch.
 
-Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten über 2,5 s misst das Modul selbst bis zu dreimal nach und nimmt den mittleren Wert. Mehrere Prüfungen nie gleichzeitig laufen lassen – das verfälscht die Ladezeit.
+Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten über 2,5 s misst das Modul selbst bis zu dreimal nach und nimmt den mittleren Wert; spätere Bildwechsel in Slidern zählen nicht. Mehrere Prüfungen nie gleichzeitig laufen lassen – das verfälscht die Ladezeit.
 
 ### So bewertet das Modul
 
