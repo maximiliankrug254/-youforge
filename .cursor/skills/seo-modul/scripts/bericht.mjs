@@ -2,7 +2,7 @@ import { PLATTFORMEN, STUFEN, VERSION, escapeHtml as e, katLabels } from "./lib.
 import { note } from "./pruefungen.mjs";
 
 let KATEGORIEN = katLabels();
-const TYP_LABEL = { rechtstext: "Rechtstext · nicht gewertet", versteckt: "Verborgen · nicht gewertet" };
+const TYP_LABEL = { rechtstext: "Rechtstext · nicht gewertet", versteckt: "Verborgen · nicht gewertet", kopie: "Kopie · nicht gewertet" };
 
 const ICON = { ok: "✓", warnung: "!", fehler: "✕", info: "i" };
 const STATUS_LABEL = { ok: "Bestanden", warnung: "Verbesserbar", fehler: "Fehlt", info: "Hinweis" };
@@ -142,7 +142,7 @@ function websiteBlock(website) {
   return `
   <section class="card">
     <h2>Gesamte Website · ${website.seiten} Seiten</h2>
-    ${website.gewertet != null && website.gewertet < website.seiten ? `<p class="detail">Die Gesamtnote beruht auf ${website.gewertet} Seiten. Rechtstexte und bewusst verborgene Seiten zählen nicht mit.</p>` : ""}
+    ${website.gewertet != null && website.gewertet < website.seiten ? `<p class="detail">Die Gesamtnote beruht auf ${website.gewertet} Seiten. Rechtstexte, Kopien und bewusst verborgene Seiten zählen nicht mit.</p>` : ""}
     ${website.uebersprungen?.anzahl ? `<p class="detail">${website.uebersprungen.anzahl} weitere Seiten in verborgenen Bereichen (/${website.uebersprungen.bereiche.map(e).join(", /")}) wurden nicht einzeln geprüft.</p>` : ""}
     <div class="overview-score inline">${ring(website.score.gesamt)}<div class="bars">${kategorieBalken(website.score)}</div></div>
     <ul class="checks">${website.results.map(checkZeile).join("")}</ul>

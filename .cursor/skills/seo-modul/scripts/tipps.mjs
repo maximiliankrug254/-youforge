@@ -55,7 +55,7 @@ const TIPPS = {
   sprache: {
     nextjs: '<html lang="de"> im Root-Layout setzen.',
     wordpress: "Einstellungen → Allgemein → Sprache der Website auf Deutsch stellen.",
-    allgemein: '<html lang="de"> setzen.',
+    allgemein: '<html lang="de"> setzen – bei anderssprachigen Seiten die passende Sprache, z. B. lang="en".',
   },
   viewport: {
     nextjs: "viewport-Export mit width=device-width setzen.",

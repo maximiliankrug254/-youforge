@@ -58,6 +58,29 @@ function openFile(file) {
   spawn(cmd[0], cmd[1], { detached: true, stdio: "ignore" }).unref();
 }
 
+const TYP_KURZ = { rechtstext: "Rechtstext", versteckt: "verborgen", kopie: "Kopie (Canonical)" };
+const LCP_GRENZE = 2500;
+const median = (werte) => {
+  const s = [...werte].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
+};
+
+/** Ladezeit schwankt: über der Grenze ein zweites Mal messen, bei starker Abweichung ein drittes Mal. */
+async function nachmessen(browser, url, page, opts) {
+  if (!opts.drosseln || page.lcp == null || page.lcp <= LCP_GRENZE) return;
+  const werte = [page.lcp];
+  for (let i = 0; i < 2; i++) {
+    const m = await collectPage(browser, url, { drosseln: true, nurMessen: true });
+    if (m.ok && m.lcp != null) werte.push(m.lcp);
+    if (werte.length === 2 && Math.max(...werte) / Math.min(...werte) < 1.5) break;
+  }
+  if (werte.length > 1) {
+    page.lcpMessungen = werte;
+    page.lcp = median(werte);
+  }
+}
+
 async function analysiere(browser, url, opts, istStart) {
   process.stdout.write(`  prüfe ${url} … `);
   const page = await collectPage(browser, url, { drosseln: opts.drosseln });
@@ -68,10 +91,12 @@ async function analysiere(browser, url, opts, istStart) {
   const site = await collectOrigin(new URL(page.finalUrl || url).origin);
   const kontext = { ...opts, istStart };
   const einordnung = einordnen(page, site, kontext);
+  if (einordnung.gewertet) await nachmessen(browser, url, page, opts);
   const results = pruefeSeite(page, site, { ...kontext, einordnung });
   const score = bewerte(results);
-  const zusatz = einordnung.gewertet ? "" : ` · ${einordnung.typ === "rechtstext" ? "Rechtstext" : "verborgen"}, nicht gewertet`;
-  console.log(`${score.gesamt}/100 (${note(score.gesamt)})${zusatz}`);
+  const zusatz = einordnung.gewertet ? "" : ` · ${TYP_KURZ[einordnung.typ] || einordnung.typ}, nicht gewertet`;
+  const hinweise = [page.zweiterVersuch && "im 2. Anlauf geladen", page.lcpMessungen && `Ladezeit ${page.lcpMessungen.length}× gemessen`].filter(Boolean);
+  console.log(`${score.gesamt}/100 (${note(score.gesamt)})${zusatz}${hinweise.length ? ` · ${hinweise.join(", ")}` : ""}`);
   return { page, einordnung, results, score, massnahmen: massnahmen(results) };
 }
 
@@ -105,42 +130,71 @@ try {
     const start = opts.urls[0];
     const prefix = new URL(start).pathname.replace(/\/$/, "") || "/";
     const queue = [start];
+    const ausSitemap = [];
     const spaeter = [];
     const seen = new Set(queue);
+    const verlinkt = new Set();
+    const herkunftSitemap = new Set();
     const verborgeneBereiche = new Set();
     const uebersprungen = new Set();
     const bereich = (url) => new URL(url).pathname.split("/")[1] || "";
     const imVerborgenen = (url) => bereich(url) !== "" && verborgeneBereiche.has(bereich(url));
     const gewerteteSeiten = () => analysen.filter((a) => a.einordnung.gewertet).length;
+    const imBereich = (url) => prefix === "/" || new URL(url).pathname === prefix || new URL(url).pathname.startsWith(`${prefix}/`);
+    const einreihen = (url, liste) => {
+      if (seen.has(url)) return;
+      seen.add(url);
+      (RECHTSTEXT.test(new URL(url).pathname) ? spaeter : liste).push(url);
+    };
     const MAX_RECHTSTEXTE = 3;
+    // Reihenfolge: verlinkte Seiten, dann Seiten nur aus der Sitemap, zuletzt höchstens drei Rechtstexte.
     // Nur gewertete Seiten zählen gegen --max. Nach der ersten verborgenen Seite eines Bereichs (z. B. /demo/…)
-    // werden weitere Seiten dort übersprungen; Rechtstexte kommen zuletzt und höchstens dreimal.
-    while (queue.length || spaeter.length) {
-      const ausQueue = queue.length > 0;
-      if (ausQueue ? gewerteteSeiten() >= opts.max : analysen.filter((a) => a.einordnung.typ === "rechtstext").length >= MAX_RECHTSTEXTE) break;
-      const url = ausQueue ? queue.shift() : spaeter.shift();
+    // werden weitere Seiten dort übersprungen.
+    while (queue.length || ausSitemap.length || spaeter.length) {
+      const liste = queue.length ? queue : ausSitemap.length ? ausSitemap : spaeter;
+      if (liste !== spaeter ? gewerteteSeiten() >= opts.max : analysen.filter((a) => a.einordnung.typ === "rechtstext").length >= MAX_RECHTSTEXTE) break;
+      const url = liste.shift();
       if (imVerborgenen(url)) {
         uebersprungen.add(url);
         continue;
       }
-      const a = await analysiere(browser, url, opts, analysen.length === 0);
+      const istStart = analysen.length === 0;
+      const a = await analysiere(browser, url, opts, istStart);
       analysen.push(a);
       if (!a.page.ok) continue;
+      if (a.page.finalUrl) seen.add(normalizeUrl(a.page.finalUrl));
+      if (istStart) {
+        const origin = new URL(a.page.finalUrl || url).origin;
+        const { sitemap } = await collectOrigin(origin);
+        for (const pfad of sitemap.paths) {
+          let adresse;
+          try {
+            adresse = normalizeUrl(new URL(pfad, origin).href);
+          } catch {
+            continue;
+          }
+          if (!imBereich(adresse) || seen.has(adresse) || /\.(pdf|jpe?g|png|gif|webp|svg|mp4|zip|docx?|xlsx?)$/i.test(pfad)) continue;
+          herkunftSitemap.add(adresse);
+          einreihen(adresse, ausSitemap);
+        }
+      }
       if (a.einordnung.typ === "versteckt") {
         verborgeneBereiche.add(bereich(url));
         continue;
       }
+      const selbst = new Set([a.page.url, a.page.finalUrl].filter(Boolean).map(normalizeUrl));
       for (const link of internalLinks(a.page, prefix)) {
-        if (!seen.has(link)) {
-          seen.add(link);
-          (RECHTSTEXT.test(new URL(link).pathname) ? spaeter : queue).push(link);
-        }
+        if (!selbst.has(link)) verlinkt.add(link);
+        const idx = ausSitemap.indexOf(link);
+        if (idx >= 0) queue.push(...ausSitemap.splice(idx, 1));
+        einreihen(link, queue);
       }
     }
-    for (const url of queue) if (imVerborgenen(url)) uebersprungen.add(url);
+    for (const url of [...queue, ...ausSitemap]) if (imVerborgenen(url)) uebersprungen.add(url);
     if (uebersprungen.size) console.log(`  ${uebersprungen.size} weitere Seiten in verborgenen Bereichen übersprungen (/${[...verborgeneBereiche].join(", /")})`);
     const gewertet = analysen.filter((a) => a.einordnung.gewertet);
-    const siteResults = pruefeWebsite(gewertet.map((a) => a.page), opts);
+    const nurSitemap = gewertet.map((a) => normalizeUrl(a.page.url)).filter((u) => herkunftSitemap.has(u) && !verlinkt.has(u)).map((u) => new URL(u).pathname);
+    const siteResults = pruefeWebsite(gewertet.map((a) => a.page), { ...opts, nurSitemap });
     const alle = [...gewertet.flatMap((a) => a.results), ...siteResults];
     website = {
       seiten: analysen.length,

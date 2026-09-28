@@ -24,7 +24,7 @@ export async function launchBrowser() {
   throw lastError;
 }
 
-export async function collectPage(browser, url, { drosseln = true } = {}) {
+export async function collectPage(browser, url, { drosseln = true, nurMessen = false } = {}) {
   const context = await browser.newContext({
     viewport: MOBILE,
     deviceScaleFactor: 2,
@@ -73,13 +73,21 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
     }
   });
 
-  const started = Date.now();
+  let started = Date.now();
   let response;
+  let zweiterVersuch = false;
   try {
-    response = await page.goto(url, { waitUntil: "load", timeout: 60000 });
-  } catch (err) {
-    await context.close();
-    return { url, ok: false, error: err instanceof Error ? err.message.split("\n")[0] : String(err) };
+    response = await page.goto(url, { waitUntil: "load", timeout: 45000 });
+  } catch {
+    // Einmalige Aussetzer (Server, Netz, hängendes Skript) nicht als „nicht erreichbar“ werten.
+    zweiterVersuch = true;
+    started = Date.now();
+    try {
+      response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
+    } catch (err) {
+      await context.close();
+      return { url, ok: false, error: err instanceof Error ? err.message.split("\n")[0] : String(err) };
+    }
   }
   await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
   await page.waitForTimeout(2500);
@@ -93,6 +101,11 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
       .concat(performance.getEntriesByType("navigation"))
       .reduce((sum, e) => sum + (e.transferSize || 0), 0),
   }));
+
+  if (nurMessen) {
+    await context.close();
+    return { url, ok: true, lcp: vitals.lcp, cls: vitals.cls };
+  }
 
   const dom = await page.evaluate(() => {
     const q = (s) => document.querySelector(s);
@@ -143,6 +156,8 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
       viewport: meta("viewport"),
       canonical: q('link[rel="canonical"]')?.href ?? null,
       lang: document.documentElement.getAttribute("lang"),
+      hreflang: [...document.querySelectorAll('link[rel="alternate"][hreflang]')].map((l) => ({ lang: l.hreflang, href: l.href })),
+      formulare: document.querySelectorAll("form").length,
       ogTitle: prop("og:title"),
       ogImage: prop("og:image"),
       favicon: Boolean(q('link[rel~="icon"]')),
@@ -178,6 +193,7 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
     xRobots: headers["x-robots-tag"] || null,
     plattform: erkennePlattform(dom.generator, marker, headers),
     netz,
+    zweiterVersuch,
     ladezeitMs,
     lcp: vitals.lcp,
     cls: vitals.cls,

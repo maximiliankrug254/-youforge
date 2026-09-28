@@ -16,6 +16,16 @@ function words(text) {
 const pfadVon = (url) => new URL(url).pathname;
 const istNoindex = (p) => /noindex/i.test(`${p.robots || ""} ${p.xRobots || ""}`);
 
+/** Canonical, der auf eine andere Adresse zeigt – sonst null. */
+function fremderCanonical(p) {
+  if (!p.canonical) return null;
+  try {
+    return normalizeUrl(p.canonical) !== normalizeUrl(p.finalUrl || p.url) ? p.canonical : null;
+  } catch {
+    return null;
+  }
+}
+
 function imSitemap(p, site) {
   if (!site.sitemap.found) return false;
   const pfade = new Set(site.sitemap.paths);
@@ -113,14 +123,22 @@ export function hatFaq(p) {
 /**
  * Ordnet eine Seite ein, bevor sie geprüft wird:
  * - rechtstext: Impressum, Datenschutz, AGB … → nur Grundtechnik, zählt nicht zur Gesamtnote
+ * - kopie: verweist per Canonical auf eine andere Adresse (z. B. /index.html → /) → zählt nicht
  * - versteckt: bewusst vor Google verborgen (noindex oder robots.txt, nicht in der Sitemap) → zählt nicht
  * - normal
  */
 export function einordnen(p, site, opts) {
   const pfad = pfadVon(p.finalUrl || p.url);
   const kopf = `${p.title || ""} ${p.headings.find((h) => h.level === 1)?.text || ""}`;
-  if (RECHTSTEXT.test(pfad) || /^(impressum|datenschutz|agb|allgemeine geschäftsbedingungen|privacy|widerruf)/i.test(kopf.trim())) {
+  if (
+    RECHTSTEXT.test(pfad) ||
+    /^(impressum|imprint|datenschutz|agb|allgemeine geschäftsbedingungen|privacy|widerruf|legal notice|terms)/i.test(kopf.trim())
+  ) {
     return { typ: "rechtstext", gewertet: false, grund: "Rechtstext – nur Grundtechnik geprüft, zählt nicht zur Gesamtnote." };
+  }
+  const kanon = fremderCanonical(p);
+  if (!opts.istStart && kanon) {
+    return { typ: "kopie", gewertet: false, grund: `Verweist per Canonical auf ${kanon} – Google wertet nur diese Adresse. Zählt nicht zur Gesamtnote.` };
   }
   if (!opts.istStart && !opts.ignoriereNoindex && !imSitemap(p, site) && (istNoindex(p) || robotsBlocks(site.robots, pfad))) {
     return { typ: "versteckt", gewertet: false, grund: "Bewusst vor Google verborgen – zählt nicht zur Gesamtnote." };
@@ -136,8 +154,9 @@ export function pruefeSeite(p, site, opts) {
   const plattform = isLocal ? "nextjs" : p.plattform || "unbekannt";
   const T = (key) => tipp(key, plattform);
   const typ = opts.einordnung?.typ || "normal";
-  const nebenbei = typ === "rechtstext" || typ === "versteckt";
-  const voll = typ !== "rechtstext";
+  const nebenbei = typ === "rechtstext" || typ === "versteckt" || typ === "kopie";
+  const voll = typ !== "rechtstext" && typ !== "kopie";
+  const kanon = fremderCanonical(p);
   const start = Boolean(opts.istStart);
   const inSitemap = imSitemap(p, site);
   const ueber = Boolean(opts.ueberregional);
@@ -182,6 +201,8 @@ export function pruefeSeite(p, site, opts) {
   const sm = (status, detail, fix = "") => r("sitemap", "technik", "wichtig", "Sitemap", status, detail, fix);
   const teile = site.sitemap.teile?.length ? ` (${site.sitemap.teile.length} Teil-Sitemaps)` : "";
   if (!site.sitemap.found) out.push(sm(nebenbei ? "info" : "fehler", "Keine gültige Sitemap gefunden.", T("sitemapFehlt")));
+  else if (inSitemap && typ === "kopie")
+    out.push(sm("warnung", `Die Seite steht in der Sitemap, verweist aber per Canonical auf ${kanon}.`, "In die Sitemap nur die Haupt-Adressen eintragen, keine Kopien."));
   else if (inSitemap) out.push(sm("ok", `Vorhanden${teile}, Seite eingetragen.`));
   else if (opts.ignoriereNoindex || nebenbei) out.push(sm("info", `Vorhanden${teile}, diese Seite ist – passend – nicht eingetragen.`));
   else out.push(sm("warnung", `Sitemap vorhanden${teile}, diese Seite ist aber nicht eingetragen.`, T("sitemapSeite")));
@@ -228,16 +249,28 @@ export function pruefeSeite(p, site, opts) {
     );
 
     out.push(
-      p.canonical
-        ? r("canonical", "technik", "tipp", "Canonical-Link", "ok", p.canonical)
-        : r("canonical", "technik", "tipp", "Canonical-Link", "fehler", "Kein Canonical-Link.", T("canonical")),
+      !p.canonical
+        ? r("canonical", "technik", "tipp", "Canonical-Link", "fehler", "Kein Canonical-Link.", T("canonical"))
+        : kanon
+          ? r(
+              "canonical",
+              "technik",
+              "wichtig",
+              "Canonical-Link",
+              "fehler",
+              `Zeigt auf eine andere Adresse (${kanon}) – Google wertet dann diese statt der geprüften Seite.`,
+              "Canonical auf die eigene Adresse der Seite setzen.",
+            )
+          : r("canonical", "technik", "tipp", "Canonical-Link", "ok", p.canonical),
     );
+  } else if (typ === "kopie") {
+    out.push(r("canonical", "technik", "tipp", "Canonical-Link", "info", `Verweist auf ${kanon} – diese Adresse gilt als Kopie.`));
   }
 
   out.push(
-    p.lang?.toLowerCase().startsWith("de")
+    p.lang
       ? r("lang", "technik", "wichtig", "Sprache der Seite", "ok", `lang="${p.lang}"`)
-      : r("lang", "technik", "wichtig", "Sprache der Seite", p.lang ? "warnung" : "fehler", p.lang ? `lang="${p.lang}"` : "Keine Sprache angegeben.", T("sprache")),
+      : r("lang", "technik", "wichtig", "Sprache der Seite", "fehler", "Keine Sprache angegeben.", T("sprache")),
   );
 
   out.push(
@@ -291,7 +324,10 @@ export function pruefeSeite(p, site, opts) {
     );
   }
 
-  if (p.lcp == null) out.push(r("lcp", "technik", "wichtig", "Ladezeit (LCP)", "info", "Nicht messbar."));
+  const messungen = p.lcpMessungen?.length > 1 ? ` – mittlerer Wert aus ${p.lcpMessungen.length} Messungen (${p.lcpMessungen.map(sek).join(", ")})` : "";
+  // Bewertet wird der angezeigte Wert (auf 0,1 s gerundet), damit „2,5 s“ nicht als Warnung erscheint.
+  const lcp = p.lcp == null ? null : Math.round(p.lcp / 100) * 100;
+  if (lcp == null) out.push(r("lcp", "technik", "wichtig", "Ladezeit (LCP)", "info", "Nicht messbar."));
   else
     out.push(
       r(
@@ -299,9 +335,9 @@ export function pruefeSeite(p, site, opts) {
         "technik",
         "wichtig",
         "Ladezeit (LCP)",
-        p.lcp <= 2500 ? "ok" : p.lcp <= 4000 ? "warnung" : "fehler",
-        `Hauptinhalt sichtbar nach ${sek(p.lcp)} (${p.netz}).`,
-        p.lcp <= 2500 ? "" : T("ladezeit"),
+        lcp <= 2500 ? "ok" : lcp <= 4000 ? "warnung" : "fehler",
+        `Hauptinhalt sichtbar nach ${sek(lcp)} (${p.netz})${messungen}.`,
+        lcp <= 2500 ? "" : T("ladezeit"),
       ),
     );
 
@@ -333,7 +369,7 @@ export function pruefeSeite(p, site, opts) {
 
   // Inhalte
   const wc = words(p.text);
-  if (typ === "kontakt")
+  if (typ === "kontakt" && wc < 300)
     out.push(r("woerter", "inhalte", "wichtig", "Textumfang", "info", `${wc} Wörter – bei einer Kontaktseite ist wenig Text in Ordnung.`));
   else
     out.push(
@@ -406,7 +442,9 @@ export function pruefeSeite(p, site, opts) {
   out.push(
     cta
       ? r("kontakt", "inhalte", "wichtig", "Kontakt mit einem Klick", "ok", tel.length ? "Telefon-Link und/oder Kontakt-Link vorhanden." : "Kontakt-Link vorhanden.")
-      : r("kontakt", "inhalte", "wichtig", "Kontakt mit einem Klick", "fehler", "Kein Anruf- oder Kontakt-Link gefunden.", "Gut sichtbaren Anruf-Button und Kontakt-Link einbauen."),
+      : typ === "kontakt" && p.formulare
+        ? r("kontakt", "inhalte", "wichtig", "Kontakt mit einem Klick", "ok", "Die Seite ist selbst das Kontakt- bzw. Anfrageformular.")
+        : r("kontakt", "inhalte", "wichtig", "Kontakt mit einem Klick", "fehler", "Kein Anruf- oder Kontakt-Link gefunden.", "Gut sichtbaren Anruf-Button und Kontakt-Link einbauen."),
   );
 
   // Lokal bzw. Firmenangaben
@@ -576,7 +614,61 @@ export function pruefeWebsite(pages, opts = {}) {
   const titles = dup("title");
   const descs = dup("description");
   const mitFaq = ok.filter((p) => hatFaq(p).gefunden).map((p) => new URL(p.url).pathname);
+
+  const zusatz = [];
+  const sprachen = [...new Set(ok.map((p) => (p.lang || "").slice(0, 2).toLowerCase()).filter(Boolean))];
+  if (sprachen.length > 1) {
+    const adresse = (u) => {
+      try {
+        return normalizeUrl(u);
+      } catch {
+        return u;
+      }
+    };
+    const nachAdresse = new Map(ok.map((p) => [adresse(p.finalUrl || p.url), p]));
+    const mitHreflang = ok.filter((p) => p.hreflang?.length);
+    const ohneRueckweg = [];
+    for (const p of mitHreflang) {
+      const selbst = adresse(p.finalUrl || p.url);
+      for (const h of p.hreflang) {
+        if (h.lang === "x-default") continue;
+        const ziel = nachAdresse.get(adresse(h.href));
+        if (!ziel || ziel === p) continue;
+        if (!(ziel.hreflang || []).some((x) => adresse(x.href) === selbst)) ohneRueckweg.push(`${pfadVon(ziel.url)} → ${pfadVon(p.url)}`);
+      }
+    }
+    const fix = 'Auf jeder Sprachfassung <link rel="alternate" hreflang="…"> zu allen Fassungen setzen – auch zu sich selbst.';
+    zusatz.push(
+      !mitHreflang.length
+        ? r("hreflang", "technik", "wichtig", "Sprachfassungen verknüpft (hreflang)", "warnung", `Die Website hat mehrere Sprachen (${sprachen.join(", ")}), aber keine hreflang-Verweise.`, fix)
+        : ohneRueckweg.length
+          ? r(
+              "hreflang",
+              "technik",
+              "wichtig",
+              "Sprachfassungen verknüpft (hreflang)",
+              "warnung",
+              `Rückverweis fehlt: ${[...new Set(ohneRueckweg)].slice(0, 3).join(" · ")}. Einseitige Angaben ignoriert Google.`,
+              fix,
+            )
+          : r("hreflang", "technik", "wichtig", "Sprachfassungen verknüpft (hreflang)", "ok", `Sprachen ${sprachen.join(", ")} gegenseitig verknüpft.`),
+    );
+  }
+  if (opts.nurSitemap?.length) {
+    zusatz.push(
+      r(
+        "verwaist",
+        "inhalte",
+        "tipp",
+        "Seiten ohne Verlinkung",
+        "info",
+        `Nur über die Sitemap gefunden, von den geprüften Seiten nicht verlinkt: ${opts.nurSitemap.slice(0, 4).join(", ")}${opts.nurSitemap.length > 4 ? " …" : ""}. Bei Landingpages für Werbung gewollt, sonst verlinken.`,
+      ),
+    );
+  }
+
   return [
+    ...zusatz,
     titles.length
       ? r("dup-title", "technik", "wichtig", "Einzigartige Seitentitel", "fehler", titles.map(([t, l]) => `„${t}“ auf ${l.join(", ")}`).join(" · "), "Jede Unterseite braucht einen eigenen Titel.")
       : r("dup-title", "technik", "wichtig", "Einzigartige Seitentitel", "ok", `${ok.length} Seiten, alle Titel verschieden.`),

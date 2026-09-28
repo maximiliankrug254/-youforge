@@ -27,7 +27,7 @@ Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen),
 
 Ausgabe: `.seo/berichte/seo-<zeit>.html|.md|.json` (+ `.pdf`/`.png`). Der HTML-Bericht öffnet sich automatisch.
 
-Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten schwanken; bei knappen Werten zweimal messen.
+Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten über 2,5 s misst das Modul selbst bis zu dreimal nach und nimmt den mittleren Wert. Mehrere Prüfungen nie gleichzeitig laufen lassen – das verfälscht die Ladezeit.
 
 ### So bewertet das Modul
 
@@ -37,7 +37,10 @@ Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten schwanken; bei knappen 
 - **Sitemap:** Sitemap-Index (WordPress, Yoast, Rank Math) wird komplett gelesen. Eine öffentliche Autoren-/Benutzer-Sitemap wird gemeldet.
 - **Firmeneintrag:** Verknüpfte Angaben (`@id`, `provider`, `parentOrganization`) zählen mit. Überregional reicht ein Organization-Eintrag.
 - **Plattform:** Next.js, WordPress, Wix, Jimdo, Shopify u. a. werden erkannt; die „So beheben“-Tipps passen zur Plattform (`scripts/tipps.mjs`).
-- **Fehlerseiten:** Antwortet eine Adresse mit 4xx/5xx, wird nur das gemeldet – der Inhalt der Fehlerseite wird nicht bewertet.
+- **Fehlerseiten:** Antwortet eine Adresse mit 4xx/5xx, wird nur das gemeldet – der Inhalt der Fehlerseite wird nicht bewertet. Lädt eine Seite beim ersten Versuch nicht, gibt es einen zweiten Anlauf.
+- **Kopien:** Seiten, deren Canonical auf eine andere Adresse zeigt (z. B. `/index.html`), werden gezeigt, zählen aber nicht zur Gesamtnote.
+- **Mehrsprachig:** Jede Sprache in `lang` ist gültig; bei mehreren Sprachen wird geprüft, ob die Fassungen per hreflang gegenseitig verknüpft sind.
+- **Sitemap als Quelle:** Im Website-Modus werden auch Seiten geprüft, die nur in der Sitemap stehen (Hinweis „nicht verlinkt“).
 
 Stand, offene Punkte und Änderungen: [fahrplan.md](fahrplan.md). Nach jeder Änderung am Modul dort eintragen und `VERSION` in `scripts/lib.mjs` erhöhen.
 

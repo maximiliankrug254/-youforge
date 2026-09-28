@@ -9,7 +9,7 @@ export const REPORT_DIR = join(OUT_DIR, "berichte");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.1";
+export const VERSION = "1.2";
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },
@@ -27,9 +27,13 @@ export function katLabels(opts = {}) {
   return { ...KATEGORIEN, lokal: opts.ueberregional ? "Firmenangaben" : KATEGORIEN.lokal };
 }
 
-export const RECHTSTEXT =
-  /(^|\/)(impressum|imprint|datenschutz[a-z-]*|privacy[a-z-]*|agb|terms[a-z-]*|nutzungsbedingungen|widerruf[a-z-]*|cookie[a-z-]*|barrierefreiheit[a-z-]*|legal|rechtliches|disclaimer)(\/|$)/i;
-export const KONTAKTSEITE = /(^|\/)(kontakt|contact|anfrage|termin)(\/|$)/i;
+// Endung wie bei statischen Seiten und Sprachfassungen: /impressum-en.html, /kontakt.php
+const PFAD_ENDE = String.raw`(?:[-_](?:de|en|fr|it|es|nl))?(?:\.(?:html?|php|aspx?))?(?:\/|$)`;
+export const RECHTSTEXT = new RegExp(
+  String.raw`(^|\/)(impressum|imprint|datenschutz[a-z-]*|privacy[a-z-]*|agb|terms[a-z-]*|nutzungsbedingungen|widerruf[a-z-]*|cookie[a-z-]*|barrierefreiheit[a-z-]*|legal|rechtliches|disclaimer)${PFAD_ENDE}`,
+  "i",
+);
+export const KONTAKTSEITE = new RegExp(String.raw`(^|\/)(kontakt|contact|anfrage|termin[a-z-]*|fragebogen|buchung|booking)${PFAD_ENDE}`, "i");
 
 const REGIONEN =
   /^(dach|d-a-ch|deutschland|germany|oesterreich|austria|schweiz|switzerland|europa|europe|bundesweit|deutschlandweit|international|weltweit|online)$/;
