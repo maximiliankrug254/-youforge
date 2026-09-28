@@ -1,0 +1,13 @@
+---
+description: >-
+  YouForge-SEO-Modul bei neuen Kundenwebsites, Metadaten, Sitemap, robots.txt, JSON-LD,
+  Seitentiteln oder SEO-Fragen.
+globs: src/app/**/layout.tsx, src/app/**/sitemap.ts, src/app/**/robots.ts, src/**/*JsonLd*.tsx, src/lib/seo/**
+alwaysApply: false
+---
+
+# SEO-Modul
+
+@.cursor/skills/seo-modul/SKILL.md
+
+Vor dem Live-Gang einer Kundenwebsite: `npm run seo:pruefen -- --url … --site --keyword … --ort …`. Keine kritischen Befunde offen lassen. Inhalte nach `.cursor/skills/seo-modul/inhalte.md`, danach Lektorat. Keine Platzierungen versprechen, keine Fakten erfinden.

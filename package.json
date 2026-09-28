@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lektorat": "node .cursor/skills/deutsches-lektorat/scripts/lektorat.mjs",
+    "lektorat:pruefen": "node .cursor/skills/deutsches-lektorat/scripts/lektorat.mjs pruefen",
+    "lektorat:korrigieren": "node .cursor/skills/deutsches-lektorat/scripts/lektorat.mjs korrigieren",
+    "lektorat:lt": "node .cursor/skills/deutsches-lektorat/scripts/start-languagetool.mjs",
+    "seo": "node .cursor/skills/seo-modul/scripts/seo.mjs",
+    "seo:pruefen": "node .cursor/skills/seo-modul/scripts/seo.mjs pruefen"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

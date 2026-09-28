@@ -42,3 +42,9 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# Lektorat: lokale LanguageTool-Installation, Caches, Screenshots
+.lektorat/
+
+# SEO-Modul: Berichte
+.seo/
