@@ -1,5 +1,8 @@
-import { KATEGORIEN, STUFEN, VERSION, escapeHtml as e } from "./lib.mjs";
+import { PLATTFORMEN, STUFEN, VERSION, escapeHtml as e, katLabels } from "./lib.mjs";
 import { note } from "./pruefungen.mjs";
+
+let KATEGORIEN = katLabels();
+const TYP_LABEL = { rechtstext: "Rechtstext · nicht gewertet", versteckt: "Verborgen · nicht gewertet" };
 
 const ICON = { ok: "✓", warnung: "!", fehler: "✕", info: "i" };
 const STATUS_LABEL = { ok: "Bestanden", warnung: "Verbesserbar", fehler: "Fehlt", info: "Hinweis" };
@@ -71,13 +74,16 @@ function analyseBlock(a, index, offen) {
         .join("")}</ol>`
     : `<p class="detail">Keine offenen Maßnahmen – stark.</p>`;
 
+  const typ = TYP_LABEL[a.einordnung?.typ];
   return `
-  <details class="card seite" ${offen ? "open" : ""}>
+  <details class="card seite${typ ? " nebenbei" : ""}" ${offen ? "open" : ""}>
     <summary>
       ${ring(a.score.gesamt, "klein")}
       <div><strong>${e(pathOf(a.page.finalUrl || a.page.url))}</strong><br><span class="muted">${e(a.page.title || "ohne Titel")}</span></div>
+      ${typ ? `<span class="typ">${typ}</span>` : ""}
       <span class="note t-${tone(a.score.gesamt)}">${note(a.score.gesamt)}</span>
     </summary>
+    ${typ ? `<p class="detail typ-hinweis">${e(a.einordnung.grund)}</p>` : ""}
     <div class="overview">
       <div class="overview-score">
         ${ring(a.score.gesamt)}
@@ -88,6 +94,7 @@ function analyseBlock(a, index, offen) {
           <div><dt>Datenmenge</dt><dd>${mb(a.page.bytes)}</dd></div>
           <div><dt>Wörter</dt><dd>${(a.page.text.match(/[A-Za-zÄÖÜäöüß0-9]{2,}/g) || []).length}</dd></div>
           <div><dt>Gemessen</dt><dd>${e(a.page.netz)}</dd></div>
+          <div><dt>Plattform</dt><dd>${e(PLATTFORMEN[a.page.plattform] || PLATTFORMEN.unbekannt)}</dd></div>
         </dl>
       </div>
       <div class="overview-todo">
@@ -104,15 +111,22 @@ function vergleichTabelle(analysen, titel) {
   const ok = analysen.filter((a) => a.page.ok);
   if (ok.length < 2) return "";
   const best = Math.max(...ok.map((a) => a.score.gesamt));
-  const hasSchema = (a) => a.results.find((c) => c.id === "schema")?.status === "ok";
+  const schemaZelle = (a) => {
+    const status = a.results.find((c) => c.id === "schema")?.status;
+    return status === "ok" ? "✓" : status ? "✕" : `<span class="muted">–</span>`;
+  };
   const rows = [
     ["Gesamt", (a) => `<b class="${a.score.gesamt === best ? "best" : ""}">${a.score.gesamt}</b>`],
     ...Object.entries(KATEGORIEN).map(([k, label]) => [label, (a) => a.score.kategorien[k] ?? "–"]),
     ["Ladezeit (LCP)", (a) => sek(a.page.lcp)],
     ["Datenmenge", (a) => mb(a.page.bytes)],
-    ["Firmeneintrag für Google", (a) => (hasSchema(a) ? "✓" : "✕")],
+    ["Firmeneintrag für Google", schemaZelle],
+    ["Plattform", (a) => e(PLATTFORMEN[a.page.plattform] || PLATTFORMEN.unbekannt)],
     ["Offene Maßnahmen", (a) => a.results.filter((c) => c.status === "fehler" || c.status === "warnung").length],
   ];
+  if (ok.some((a) => a.einordnung && !a.einordnung.gewertet)) {
+    rows.splice(1, 0, ["Zählt zur Gesamtnote", (a) => (a.einordnung?.gewertet === false ? `<span class="muted">nein</span>` : "ja")]);
+  }
   return `
   <section class="card">
     <h2>${titel}</h2>
@@ -128,6 +142,8 @@ function websiteBlock(website) {
   return `
   <section class="card">
     <h2>Gesamte Website · ${website.seiten} Seiten</h2>
+    ${website.gewertet != null && website.gewertet < website.seiten ? `<p class="detail">Die Gesamtnote beruht auf ${website.gewertet} Seiten. Rechtstexte und bewusst verborgene Seiten zählen nicht mit.</p>` : ""}
+    ${website.uebersprungen?.anzahl ? `<p class="detail">${website.uebersprungen.anzahl} weitere Seiten in verborgenen Bereichen (/${website.uebersprungen.bereiche.map(e).join(", /")}) wurden nicht einzeln geprüft.</p>` : ""}
     <div class="overview-score inline">${ring(website.score.gesamt)}<div class="bars">${kategorieBalken(website.score)}</div></div>
     <ul class="checks">${website.results.map(checkZeile).join("")}</ul>
   </section>`;
@@ -135,8 +151,14 @@ function websiteBlock(website) {
 
 export function renderHtml(report) {
   const { analysen, website, opts, erstellt, modus } = report;
+  KATEGORIEN = katLabels(opts);
   const kopf = modus === "vergleich" ? `${analysen.length} Websites im Vergleich` : e(pathOf(analysen[0].page.url));
-  const kontext = [opts.keyword && `Suchbegriff: „${e(opts.keyword)}“`, opts.ort && `Ort: ${e(opts.ort)}`, opts.ignoriereNoindex && "Demo-Modus: noindex ignoriert"]
+  const kontext = [
+    opts.keyword && `Suchbegriff: „${e(opts.keyword)}“`,
+    opts.ort && `${opts.ueberregional ? "Einsatzgebiet" : "Ort"}: ${e(opts.ort)}`,
+    opts.ueberregional && "überregional bewertet",
+    opts.ignoriereNoindex && "Demo-Modus: noindex ignoriert",
+  ]
     .filter(Boolean)
     .join(" · ");
 
@@ -161,6 +183,10 @@ h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute
 .seite>summary{display:flex;align-items:center;gap:16px;cursor:pointer;list-style:none}
 .seite>summary::-webkit-details-marker{display:none}
 .seite>summary .note{margin-left:auto}
+.seite>summary .typ{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:#f1efe9;padding:4px 10px;border-radius:999px}
+.seite>summary .typ+.note{margin-left:0}
+.nebenbei{opacity:.85}
+.typ-hinweis{margin:12px 0 0}
 .note{font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:#f1efe9}
 .overview{display:grid;grid-template-columns:260px 1fr 220px;gap:28px;margin-top:22px;align-items:start}
 .overview-score{display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -227,11 +253,13 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 }
 
 export function renderMarkdown(report) {
-  const lines = ["# SEO-Bericht", "", `Erstellt: ${report.erstellt}`, ""];
+  KATEGORIEN = katLabels(report.opts);
+  const lines = ["# SEO-Bericht", "", `Erstellt: ${report.erstellt} · YouForge-SEO-Modul ${VERSION}`, ""];
   if (report.opts.keyword) lines.push(`Suchbegriff: ${report.opts.keyword}`);
-  if (report.opts.ort) lines.push(`Ort: ${report.opts.ort}`);
+  if (report.opts.ort) lines.push(`${report.opts.ueberregional ? "Einsatzgebiet" : "Ort"}: ${report.opts.ort}${report.opts.ueberregional ? " (überregional bewertet)" : ""}`);
   if (report.website) {
-    lines.push("", `## Gesamte Website (${report.website.seiten} Seiten): ${report.website.score.gesamt}/100`, "");
+    const basis = report.website.gewertet != null && report.website.gewertet < report.website.seiten ? `, davon ${report.website.gewertet} gewertet` : "";
+    lines.push("", `## Gesamte Website (${report.website.seiten} Seiten${basis}): ${report.website.score.gesamt}/100`, "");
     for (const c of report.website.results) lines.push(`- [${c.status}] ${c.titel}: ${c.detail}`);
   }
   for (const a of report.analysen) {
@@ -243,7 +271,13 @@ export function renderMarkdown(report) {
     const kat = Object.entries(a.score.kategorien)
       .map(([k, v]) => `${KATEGORIEN[k]} ${v}`)
       .join(" · ");
-    lines.push(`**${a.score.gesamt}/100 (${note(a.score.gesamt)})** · ${kat}`, "", "| Status | Stufe | Prüfung | Befund | So beheben |", "|---|---|---|---|---|");
+    const typ = TYP_LABEL[a.einordnung?.typ];
+    lines.push(
+      `**${a.score.gesamt}/100 (${note(a.score.gesamt)})** · ${kat} · Plattform: ${PLATTFORMEN[a.page.plattform] || PLATTFORMEN.unbekannt}${typ ? ` · ${typ}` : ""}`,
+      "",
+      "| Status | Stufe | Prüfung | Befund | So beheben |",
+      "|---|---|---|---|---|",
+    );
     for (const c of a.results.filter((x) => x.status !== "ok")) {
       lines.push(`| ${c.status} | ${c.stufe} | ${c.titel} | ${c.detail.replace(/\|/g, "/")} | ${(c.fix || "").replace(/\|/g, "/")} |`);
     }

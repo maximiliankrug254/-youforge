@@ -126,7 +126,17 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
       text: clean(a.textContent).slice(0, 80),
     }));
 
+    const marker = {
+      wordpress: Boolean(q('link[href*="/wp-content/"],script[src*="/wp-content/"],script[src*="/wp-includes/"],link[href*="/wp-json/"]')),
+      nextjs: Boolean(q('script[src*="/_next/"],link[href*="/_next/"]') || window.__NEXT_DATA__ || q("#__next")),
+      jimdo: Boolean(q('link[href*="jimdo"],script[src*="jimdo"]')),
+      shopify: Boolean(window.Shopify || q('script[src*="cdn.shopify.com"]')),
+      wix: Boolean(q('meta[name="generator"][content*="Wix"]') || q('script[src*="parastorage.com"]')),
+    };
+
     return {
+      generator: meta("generator"),
+      marker,
       title: clean(document.title),
       description: meta("description"),
       robots: [meta("robots"), meta("googlebot")].filter(Boolean).join(", ") || null,
@@ -159,20 +169,37 @@ export async function collectPage(browser, url, { drosseln = true } = {}) {
   await context.close();
 
   const headers = response?.headers() || {};
+  const { marker, ...rest } = dom;
   return {
     url,
     finalUrl: page.url(),
     ok: true,
     status: response?.status() ?? 0,
     xRobots: headers["x-robots-tag"] || null,
+    plattform: erkennePlattform(dom.generator, marker, headers),
     netz,
     ladezeitMs,
     lcp: vitals.lcp,
     cls: vitals.cls,
     bytes: bytes || vitals.fallbackBytes,
     screenshot,
-    ...dom,
+    ...rest,
   };
+}
+
+function erkennePlattform(generator, marker, headers) {
+  const g = (generator || "").toLowerCase();
+  const powered = `${headers["x-powered-by"] || ""} ${headers["server"] || ""}`.toLowerCase();
+  if (marker.wordpress || g.includes("wordpress")) return "wordpress";
+  if (marker.nextjs || g.includes("next.js") || powered.includes("next.js")) return "nextjs";
+  if (marker.wix || g.includes("wix")) return "wix";
+  if (marker.jimdo || g.includes("jimdo")) return "jimdo";
+  if (marker.shopify || g.includes("shopify")) return "shopify";
+  if (g.includes("webflow")) return "webflow";
+  if (g.includes("squarespace")) return "squarespace";
+  if (g.includes("typo3")) return "typo3";
+  if (g.includes("joomla")) return "joomla";
+  return "unbekannt";
 }
 
 const originCache = new Map();
@@ -226,25 +253,69 @@ async function fetchText(url) {
   }
 }
 
+export function sitemapPfad(value) {
+  try {
+    const path = new URL(value).pathname.replace(/\/$/, "") || "/";
+    try {
+      return decodeURI(path);
+    } catch {
+      return path;
+    }
+  } catch {
+    return value;
+  }
+}
+
+const MAX_SITEMAPS = 30;
+
+/** Liest eine Sitemap; bei einem Sitemap-Index auch die verlinkten Teil-Sitemaps (z. B. WordPress, Yoast). */
+async function ladeSitemap(url, besucht, tiefe = 0) {
+  const leer = { found: false, paths: [], teile: [] };
+  if (besucht.has(url) || besucht.size >= MAX_SITEMAPS) return leer;
+  besucht.add(url);
+  const res = await fetchText(url);
+  if (res.status !== 200) return leer;
+  const istIndex = /<sitemapindex[\s>]/i.test(res.text);
+  if (!istIndex && !/<urlset[\s>]/i.test(res.text)) return leer;
+  const locs = [...res.text.matchAll(/<loc>\s*(?:<!\[CDATA\[)?\s*([^<\s\]]+)\s*(?:\]\]>)?\s*<\/loc>/gi)].map((m) =>
+    m[1].replace(/&amp;/g, "&"),
+  );
+  if (!istIndex) return { found: true, paths: locs.map(sitemapPfad), teile: [] };
+  const paths = [];
+  const teile = [...locs];
+  if (tiefe < 2) {
+    for (const teil of locs) {
+      const sub = await ladeSitemap(teil, besucht, tiefe + 1);
+      paths.push(...sub.paths);
+      teile.push(...sub.teile);
+    }
+  }
+  return { found: true, paths, teile };
+}
+
 export async function collectOrigin(origin) {
   if (originCache.has(origin)) return originCache.get(origin);
   const robotsRes = await fetchText(`${origin}/robots.txt`);
   const robots = robotsRes.status === 200 ? { found: true, ...parseRobots(robotsRes.text) } : { found: false, rules: [], sitemaps: [] };
 
-  const sitemapUrl = robots.sitemaps[0] || `${origin}/sitemap.xml`;
-  const sitemapRes = await fetchText(sitemapUrl);
-  const valid = sitemapRes.status === 200 && /<(urlset|sitemapindex)[\s>]/i.test(sitemapRes.text);
-  const paths = valid
-    ? [...sitemapRes.text.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/gi)].map((m) => {
-        try {
-          return new URL(m[1]).pathname.replace(/\/$/, "") || "/";
-        } catch {
-          return m[1];
-        }
-      })
-    : [];
+  const kandidaten = robots.sitemaps.length
+    ? robots.sitemaps.slice(0, 5)
+    : [`${origin}/sitemap.xml`, `${origin}/sitemap_index.xml`, `${origin}/wp-sitemap.xml`];
+  const besucht = new Set();
+  const sitemap = { url: kandidaten[0], found: false, paths: [], teile: [] };
+  for (const url of kandidaten) {
+    const res = await ladeSitemap(url, besucht);
+    if (!res.found) continue;
+    if (!sitemap.found) sitemap.url = url;
+    sitemap.found = true;
+    sitemap.paths.push(...res.paths);
+    sitemap.teile.push(...res.teile);
+    if (!robots.sitemaps.length) break;
+  }
+  sitemap.paths = [...new Set(sitemap.paths)];
+  sitemap.benutzer = sitemap.teile.filter((t) => /(users?|author)[-_]?(sitemap)?[-_\d]*\.xml/i.test(t));
 
-  const result = { robots, sitemap: { url: sitemapUrl, found: valid, paths } };
+  const result = { robots, sitemap };
   originCache.set(origin, result);
   return result;
 }

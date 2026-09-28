@@ -1,10 +1,11 @@
 ---
 name: seo-modul
 description: >-
-  YouForge-SEO-Modul für Handwerker-Websites (Next.js). Prüft Seiten auf Technik, Inhalte und
-  lokale Auffindbarkeit mit Playwright und erzeugt einen HTML-/PDF-Bericht. Enthält Vorlagen für
-  Firmeneintrag (JSON-LD), Metadaten, Sitemap und robots.txt sowie Regeln für SEO-Inhalte. Nutzen
-  bei neuen Kundenwebsites, vor dem Live-Gang, bei SEO-Fragen, Vergleich alte vs. neue Website.
+  YouForge-SEO-Modul für Handwerker-Websites. Prüft beliebige Websites (Next.js, WordPress, Baukästen)
+  auf Technik, Inhalte und lokale Auffindbarkeit mit Playwright und erzeugt einen HTML-/PDF-Bericht.
+  Enthält Vorlagen für Firmeneintrag (JSON-LD), Metadaten, Sitemap und robots.txt sowie Regeln für
+  SEO-Inhalte. Nutzen bei neuen Kundenwebsites, vor dem Live-Gang, bei SEO-Fragen, Vergleich alte vs.
+  neue Website.
 ---
 
 # YouForge-SEO-Modul
@@ -22,11 +23,23 @@ npm run seo:pruefen -- --url https://kunde.de --site --max 10         # ganze We
 npm run seo:pruefen -- --url https://alt.de --url https://neu.de      # Vergleich
 ```
 
-Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--base URL`.
+Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ueberregional` (Anbieter ohne festen Ort; automatisch bei `--ort DACH`, `Deutschland`, `bundesweit` …), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--base URL`.
 
 Ausgabe: `.seo/berichte/seo-<zeit>.html|.md|.json` (+ `.pdf`/`.png`). Der HTML-Bericht öffnet sich automatisch.
 
 Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten schwanken; bei knappen Werten zweimal messen.
+
+### So bewertet das Modul
+
+- **Seiten einordnen:** Rechtstexte (Impressum, Datenschutz, AGB …) bekommen nur die Grundtechnik geprüft. Bewusst verborgene Seiten (noindex oder robots.txt und nicht in der Sitemap) werden gezeigt, zählen aber nicht zur Gesamtnote. Gesperrte Startseite oder noindex trotz Sitemap-Eintrag bleiben Fehler.
+- **Website-Modus:** Suchbegriff und Ort mit vollem Gewicht nur auf der Startseite, auf Unterseiten der Ort als Tipp. Firmeneintrag und FAQ werden einmal für die ganze Website geprüft. Nur gewertete Seiten zählen gegen `--max`; nach der ersten verborgenen Seite eines Bereichs (z. B. `/demo`) wird der Rest übersprungen.
+- **Suchbegriff wortweise:** „Maler Rosenheim“ zählt auch bei „Malerbetrieb in Rosenheim“; fehlt ein Wort, gibt es eine Teilwertung.
+- **Sitemap:** Sitemap-Index (WordPress, Yoast, Rank Math) wird komplett gelesen. Eine öffentliche Autoren-/Benutzer-Sitemap wird gemeldet.
+- **Firmeneintrag:** Verknüpfte Angaben (`@id`, `provider`, `parentOrganization`) zählen mit. Überregional reicht ein Organization-Eintrag.
+- **Plattform:** Next.js, WordPress, Wix, Jimdo, Shopify u. a. werden erkannt; die „So beheben“-Tipps passen zur Plattform (`scripts/tipps.mjs`).
+- **Fehlerseiten:** Antwortet eine Adresse mit 4xx/5xx, wird nur das gemeldet – der Inhalt der Fehlerseite wird nicht bewertet.
+
+Stand, offene Punkte und Änderungen: [fahrplan.md](fahrplan.md). Nach jeder Änderung am Modul dort eintragen und `VERSION` in `scripts/lib.mjs` erhöhen.
 
 ## Neue Kundenwebsite (Ablauf)
 
@@ -46,6 +59,8 @@ Vor Code-Änderungen die Next.js-Doku in `node_modules/next/dist/docs/` lesen (M
 Der Bericht nennt pro Befund „So beheben“. Reihenfolge: Kritisch → Wichtig → Tipp. Nur echte Fakten des Betriebs verwenden, nichts erfinden (keine Fake-Bewertungen, keine erfundenen Orte oder Leistungen). Danach erneut prüfen.
 
 ## Vorführen (Vertrieb)
+
+Den Bericht über eine fremde Website nie ungeprüft weitergeben: erst selbst lesen, falsche Befunde als Verbesserung ins Modul übernehmen.
 
 Vergleich alte Website des Betriebs gegen eine YouForge-Demo:
 

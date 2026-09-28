@@ -9,7 +9,7 @@ export const REPORT_DIR = join(OUT_DIR, "berichte");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.0";
+export const VERSION = "1.1";
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },
@@ -21,6 +21,34 @@ export const KATEGORIEN = {
   technik: "Technik",
   inhalte: "Inhalte",
   lokal: "Lokale Auffindbarkeit",
+};
+
+export function katLabels(opts = {}) {
+  return { ...KATEGORIEN, lokal: opts.ueberregional ? "Firmenangaben" : KATEGORIEN.lokal };
+}
+
+export const RECHTSTEXT =
+  /(^|\/)(impressum|imprint|datenschutz[a-z-]*|privacy[a-z-]*|agb|terms[a-z-]*|nutzungsbedingungen|widerruf[a-z-]*|cookie[a-z-]*|barrierefreiheit[a-z-]*|legal|rechtliches|disclaimer)(\/|$)/i;
+export const KONTAKTSEITE = /(^|\/)(kontakt|contact|anfrage|termin)(\/|$)/i;
+
+const REGIONEN =
+  /^(dach|d-a-ch|deutschland|germany|oesterreich|austria|schweiz|switzerland|europa|europe|bundesweit|deutschlandweit|international|weltweit|online)$/;
+
+export function istUeberregional(ort) {
+  return REGIONEN.test(fold(ort).trim());
+}
+
+export const PLATTFORMEN = {
+  nextjs: "Next.js",
+  wordpress: "WordPress",
+  wix: "Wix",
+  jimdo: "Jimdo",
+  shopify: "Shopify",
+  webflow: "Webflow",
+  squarespace: "Squarespace",
+  typo3: "TYPO3",
+  joomla: "Joomla",
+  unbekannt: "nicht erkannt",
 };
 
 export const LOCAL_BUSINESS_TYPES = [

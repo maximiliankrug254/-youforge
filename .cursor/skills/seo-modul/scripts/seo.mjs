@@ -5,6 +5,7 @@
  *   node seo.mjs pruefen --url https://beispiel.de
  *   node seo.mjs pruefen --url /demo/raumkontrast --site --max 8 --ignoriere-noindex
  *   node seo.mjs pruefen --url https://alt.de --url https://neu.de --keyword Maler --ort Rosenheim
+ *   node seo.mjs pruefen --url https://agentur.de --site --keyword Webdesign --ort DACH   (überregional)
  */
 import { spawn } from "node:child_process";
 import { writeFileSync } from "node:fs";
@@ -12,8 +13,8 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { collectOrigin, collectPage, internalLinks, launchBrowser } from "./analyse.mjs";
 import { renderHtml, renderMarkdown } from "./bericht.mjs";
-import { DEFAULT_BASE, REPORT_DIR, ensureDirs, normalizeUrl, stamp, toUrl } from "./lib.mjs";
-import { bewerte, massnahmen, note, pruefeSeite, pruefeWebsite } from "./pruefungen.mjs";
+import { DEFAULT_BASE, RECHTSTEXT, REPORT_DIR, ensureDirs, istUeberregional, normalizeUrl, stamp, toUrl } from "./lib.mjs";
+import { bewerte, einordnen, massnahmen, note, pruefeSeite, pruefeWebsite } from "./pruefungen.mjs";
 
 function parseArgs(argv) {
   if (argv[0] === "pruefen") argv.shift();
@@ -25,6 +26,7 @@ function parseArgs(argv) {
     keyword: "",
     ort: "",
     ignoriereNoindex: false,
+    ueberregional: false,
     oeffnen: true,
     drosseln: true,
     pdf: false,
@@ -39,6 +41,7 @@ function parseArgs(argv) {
     else if (arg === "--keyword") out.keyword = argv[++i] ?? "";
     else if (arg === "--ort") out.ort = argv[++i] ?? "";
     else if (arg === "--ignoriere-noindex") out.ignoriereNoindex = true;
+    else if (arg === "--ueberregional") out.ueberregional = true;
     else if (arg === "--kein-oeffnen") out.oeffnen = false;
     else if (arg === "--ohne-drosselung") out.drosseln = false;
     else if (arg === "--pdf") out.pdf = true;
@@ -46,6 +49,7 @@ function parseArgs(argv) {
     else if (!arg.startsWith("--")) out.urls.push(arg);
   }
   out.urls = out.urls.filter(Boolean).map((u) => normalizeUrl(toUrl(u, out.base)));
+  out.ueberregional = out.ueberregional || istUeberregional(out.ort);
   return out;
 }
 
@@ -54,31 +58,36 @@ function openFile(file) {
   spawn(cmd[0], cmd[1], { detached: true, stdio: "ignore" }).unref();
 }
 
-async function analysiere(browser, url, opts) {
+async function analysiere(browser, url, opts, istStart) {
   process.stdout.write(`  prüfe ${url} … `);
   const page = await collectPage(browser, url, { drosseln: opts.drosseln });
   if (!page.ok) {
     console.log(`nicht erreichbar (${page.error})`);
-    return { page, results: [], score: { gesamt: 0, kategorien: {} }, massnahmen: [] };
+    return { page, einordnung: { typ: "fehler", gewertet: false, grund: "" }, results: [], score: { gesamt: 0, kategorien: {} }, massnahmen: [] };
   }
   const site = await collectOrigin(new URL(page.finalUrl || url).origin);
-  const results = pruefeSeite(page, site, opts);
+  const kontext = { ...opts, istStart };
+  const einordnung = einordnen(page, site, kontext);
+  const results = pruefeSeite(page, site, { ...kontext, einordnung });
   const score = bewerte(results);
-  console.log(`${score.gesamt}/100 (${note(score.gesamt)})`);
-  return { page, results, score, massnahmen: massnahmen(results) };
+  const zusatz = einordnung.gewertet ? "" : ` · ${einordnung.typ === "rechtstext" ? "Rechtstext" : "verborgen"}, nicht gewertet`;
+  console.log(`${score.gesamt}/100 (${note(score.gesamt)})${zusatz}`);
+  return { page, einordnung, results, score, massnahmen: massnahmen(results) };
 }
 
 const opts = parseArgs(process.argv.slice(2));
 if (!opts.urls.length) {
   console.error(
-    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ignoriere-noindex] [--kein-oeffnen] [--ohne-drosselung]",
+    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ueberregional] [--ignoriere-noindex] [--pdf] [--vorschau] [--kein-oeffnen] [--ohne-drosselung]",
   );
   process.exit(1);
 }
 
 ensureDirs();
 const modus = opts.site ? "website" : opts.urls.length > 1 ? "vergleich" : "einzeln";
+opts.websiteModus = modus === "website";
 console.log(`YouForge-SEO-Modul · ${modus === "website" ? `Website (max. ${opts.max} Seiten)` : modus === "vergleich" ? `Vergleich (${opts.urls.length} Adressen)` : "Einzelseite"}`);
+if (opts.ueberregional) console.log(`  überregional${opts.ort ? ` (${opts.ort})` : ""}: Firmenangaben statt Ortsbezug`);
 
 let browser;
 try {
@@ -96,25 +105,52 @@ try {
     const start = opts.urls[0];
     const prefix = new URL(start).pathname.replace(/\/$/, "") || "/";
     const queue = [start];
+    const spaeter = [];
     const seen = new Set(queue);
-    while (queue.length && analysen.length < opts.max) {
-      const url = queue.shift();
-      const a = await analysiere(browser, url, opts);
+    const verborgeneBereiche = new Set();
+    const uebersprungen = new Set();
+    const bereich = (url) => new URL(url).pathname.split("/")[1] || "";
+    const imVerborgenen = (url) => bereich(url) !== "" && verborgeneBereiche.has(bereich(url));
+    const gewerteteSeiten = () => analysen.filter((a) => a.einordnung.gewertet).length;
+    const MAX_RECHTSTEXTE = 3;
+    // Nur gewertete Seiten zählen gegen --max. Nach der ersten verborgenen Seite eines Bereichs (z. B. /demo/…)
+    // werden weitere Seiten dort übersprungen; Rechtstexte kommen zuletzt und höchstens dreimal.
+    while (queue.length || spaeter.length) {
+      const ausQueue = queue.length > 0;
+      if (ausQueue ? gewerteteSeiten() >= opts.max : analysen.filter((a) => a.einordnung.typ === "rechtstext").length >= MAX_RECHTSTEXTE) break;
+      const url = ausQueue ? queue.shift() : spaeter.shift();
+      if (imVerborgenen(url)) {
+        uebersprungen.add(url);
+        continue;
+      }
+      const a = await analysiere(browser, url, opts, analysen.length === 0);
       analysen.push(a);
       if (!a.page.ok) continue;
+      if (a.einordnung.typ === "versteckt") {
+        verborgeneBereiche.add(bereich(url));
+        continue;
+      }
       for (const link of internalLinks(a.page, prefix)) {
         if (!seen.has(link)) {
           seen.add(link);
-          queue.push(link);
+          (RECHTSTEXT.test(new URL(link).pathname) ? spaeter : queue).push(link);
         }
       }
     }
-    const pages = analysen.map((a) => a.page);
-    const siteResults = pruefeWebsite(pages);
-    const alle = [...analysen.flatMap((a) => a.results), ...siteResults];
-    website = { seiten: analysen.length, results: siteResults, score: bewerte(alle) };
+    for (const url of queue) if (imVerborgenen(url)) uebersprungen.add(url);
+    if (uebersprungen.size) console.log(`  ${uebersprungen.size} weitere Seiten in verborgenen Bereichen übersprungen (/${[...verborgeneBereiche].join(", /")})`);
+    const gewertet = analysen.filter((a) => a.einordnung.gewertet);
+    const siteResults = pruefeWebsite(gewertet.map((a) => a.page), opts);
+    const alle = [...gewertet.flatMap((a) => a.results), ...siteResults];
+    website = {
+      seiten: analysen.length,
+      gewertet: gewertet.length,
+      uebersprungen: { anzahl: uebersprungen.size, bereiche: [...verborgeneBereiche] },
+      results: siteResults,
+      score: bewerte(alle),
+    };
   } else {
-    for (const url of opts.urls) analysen.push(await analysiere(browser, url, opts));
+    for (const url of opts.urls) analysen.push(await analysiere(browser, url, opts, true));
   }
 } finally {
   await browser.close();
