@@ -8,6 +8,7 @@ function r(id, kategorie, stufe, titel, status, detail, fix = "") {
 
 const kb = (bytes) => (bytes >= 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`);
 const sek = (ms) => `${(ms / 1000).toFixed(1).replace(".", ",")} s`;
+const abrufGrund = (status) => (status ? `Server antwortet mit Code ${status}` : "keine Antwort vom Server");
 
 function words(text) {
   return (text.match(/[A-Za-zÄÖÜäöüß0-9][A-Za-zÄÖÜäöüß0-9\-]{1,}/g) || []).length;
@@ -124,11 +125,15 @@ function istShop(p, pfad) {
   return flattenJsonLd(p.jsonLd.filter((b) => !b.__fehler)).some((n) => typesOf(n).some((t) => t === "Product" || t === "ItemList"));
 }
 
+const FAQ_TITEL = /h(ä|ae)ufig(e|en)?\s+(gestellte\s+)?fragen|\bfaqs?\b|fragen\s*(und|&|\+)\s*antworten|ihre\s+fragen|kundenfragen|frequently\s+asked|\bq\s*&\s*a\b/i;
+
 export function hatFaq(p) {
   const nodes = flattenJsonLd(p.jsonLd.filter((b) => !b.__fehler));
   const schema = nodes.some((n) => typesOf(n).includes("FAQPage"));
-  const ueberschrift = p.headings.some((h) => /häufig|fragen|faq/i.test(h.text));
-  return { gefunden: schema || ueberschrift || p.details >= 3, schema };
+  // „Ihr Partner in allen Fragen rund ums Dach“ ist kein FAQ-Bereich – nur eindeutige Titel zählen.
+  const ueberschrift = p.headings.some((h) => FAQ_TITEL.test(h.text));
+  const frageUeberschriften = p.headings.filter((h) => /\?\s*$/.test(h.text)).length >= 3;
+  return { gefunden: schema || ueberschrift || frageUeberschriften || p.details >= 3, schema };
 }
 
 /**
@@ -204,14 +209,18 @@ export function pruefeSeite(p, site, opts) {
 
   const blocked = robotsBlocks(site.robots, pfad);
   const rob = (status, detail, fix = "") => r("robots", "technik", "wichtig", "robots.txt", status, detail, fix);
-  if (!site.robots.found) out.push(rob("warnung", "Keine robots.txt gefunden.", T("robotsFehlt")));
+  if (!site.robots.found && site.robots.unklar)
+    out.push(rob("info", `robots.txt konnte nicht abgerufen werden (${abrufGrund(site.robots.status)}) – bitte im Browser selbst prüfen.`));
+  else if (!site.robots.found) out.push(rob("warnung", "Keine robots.txt gefunden.", T("robotsFehlt")));
   else if (blocked && (opts.ignoriereNoindex || nebenbei)) out.push(rob("info", `Pfad per robots.txt ausgeblendet (Disallow: ${blocked}) – hier gewollt.`));
   else if (blocked) out.push(rob("fehler", `robots.txt sperrt diese Seite (Disallow: ${blocked}).`, T("robotsSperrt")));
   else out.push(rob("ok", "Vorhanden, Seite nicht gesperrt."));
 
   const sm = (status, detail, fix = "") => r("sitemap", "technik", "wichtig", "Sitemap", status, detail, fix);
   const teile = site.sitemap.teile?.length ? ` (${site.sitemap.teile.length} Teil-Sitemaps)` : "";
-  if (!site.sitemap.found) out.push(sm(nebenbei ? "info" : "fehler", "Keine gültige Sitemap gefunden.", T("sitemapFehlt")));
+  if (!site.sitemap.found && site.sitemap.unklar)
+    out.push(sm("info", `Sitemap konnte nicht abgerufen werden (${abrufGrund(site.sitemap.status)}) – bitte im Browser selbst prüfen.`));
+  else if (!site.sitemap.found) out.push(sm(nebenbei ? "info" : "fehler", "Keine gültige Sitemap gefunden.", T("sitemapFehlt")));
   else if (inSitemap && typ === "kopie")
     out.push(sm("warnung", `Die Seite steht in der Sitemap, verweist aber per Canonical auf ${kanon}.`, "In die Sitemap nur die Haupt-Adressen eintragen, keine Kopien."));
   else if (inSitemap) out.push(sm("ok", `Vorhanden${teile}, Seite eingetragen.`));
@@ -284,10 +293,21 @@ export function pruefeSeite(p, site, opts) {
       : r("lang", "technik", "wichtig", "Sprache der Seite", "fehler", "Keine Sprache angegeben.", T("sprache")),
   );
 
+  const festeBreite = (p.viewport || "").match(/width\s*=\s*(\d+)/i)?.[1];
   out.push(
-    /width=device-width/.test(p.viewport || "")
+    /width\s*=\s*device-width/i.test(p.viewport || "")
       ? r("viewport", "technik", "kritisch", "Handy-tauglich (Viewport)", "ok", "Viewport gesetzt.")
-      : r("viewport", "technik", "kritisch", "Handy-tauglich (Viewport)", "fehler", "Kein mobiler Viewport.", T("viewport")),
+      : festeBreite
+        ? r(
+            "viewport",
+            "technik",
+            "kritisch",
+            "Handy-tauglich (Viewport)",
+            "fehler",
+            `Feste Breite von ${festeBreite} Pixeln – Handys zeigen die verkleinerte Desktop-Seite, Texte sind winzig. Google wertet das als nicht handytauglich.`,
+            T("viewport"),
+          )
+        : r("viewport", "technik", "kritisch", "Handy-tauglich (Viewport)", "fehler", "Kein mobiler Viewport.", T("viewport")),
   );
 
   const h1 = p.headings.filter((h) => h.level === 1);
@@ -350,6 +370,19 @@ export function pruefeSeite(p, site, opts) {
     (p.lcpSlider ? "; spätere Bildwechsel im Slider nicht mitgezählt" : "");
   // Bewertet wird der angezeigte Wert (auf 0,1 s gerundet), damit „2,5 s“ nicht als Warnung erscheint.
   const lcp = p.lcp == null ? null : Math.round(p.lcp / 100) * 100;
+  const le = p.lcpElement;
+  const lcpUrsache =
+    lcp > 2500 && le
+      ? le.datei
+        ? ` Zuletzt erscheint das Bild „${le.datei}“${le.bytes ? ` (${kb(le.bytes).replace(".", ",")})` : ""}.`
+        : le.text
+          ? ` Zuletzt erscheint der Text „${le.text.slice(0, 50)}“ – oft bremsen Schriftarten oder Skripte.`
+          : ""
+      : "";
+  const lcpFix =
+    le?.datei && le.bytes > 400 * 1024
+      ? `Dieses Bild verkleinern und als WebP speichern (ideal unter 200 KB). ${T("ladezeit")}`
+      : T("ladezeit");
   if (lcp == null) out.push(r("lcp", "technik", "wichtig", "Ladezeit (LCP)", "info", "Nicht messbar."));
   else
     out.push(
@@ -359,11 +392,23 @@ export function pruefeSeite(p, site, opts) {
         "wichtig",
         "Ladezeit (LCP)",
         lcp <= 2500 ? "ok" : lcp <= 4000 ? "warnung" : "fehler",
-        `Hauptinhalt sichtbar nach ${sek(lcp)} (${p.netz})${messungen}.`,
-        lcp <= 2500 ? "" : T("ladezeit"),
+        `Hauptinhalt sichtbar nach ${sek(lcp)} (${p.netz})${messungen}.${lcpUrsache}`,
+        lcp <= 2500 ? "" : lcpFix,
       ),
     );
 
+  const cq = p.cls > 0.1 ? p.clsQuelle : null;
+  const clsText = {
+    popup: [" Größter Sprung durch ein Popup bzw. Einblend-Fenster", "Das Popup über dem Inhalt einblenden (ohne die Seite zu verschieben) oder erst nach einer Aktion des Besuchers zeigen."],
+    cookie: [" Größter Sprung durch den Cookie-Hinweis", "Den Cookie-Hinweis als festes Fenster über dem Inhalt anzeigen, nicht oben in die Seite schieben."],
+    bild: [" Größter Sprung durch ein Bild oder Video ohne feste Größe", "Bildern und Videos Breite und Höhe mitgeben, damit der Platz vor dem Laden reserviert ist."],
+    sonst: cq?.element
+      ? [
+          " Am stärksten verrutscht ein Inhaltsblock – meist schiebt ihn etwas darüber nach unten (nachladendes Bild, Schrift oder Slider)",
+          "Mit der Handy-Ansicht im Browser prüfen, was beim Laden oberhalb dieses Blocks aufgeht, und dafür Platz reservieren (feste Höhe bzw. Bildgröße).",
+        ]
+      : null,
+  }[cq?.art];
   out.push(
     r(
       "cls",
@@ -371,8 +416,8 @@ export function pruefeSeite(p, site, opts) {
       "wichtig",
       "Stabiles Layout (CLS)",
       p.cls <= 0.1 ? "ok" : p.cls <= 0.25 ? "warnung" : "fehler",
-      `Layout-Verschiebung: ${p.cls.toFixed(3).replace(".", ",")}`,
-      p.cls <= 0.1 ? "" : "Bildern feste Größen geben, nachladende Elemente reservieren.",
+      `Layout-Verschiebung: ${p.cls.toFixed(3).replace(".", ",")}${clsText ? `.${clsText[0]}${cq.element ? ` (${cq.element.slice(0, 60)})` : ""}.` : ""}`,
+      p.cls <= 0.1 ? "" : clsText?.[1] || "Bildern feste Größen geben, nachladende Elemente reservieren.",
     ),
   );
 
@@ -615,12 +660,24 @@ export function pruefeSeite(p, site, opts) {
 export function pruefeWebsite(pages, opts = {}) {
   const ok = pages.filter((p) => p.ok);
   if (ok.length < 2) return [];
-  const mitEintrag = ok
+  const alleEintraege = ok
     .map((p) => ({ pfad: new URL(p.url).pathname, firma: findeFirma(flattenJsonLd(p.jsonLd.filter((b) => !b.__fehler))) }))
-    .filter((x) => x.firma && (x.firma.lokal || opts.ueberregional));
+    .filter((x) => x.firma);
+  const mitEintrag = alleEintraege.filter((x) => x.firma.lokal || opts.ueberregional);
+  const beispiele = (liste) => liste.slice(0, 3).map((x) => x.pfad).join(", ");
   const eintrag = mitEintrag.length
-    ? r("schema-website", "lokal", "wichtig", "Firmeneintrag auf der Website", "ok", `Auf ${mitEintrag.length} von ${ok.length} Seiten, z. B. ${mitEintrag.slice(0, 3).map((x) => x.pfad).join(", ")}.`)
-    : r(
+    ? r("schema-website", "lokal", "wichtig", "Firmeneintrag auf der Website", "ok", `Auf ${mitEintrag.length} von ${ok.length} Seiten, z. B. ${beispiele(mitEintrag)}.`)
+    : alleEintraege.length
+      ? r(
+          "schema-website",
+          "lokal",
+          "wichtig",
+          "Firmeneintrag auf der Website",
+          "warnung",
+          `Nur ein allgemeiner Eintrag (Typ: ${alleEintraege[0].firma.typ}, z. B. ${beispiele(alleEintraege)}) – kein Betriebs-Eintrag wie LocalBusiness für die lokale Suche.`,
+          tipp("firmeneintrag", ok[0].plattform || "unbekannt"),
+        )
+      : r(
         "schema-website",
         "lokal",
         "wichtig",

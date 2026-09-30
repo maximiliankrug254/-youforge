@@ -1,0 +1,190 @@
+{
+  "website": {
+    "gesamt": 92,
+    "befunde": {
+      "hreflang": "warnung",
+      "verwaist": "info",
+      "dup-title": "ok",
+      "dup-desc": "ok",
+      "faq": "warnung",
+      "schema-website": "ok"
+    }
+  },
+  "seiten": [
+    {
+      "pfad": "/",
+      "typ": "normal",
+      "gesamt": 98,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "ok",
+        "description": "ok",
+        "canonical": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "ok",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "ok",
+        "kw-title": "ok",
+        "kw-h1": "ok",
+        "kw-text": "ok",
+        "links": "ok",
+        "kontakt": "ok",
+        "schema": "ok",
+        "nap": "ok",
+        "schema-extra": "ok",
+        "tel": "warnung",
+        "adresse": "info",
+        "ort": "warnung"
+      }
+    },
+    {
+      "pfad": "/fragebogen.html",
+      "typ": "kontakt",
+      "gesamt": 84,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "ok",
+        "description": "fehler",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "fehler",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "warnung",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "ok",
+        "links": "warnung",
+        "kontakt": "ok",
+        "tel": "warnung",
+        "adresse": "info"
+      }
+    },
+    {
+      "pfad": "/index-en.html",
+      "typ": "normal",
+      "gesamt": 91,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "ok",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "ok",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "warnung",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "ok",
+        "links": "warnung",
+        "kontakt": "ok",
+        "tel": "warnung",
+        "adresse": "info"
+      }
+    },
+    {
+      "pfad": "/index.html",
+      "typ": "kopie",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "info",
+        "https": "ok",
+        "canonical": "info",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    },
+    {
+      "pfad": "/landing-erstgespraech.html",
+      "typ": "normal",
+      "gesamt": 95,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "ok",
+        "canonical": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "ok",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "ok",
+        "links": "warnung",
+        "kontakt": "ok",
+        "tel": "warnung",
+        "adresse": "info"
+      }
+    },
+    {
+      "pfad": "/impressum.html",
+      "typ": "rechtstext",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    },
+    {
+      "pfad": "/impressum-en.html",
+      "typ": "rechtstext",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    }
+  ]
+}

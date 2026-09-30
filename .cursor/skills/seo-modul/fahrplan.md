@@ -2,7 +2,7 @@
 
 ## Aktuelle Version
 
-**1.3** vom 28.09.2026
+**1.4** vom 30.09.2026
 
 ## Was das Modul kann
 
@@ -13,9 +13,18 @@
 - Vorlagen für neue YouForge-Websites: Firmeneintrag (JSON-LD), Metadaten, Sitemap, robots.txt.
 - Regeln für SEO-Inhalte (`inhalte.md`) und Checkliste für den Betrieb (`checkliste-betrieb.md`).
 
+## Automatische Tests
+
+`npm run seo:test` wertet gespeicherte Rohdaten echter Websites (`tests/faelle/`) ohne Internet neu aus – in wenigen Sekunden, ohne schwankende Ladezeiten. Verglichen wird mit dem festgeschriebenen Stand (`tests/erwartet/`) und mit den Kernbefunden (`tests/kernbefunde.mjs`): Befunde, die nach einer Korrektur nie wieder falsch sein dürfen.
+
+- Nach **jeder** Änderung am Modul laufen lassen. Abweichungen einzeln prüfen: gewollt → `npm run seo:test -- --aktualisieren`, sonst Fehler beheben.
+- Neue Website als Testfall: normaler Aufruf plus `--testfall name`. Jeder korrigierte Fehlbefund bekommt einen Kernbefund.
+- Die Testfälle enthalten öffentliche Texte der geprüften Websites (sichtbarer Seitentext, Links, JSON-LD).
+- Stand 1.4: 9 Testfälle, 30 Kernbefunde.
+
 ## Testfälle (Referenz)
 
-Nach jeder Änderung diese Läufe wiederholen und mit den Werten vergleichen. **Nacheinander laufen lassen, nicht gleichzeitig** – parallele Läufe teilen sich den Rechner und verfälschen die Ladezeit.
+Die Live-Läufe unten messen zusätzlich die echte Ladezeit. Nach größeren Änderungen wiederholen und mit den Werten vergleichen. **Nacheinander laufen lassen, nicht gleichzeitig** – parallele Läufe teilen sich den Rechner und verfälschen die Ladezeit.
 
 | Aufruf | 1.0 | 1.1 | 1.2 |
 |---|---|---|---|
@@ -41,7 +50,21 @@ Erwartete echte Befunde bei isabellmerklinger.de: hreflang-Rückverweis von `/in
 | 28.09.2026 | isabellmerklinger.de | statisches HTML, zweisprachig, Coaching | Kopien per Canonical, Sprachfassungen, Sitemap als Quelle, Wiederholung bei Aussetzern (1.2) |
 | 28.09.2026 | grizzlyfoods.de | Shopify-Onlineshop, deutschlandweit | Slider verfälscht Ladezeit, Shopify-Adresszusätze (?variant=), Logo als H1, Shop-Tipps (1.3) |
 
+| 30.09.2026 | dachprofis.jimdosite.com | Jimdo hinter Cloudflare, Dachdecker | Server-Schutz blockt einfache Abrufe → robots.txt/Sitemap über den Browser; Sperrseiten erkennen; Slider-Kopien und Cookie-Überschriften nicht zählen (1.4) |
+| 30.09.2026 | malermeister-kassel.de | WordPress (Divi), Maler | Aufklapp-Elemente im Cookie-Banner sind kein FAQ; Hinweis, welcher Block beim Laden verrutscht (1.4) |
+| 30.09.2026 | malermeister-bong.de | WordPress (Elementor), Maler | Ursache des Layout-Sprungs benennen (Popup) mit passendem Tipp (1.4) |
+| 30.09.2026 | elektro-zuehlke.de | Wix ohne Handy-Ansicht, Elektriker | feste Viewport-Breite (980 px) klar erklären; Wix-Tipps (1.4) |
+| 30.09.2026 | dachdecker-hammermeister.de | WordPress (Elementor), Dachdecker | Bild nennen, das die Ladezeit bremst (3-MB-PNG); „Fragen“ in einer Überschrift ist kein FAQ; allgemeiner statt fehlender Firmeneintrag (1.4) |
+
 Erwartete echte Befunde bei grizzlyfoods.de: H1 der Startseite ist nur das Logo; kein Organization-Eintrag (nur BreadcrumbList); Suchbegriff „Beef Jerky“ nicht in Titel/H1 der Startseite; wenig eigener Text auf Kategorieseiten; 2,5–3 MB pro Seite. Ladezeiten der Unterseiten schwanken dort zwischen Läufen stark (unter 2,5 s bis 7 s) – für Aussagen gegenüber Kunden mit echten Nutzerdaten gegenprüfen.
+
+Erwartete echte Befunde bei den Handwerker-Seiten (30.09.2026):
+
+- dachprofis.jimdosite.com (Website 81): 2 H1 im Slider, Unterseite ohne H1, kein Firmeneintrag, keine Adresse, kein Ort.
+- malermeister-kassel.de (Website 75): Titel bis 104 Zeichen, kaum Alt-Texte, Telefon nicht antippbar, 2 H1, starke Layout-Sprünge (bis 0,65), kein Firmeneintrag.
+- malermeister-bong.de (Website 88): Elementor-Popup verschiebt das Layout (0,48); Unterseiten ohne Telefonnummer und Adresse.
+- elektro-zuehlke.de (Website 82): Wix mit fester Breite 980 px (nicht handytauglich); Startseite ohne H1 und mit nur 44 Wörtern; `/` und `/home` sind zwei Startseiten (vom Modul noch nicht allgemein erkannt); bis zu 18 H1 je Seite.
+- dachdecker-hammermeister.de (Website 94): nur Organization statt LocalBusiness, Titelbilder als PNG bis 3 MB (Ladezeit bis ~10 s), Kontaktseite ohne Beschreibung.
 
 ## Geplante Verbesserungen
 
@@ -50,7 +73,8 @@ Erwartete echte Befunde bei grizzlyfoods.de: H1 der Startseite ist nur das Logo;
 - Echte Ladezeiten von Google-Nutzern (Chrome-Nutzerdaten über die PageSpeed-Insights-Schnittstelle) zusätzlich zur eigenen Messung zeigen – die eigene Messung schwankt je nach Verbindung.
 - Shop-Modus: Produkt-Einträge (Preis, Verfügbarkeit, Bewertungen) auf Produktseiten prüfen.
 - Prüfung in die Post-Deploy-Checkliste aufnehmen.
-- Weitere echte Seiten testen: alte Handwerker-WordPress-Seiten, Jimdo, Wix, Betriebe mit mehreren Standorten, Österreich/Schweiz.
+- Doppelte Startseite erkennen (z. B. `/` und `/home` mit gleichem Inhalt, aber ohne Canonical aufeinander).
+- Weitere echte Seiten testen: Betriebe mit mehreren Standorten, Österreich/Schweiz, Webflow, TYPO3.
 
 ## Entscheidungen
 
@@ -59,6 +83,18 @@ Erwartete echte Befunde bei grizzlyfoods.de: H1 der Startseite ist nur das Logo;
 - Verkauf an Agenturen: Nutzungsrecht, einmaliger Preis (noch offen), kein Update-Paket. Details: `public/docs/SEO.docx` (intern).
 
 ## Änderungsprotokoll
+
+- **1.4 – 30.09.2026** – Automatische Tests und fünf echte Handwerker-Websites (Jimdo, Wix, 3× WordPress):
+  - Neu: `npm run seo:test` mit gespeicherten Testfällen, festgeschriebenem Stand und Kernbefunden; `--testfall name` speichert einen Lauf als Testfall.
+  - robots.txt und Sitemap mit Browser-Kennung abrufen, notfalls über den Browser selbst (Jimdo/Cloudflare lieferte sonst „Zugriff verweigert“ → fälschlich „fehlt“). Antwortet ein Server gar nicht oder mit Sperre, heißt es „konnte nicht geprüft werden“ statt „fehlt“.
+  - Sperrseiten eines Server-Schutzes (Cloudflare u. a.) werden erkannt und nicht als Website bewertet.
+  - Überschriften und Aufklapp-Elemente aus Cookie-Bannern zählen nicht mehr (falsches FAQ, falscher Gliederungssprung). Kopierte Slider-Folien zählen nicht als eigene H1.
+  - FAQ-Erkennung genauer: nur eindeutige Titel („Häufige Fragen“, „FAQ“, „Fragen & Antworten“) oder mindestens drei Frage-Überschriften – nicht jedes Wort „Fragen“.
+  - Ladezeit: Der Bericht nennt das Bild bzw. den Text, der zuletzt erscheint, mit Dateigröße; bei großen Bildern gezielter Tipp.
+  - Layout-Sprünge: Ursache wird benannt (Popup, Cookie-Hinweis, Bild ohne Größe, verrutschender Block) mit passendem Tipp.
+  - Viewport mit fester Breite (z. B. Wix `width=980`) wird klar erklärt.
+  - Website-Übersicht: „nur allgemeiner Eintrag (Organization)“ statt fälschlich „kein Firmeneintrag“.
+  - Tipps für Wix und Jimdo (Titel, Beschreibung, Handy-Ansicht, Ladezeit, Firmeneintrag, Sitemap).
 
 - **1.3 – 28.09.2026** – Nach Test mit grizzlyfoods.de (Shopify):
   - Ladezeit: Wechselt ein Slider nach dem Laden ein fast gleich großes Bild ein, zählt das nicht mehr als Hauptinhalt (vorher 14 s statt 2,6 s).

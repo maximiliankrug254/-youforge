@@ -41,8 +41,27 @@ Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten über 2,5 s misst das M
 - **Kopien:** Seiten, deren Canonical auf eine andere Adresse zeigt (z. B. `/index.html`), werden gezeigt, zählen aber nicht zur Gesamtnote.
 - **Mehrsprachig:** Jede Sprache in `lang` ist gültig; bei mehreren Sprachen wird geprüft, ob die Fassungen per hreflang gegenseitig verknüpft sind.
 - **Sitemap als Quelle:** Im Website-Modus werden auch Seiten geprüft, die nur in der Sitemap stehen (Hinweis „nicht verlinkt“).
+- **Server-Schutz:** robots.txt und Sitemap werden notfalls über den Browser geholt (Cloudflare blockt einfache Abrufe). Blockt ein Server trotzdem, heißt es „konnte nicht geprüft werden“ – nicht „fehlt“. Sperrseiten („Sorry, you have been blocked“) werden nicht bewertet.
+- **Cookie-Banner und Slider:** Überschriften und Aufklapp-Elemente aus Cookie-Bannern sowie kopierte Slider-Folien zählen nicht mit.
+- **Ursachen:** Bei langsamer Ladezeit nennt der Bericht das Bild bzw. den Text, der zuletzt erscheint; bei Layout-Sprüngen die Art der Ursache (Popup, Cookie-Hinweis, Bild ohne Größe).
 
 Stand, offene Punkte und Änderungen: [fahrplan.md](fahrplan.md). Nach jeder Änderung am Modul dort eintragen und `VERSION` in `scripts/lib.mjs` erhöhen.
+
+### Tests (nach jeder Änderung am Modul)
+
+```bash
+npm run seo:test                                   # alle Testfälle ohne Internet neu auswerten (Sekunden)
+npm run seo:test -- --fall grizzly                 # nur einen Testfall
+npm run seo:test -- --aktualisieren                # gewollte Änderungen als neue Erwartung festschreiben
+npm run seo:pruefen -- --url https://… --site --testfall name   # neue Website als Testfall aufnehmen
+```
+
+- `tests/faelle/*.json`: gespeicherte Rohdaten der Seiten (ohne Screenshot). Die Bewertung wird daraus neu berechnet, Ladezeiten sind damit fest und schwanken nicht.
+- `tests/erwartet/*.json`: erwartete Befunde je Seite. Jede Abweichung wird angezeigt; erst prüfen, ob sie gewollt ist, dann `--aktualisieren`.
+- `tests/kernbefunde.mjs`: Befunde, die immer stimmen müssen – frühere Fehler und bestätigte echte Befunde. Nach jedem behobenen Irrtum hier einen Eintrag ergänzen.
+- Änderungen an der Messung selbst (`analyse.mjs`) prüfen die Tests nicht – dafür eine Referenzseite live neu prüfen und den Testfall mit `--testfall` neu aufnehmen.
+- Befundtexte lassen sich in Kernbefunden mit `text: /Muster/` absichern (z. B. dass die Ursache genannt wird).
+- Dateien nicht mit PowerShell `Get-Content`/`Set-Content` bearbeiten – das zerstört Umlaute.
 
 ## Neue Kundenwebsite (Ablauf)
 

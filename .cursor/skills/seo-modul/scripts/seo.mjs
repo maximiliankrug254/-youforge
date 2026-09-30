@@ -8,12 +8,12 @@
  *   node seo.mjs pruefen --url https://agentur.de --site --keyword Webdesign --ort DACH   (überregional)
  */
 import { spawn } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { collectOrigin, collectPage, internalLinks, launchBrowser } from "./analyse.mjs";
 import { renderHtml, renderMarkdown } from "./bericht.mjs";
-import { DEFAULT_BASE, RECHTSTEXT, REPORT_DIR, ensureDirs, istUeberregional, normalizeUrl, stamp, toUrl } from "./lib.mjs";
+import { DEFAULT_BASE, RECHTSTEXT, REPORT_DIR, TEST_DIR, VERSION, ensureDirs, istUeberregional, normalizeUrl, stamp, toUrl } from "./lib.mjs";
 import { bewerte, einordnen, massnahmen, note, pruefeSeite, pruefeWebsite } from "./pruefungen.mjs";
 
 function parseArgs(argv) {
@@ -46,6 +46,7 @@ function parseArgs(argv) {
     else if (arg === "--ohne-drosselung") out.drosseln = false;
     else if (arg === "--pdf") out.pdf = true;
     else if (arg === "--vorschau") out.vorschau = true;
+    else if (arg === "--testfall") out.testfall = (argv[++i] ?? "").replace(/[^a-z0-9-]/gi, "");
     else if (!arg.startsWith("--")) out.urls.push(arg);
   }
   out.urls = out.urls.filter(Boolean).map((u) => normalizeUrl(toUrl(u, out.base)));
@@ -87,9 +88,9 @@ async function analysiere(browser, url, opts, istStart) {
   const page = await collectPage(browser, url, { drosseln: opts.drosseln });
   if (!page.ok) {
     console.log(`nicht erreichbar (${page.error})`);
-    return { page, einordnung: { typ: "fehler", gewertet: false, grund: "" }, results: [], score: { gesamt: 0, kategorien: {} }, massnahmen: [] };
+    return { page, istStart, einordnung: { typ: "fehler", gewertet: false, grund: "" }, results: [], score: { gesamt: 0, kategorien: {} }, massnahmen: [] };
   }
-  const site = await collectOrigin(new URL(page.finalUrl || url).origin);
+  const site = await collectOrigin(new URL(page.finalUrl || url).origin, browser);
   const kontext = { ...opts, istStart };
   const einordnung = einordnen(page, site, kontext);
   if (einordnung.gewertet) await nachmessen(browser, url, page, opts);
@@ -98,7 +99,7 @@ async function analysiere(browser, url, opts, istStart) {
   const zusatz = einordnung.gewertet ? "" : ` · ${TYP_KURZ[einordnung.typ] || einordnung.typ}, nicht gewertet`;
   const hinweise = [page.zweiterVersuch && "im 2. Anlauf geladen", page.lcpMessungen && `Ladezeit ${page.lcpMessungen.length}× gemessen`].filter(Boolean);
   console.log(`${score.gesamt}/100 (${note(score.gesamt)})${zusatz}${hinweise.length ? ` · ${hinweise.join(", ")}` : ""}`);
-  return { page, einordnung, results, score, massnahmen: massnahmen(results) };
+  return { page, istStart, einordnung, results, score, massnahmen: massnahmen(results) };
 }
 
 const opts = parseArgs(process.argv.slice(2));
@@ -126,6 +127,7 @@ try {
 
 const analysen = [];
 let website = null;
+let nurSitemap = [];
 try {
   if (modus === "website") {
     const start = opts.urls[0];
@@ -166,7 +168,7 @@ try {
       if (a.page.finalUrl) seen.add(normalizeUrl(a.page.finalUrl));
       if (istStart) {
         const origin = new URL(a.page.finalUrl || url).origin;
-        const { sitemap } = await collectOrigin(origin);
+        const { sitemap } = await collectOrigin(origin, browser);
         for (const pfad of sitemap.paths) {
           let adresse;
           try {
@@ -194,7 +196,7 @@ try {
     for (const url of [...queue, ...ausSitemap]) if (imVerborgenen(url)) uebersprungen.add(url);
     if (uebersprungen.size) console.log(`  ${uebersprungen.size} weitere Seiten in verborgenen Bereichen übersprungen (/${[...verborgeneBereiche].join(", /")})`);
     const gewertet = analysen.filter((a) => a.einordnung.gewertet);
-    const nurSitemap = gewertet.map((a) => normalizeUrl(a.page.url)).filter((u) => herkunftSitemap.has(u) && !verlinkt.has(u)).map((u) => new URL(u).pathname);
+    nurSitemap = gewertet.map((a) => normalizeUrl(a.page.url)).filter((u) => herkunftSitemap.has(u) && !verlinkt.has(u)).map((u) => new URL(u).pathname);
     const siteResults = pruefeWebsite(gewertet.map((a) => a.page), { ...opts, nurSitemap });
     const alle = [...gewertet.flatMap((a) => a.results), ...siteResults];
     website = {
@@ -222,6 +224,25 @@ writeFileSync(
 );
 
 console.log(`\nBericht: ${base}.html`);
+
+if (opts.testfall) {
+  const origins = [...new Set(analysen.filter((a) => a.page.ok).map((a) => new URL(a.page.finalUrl || a.page.url).origin))];
+  const sites = Object.fromEntries(await Promise.all(origins.map(async (o) => [o, await collectOrigin(o)])));
+  const { keyword, ort, ueberregional, ignoriereNoindex, websiteModus } = opts;
+  const fall = {
+    name: opts.testfall,
+    erstellt: new Date().toISOString().slice(0, 10),
+    version: VERSION,
+    aufruf: process.argv.slice(2).filter((a, i, arr) => a !== "--testfall" && arr[i - 1] !== "--testfall").join(" "),
+    opts: { keyword, ort, ueberregional, ignoriereNoindex, websiteModus },
+    sites,
+    seiten: analysen.map((a) => ({ istStart: a.istStart, page: { ...a.page, screenshot: undefined } })),
+    nurSitemap,
+  };
+  mkdirSync(TEST_DIR, { recursive: true });
+  writeFileSync(join(TEST_DIR, `${opts.testfall}.json`), JSON.stringify(fall));
+  console.log(`Testfall gespeichert: ${join(TEST_DIR, `${opts.testfall}.json`)} – Erwartung mit „npm run seo:test -- --aktualisieren“ festschreiben.`);
+}
 
 if (opts.pdf || opts.vorschau) {
   const viewer = await launchBrowser();

@@ -1,0 +1,185 @@
+{
+  "website": {
+    "gesamt": 81,
+    "befunde": {
+      "dup-title": "ok",
+      "dup-desc": "ok",
+      "faq": "warnung",
+      "schema-website": "fehler"
+    }
+  },
+  "seiten": [
+    {
+      "pfad": "/",
+      "typ": "normal",
+      "gesamt": 76,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "ok",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "warnung",
+        "gliederung": "warnung",
+        "alt": "ok",
+        "og": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "ok",
+        "kw-title": "fehler",
+        "kw-h1": "warnung",
+        "kw-text": "ok",
+        "links": "ok",
+        "kontakt": "ok",
+        "schema": "fehler",
+        "nap": "fehler",
+        "tel": "ok",
+        "adresse": "warnung"
+      }
+    },
+    {
+      "pfad": "/consulting",
+      "typ": "normal",
+      "gesamt": 80,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "warnung",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "fehler",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "warnung",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "fehler",
+        "links": "ok",
+        "kontakt": "ok",
+        "tel": "ok",
+        "adresse": "warnung"
+      }
+    },
+    {
+      "pfad": "/galerie",
+      "typ": "normal",
+      "gesamt": 86,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "warnung",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "ok",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "fehler",
+        "links": "ok",
+        "kontakt": "ok",
+        "tel": "ok",
+        "adresse": "warnung"
+      }
+    },
+    {
+      "pfad": "/meine-leistungen",
+      "typ": "normal",
+      "gesamt": 86,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "ok",
+        "robots": "ok",
+        "sitemap": "ok",
+        "https": "ok",
+        "title": "warnung",
+        "description": "warnung",
+        "canonical": "fehler",
+        "lang": "ok",
+        "viewport": "ok",
+        "h1": "ok",
+        "gliederung": "ok",
+        "alt": "ok",
+        "og": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok",
+        "woerter": "fehler",
+        "links": "ok",
+        "kontakt": "ok",
+        "tel": "ok",
+        "adresse": "warnung"
+      }
+    },
+    {
+      "pfad": "/impressum",
+      "typ": "rechtstext",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "info",
+        "robots": "ok",
+        "sitemap": "info",
+        "https": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    },
+    {
+      "pfad": "/datenschutz",
+      "typ": "rechtstext",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "info",
+        "robots": "ok",
+        "sitemap": "info",
+        "https": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    },
+    {
+      "pfad": "/cookie-einstellungen",
+      "typ": "rechtstext",
+      "gesamt": 100,
+      "befunde": {
+        "status": "ok",
+        "indexierbar": "info",
+        "robots": "ok",
+        "sitemap": "info",
+        "https": "ok",
+        "lang": "ok",
+        "viewport": "ok",
+        "lcp": "ok",
+        "cls": "ok",
+        "gewicht": "ok"
+      }
+    }
+  ]
+}

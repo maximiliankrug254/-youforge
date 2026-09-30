@@ -6,6 +6,7 @@ const TIPPS = {
     nextjs: "noindex entfernen: metadata.robots in layout.tsx bzw. page.tsx.",
     wordpress:
       "Einstellungen → Lesen → „Suchmaschinen davon abhalten …“ ausschalten und im SEO-Plugin (Yoast/Rank Math) die Seite auf „index“ stellen.",
+    wix: "In den SEO-Einstellungen der Seite „Seite in Suchergebnissen anzeigen“ einschalten.",
     allgemein: "noindex-Anweisung in den SEO-Einstellungen der Seite entfernen.",
   },
   robotsFehlt: {
@@ -28,6 +29,8 @@ const TIPPS = {
     nextjs: "Route in src/app/sitemap.ts ergänzen.",
     wordpress: "Seite im SEO-Plugin auf „index“ stellen, dann erscheint sie automatisch in der Sitemap.",
     shopify: "Shopify erzeugt die Sitemap selbst – prüfen, ob die Seite veröffentlicht und nicht für Suchmaschinen ausgeblendet ist.",
+    wix: "Wix erzeugt die Sitemap selbst – prüfen, ob die Seite in ihren SEO-Einstellungen für Suchmaschinen sichtbar ist.",
+    jimdo: "Jimdo erzeugt die Sitemap selbst – prüfen, ob die Seite veröffentlicht und im Menü nicht ausgeblendet ist.",
     allgemein: "Seite in die XML-Sitemap aufnehmen.",
   },
   sitemapBenutzer: {
@@ -43,12 +46,16 @@ const TIPPS = {
     nextjs: "metadata.title setzen: Leistung + Ort + Firmenname.",
     wordpress: "SEO-Titel im SEO-Plugin setzen: Leistung + Ort + Firmenname.",
     shopify: "Seite, Produkt oder Kategorie bearbeiten → unten „Suchmaschineneintrag bearbeiten“ → Seitentitel. Startseite: Onlineshop → Einstellungen.",
+    wix: "Im Wix-Editor im Seitenmenü bei der Seite die SEO-Einstellungen öffnen → Titel: Leistung + Ort + Firmenname.",
+    jimdo: "Bei Jimdo unter Einstellungen → SEO für jede Seite einen Titel eintragen: Leistung + Ort + Firmenname.",
     allgemein: "Seitentitel setzen: Leistung + Ort + Firmenname.",
   },
   beschreibung: {
     nextjs: "metadata.description setzen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
     wordpress: "Meta-Beschreibung im SEO-Plugin setzen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
     shopify: "Seite, Produkt oder Kategorie bearbeiten → unten „Suchmaschineneintrag bearbeiten“ → Meta-Beschreibung. Startseite: Onlineshop → Einstellungen.",
+    wix: "Im Wix-Editor in den SEO-Einstellungen der Seite eine Beschreibung eintragen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
+    jimdo: "Bei Jimdo unter Einstellungen → SEO für jede Seite eine Beschreibung eintragen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
     allgemein: "Meta-Beschreibung setzen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
   },
   canonical: {
@@ -64,23 +71,30 @@ const TIPPS = {
   viewport: {
     nextjs: "viewport-Export mit width=device-width setzen.",
     wordpress: "Responsives Theme verwenden bzw. viewport-Meta im Theme ergänzen.",
+    wix: "Im Wix-Editor zur Handy-Ansicht wechseln und die mobil optimierte Darstellung einschalten – danach Texte und Bilder für Handys anordnen.",
+    jimdo: "Eine mobile (responsive) Jimdo-Vorlage wählen.",
     allgemein: "viewport-Meta mit width=device-width setzen.",
   },
   vorschau: {
     nextjs: "metadata.openGraph mit Titel und Bild setzen.",
     wordpress: "Social-Vorschau (Titel und Bild) im SEO-Plugin unter „Social“ einstellen.",
     shopify: "Onlineshop → Einstellungen → Bild für soziale Medien hochladen.",
+    wix: "In den SEO-Einstellungen der Seite unter „Social Share“ Bild und Titel festlegen.",
     allgemein: "Open-Graph-Titel und -Bild für die Vorschau beim Teilen setzen.",
   },
   ladezeit: {
     nextjs: "Große Bilder mit next/image ausliefern, Intro-Animationen kürzen, Schriften sparsam laden.",
     wordpress: "Bilder als WebP komprimieren, ein Caching-Plugin nutzen, Slider und Videos im oberen Bereich reduzieren.",
     shopify: "Bilder im Theme in passender Breite ausliefern, Slider im oberen Bereich reduzieren, nicht genutzte Apps mit eigenen Skripten entfernen.",
+    wix: "Bilder vor dem Hochladen verkleinern, Animationen und Videos im oberen Bereich reduzieren, nicht genutzte Wix-Apps entfernen.",
+    jimdo: "Bilder vor dem Hochladen verkleinern (etwa 1.600 Pixel Breite reichen), große Galerien und Slider im oberen Bereich reduzieren.",
     allgemein: "Große Bilder verkleinern, Animationen im oberen Bereich kürzen, Schriften sparsam laden.",
   },
   firmeneintrag: {
     nextjs: "Vorlage vorlagen/LocalBusinessJsonLd.tsx einbauen.",
     wordpress: "Firmeneintrag über das SEO-Plugin einrichten (Yoast Local SEO oder Rank Math → Local SEO).",
+    wix: "Im Wix-Dashboard die Unternehmensinfos (Adresse, Telefon, Öffnungszeiten) vollständig ausfüllen; in den SEO-Einstellungen unter „Strukturierte Daten“ einen LocalBusiness-Eintrag ergänzen.",
+    jimdo: "Falls der Jimdo-Tarif eigenen Code im Kopfbereich erlaubt, dort einen LocalBusiness-Eintrag (JSON-LD) einfügen. Sonst das Google-Unternehmensprofil umso sorgfältiger pflegen.",
     allgemein: "Strukturierten Firmeneintrag (JSON-LD, Typ LocalBusiness) einbauen.",
   },
   organisation: {

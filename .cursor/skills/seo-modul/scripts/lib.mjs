@@ -6,10 +6,11 @@ export const SKILL_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const REPO_ROOT = join(SKILL_DIR, "..", "..", "..");
 export const OUT_DIR = join(REPO_ROOT, ".seo");
 export const REPORT_DIR = join(OUT_DIR, "berichte");
+export const TEST_DIR = join(SKILL_DIR, "tests", "faelle");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.3";
+export const VERSION = "1.4";
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },

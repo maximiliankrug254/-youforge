@@ -12,7 +12,8 @@
     "lektorat:korrigieren": "node .cursor/skills/deutsches-lektorat/scripts/lektorat.mjs korrigieren",
     "lektorat:lt": "node .cursor/skills/deutsches-lektorat/scripts/start-languagetool.mjs",
     "seo": "node .cursor/skills/seo-modul/scripts/seo.mjs",
-    "seo:pruefen": "node .cursor/skills/seo-modul/scripts/seo.mjs pruefen"
+    "seo:pruefen": "node .cursor/skills/seo-modul/scripts/seo.mjs pruefen",
+    "seo:test": "node .cursor/skills/seo-modul/scripts/test.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

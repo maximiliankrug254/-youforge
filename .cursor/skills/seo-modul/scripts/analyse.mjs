@@ -58,17 +58,41 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
   }
 
   await page.addInitScript(() => {
-    window.__seo = { lcp: null, cls: 0, lcpListe: [] };
+    window.__seo = { lcp: null, cls: 0, lcpListe: [], clsQuelle: null };
+    const kurz = (el) => (el ? `${el.tagName.toLowerCase()}${typeof el.className === "string" && el.className.trim() ? `.${el.className.trim().split(/\s+/).slice(0, 2).join(".")}` : ""}` : "");
+    const art = (el) => {
+      if (!el || el.nodeType !== 1) return "sonst";
+      for (let e = el; e && e !== document.body; e = e.parentElement) {
+        const name = `${e.id} ${typeof e.className === "string" ? e.className : ""}`;
+        if (/cookie|consent|cmplz|borlabs|usercentrics|gdpr|klaro/i.test(name)) return "cookie";
+        if (e.getAttribute("role") === "dialog" || e.tagName === "DIALOG" || /popup|modal|dialog|lightbox/i.test(name)) return "popup";
+      }
+      const medien = el.matches("img,video,iframe,picture") ? [el] : [...el.querySelectorAll("img,video,iframe")].slice(0, 3);
+      if (medien.some((m) => !m.getAttribute("width") || !m.getAttribute("height"))) return "bild";
+      return "sonst";
+    };
     try {
       new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           window.__seo.lcp = entry.startTime;
-          window.__seo.lcpListe.push({ t: entry.startTime, size: entry.size });
+          const el = entry.element;
+          window.__seo.lcpListe.push({
+            t: entry.startTime,
+            size: entry.size,
+            datei: entry.url || "",
+            element: kurz(el),
+            text: entry.url ? "" : (el?.textContent || "").replace(/\s+/g, " ").trim().slice(0, 60),
+          });
         }
       }).observe({ type: "largest-contentful-paint", buffered: true });
       new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (!entry.hadRecentInput) window.__seo.cls += entry.value;
+          if (entry.hadRecentInput) continue;
+          window.__seo.cls += entry.value;
+          if (!window.__seo.clsQuelle || entry.value > window.__seo.clsQuelle.wert) {
+            const node = (entry.sources || []).map((s) => s.node).find((n) => n && n.nodeType === 1) || null;
+            window.__seo.clsQuelle = { wert: entry.value, element: kurz(node), art: art(node) };
+          }
         }
       }).observe({ type: "layout-shift", buffered: true });
     } catch {
@@ -96,6 +120,15 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
   await page.waitForTimeout(2500);
   const ladezeitMs = Date.now() - started;
 
+  // Sperrseite eines Server-Schutzes (Cloudflare u. a.) nicht als Website bewerten.
+  const sperre = await page
+    .evaluate(() => Boolean(document.querySelector("#cf-wrapper,#challenge-form,#challenge-running,script[src*='challenge-platform']")) || /^(just a moment|attention required|access denied)/i.test(document.title))
+    .catch(() => false);
+  if (sperre && [403, 429, 503].includes(response?.status() ?? 0)) {
+    await context.close();
+    return { url, ok: false, error: `vom Server-Schutz blockiert (Code ${response.status()}) – bitte später oder von einem anderen Anschluss erneut prüfen` };
+  }
+
   const vitals = await page.evaluate(() => ({
     // Slider: Wechselt nach dem Laden ein fast gleich großes Bild ein, zählt der Browser das als neuen
     // „größten Inhalt“. Besucher sehen den Hauptinhalt aber schon beim ersten Bild – spätere Wechsel ignorieren.
@@ -105,6 +138,7 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
       let wert = null;
       let groesse = 0;
       let slider = false;
+      let gewaehlt = null;
       for (const e of liste) {
         if (wert != null && geladen && e.t > geladen && e.size <= groesse * 1.1) {
           slider = true;
@@ -112,10 +146,22 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
         }
         wert = e.t;
         groesse = e.size;
+        gewaehlt = e;
       }
-      return { lcp: wert ?? window.__seo?.lcp ?? null, lcpSlider: slider };
+      let lcpElement = null;
+      if (gewaehlt) {
+        const res = gewaehlt.datei ? performance.getEntriesByName(gewaehlt.datei)[0] : null;
+        lcpElement = {
+          element: gewaehlt.element,
+          datei: gewaehlt.datei ? gewaehlt.datei.split("?")[0].split("/").pop().slice(0, 80) : "",
+          bytes: res ? res.encodedBodySize || res.transferSize || 0 : 0,
+          text: gewaehlt.text,
+        };
+      }
+      return { lcp: wert ?? window.__seo?.lcp ?? null, lcpSlider: slider, lcpElement };
     })(),
     cls: window.__seo?.cls ?? 0,
+    clsQuelle: window.__seo?.clsQuelle ?? null,
     fallbackBytes: performance
       .getEntriesByType("resource")
       .concat(performance.getEntriesByType("navigation"))
@@ -124,7 +170,7 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
 
   if (nurMessen) {
     await context.close();
-    return { url, ok: true, lcp: vitals.lcp, lcpSlider: vitals.lcpSlider, cls: vitals.cls };
+    return { url, ok: true, lcp: vitals.lcp, lcpSlider: vitals.lcpSlider, lcpElement: vitals.lcpElement, cls: vitals.cls, clsQuelle: vitals.clsQuelle };
   }
 
   const dom = await page.evaluate(() => {
@@ -132,8 +178,24 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
     const meta = (name) => q(`meta[name="${name}"]`)?.getAttribute("content") ?? null;
     const prop = (p) => q(`meta[property="${p}"]`)?.getAttribute("content") ?? null;
     const clean = (t) => (t || "").replace(/\s+/g, " ").trim();
+    // Cookie-Banner (Complianz, Borlabs, Jimdo …) gehören nicht zum Seiteninhalt. Ein Treffer zählt nur,
+    // wenn der Container klein ist – manche Themes hängen „cookie“-Klassen an den ganzen Seitenrahmen.
+    const bodyLaenge = (document.body?.textContent || "").length || 1;
+    const imBanner = (el) => {
+      for (let e = el; e && e !== document.body; e = e.parentElement) {
+        if (/cookie|consent|cmplz|borlabs|usercentrics|gdpr|cky-|klaro|cmp/i.test(`${e.id} ${typeof e.className === "string" ? e.className : ""}`)) {
+          return (e.textContent || "").length < bodyLaenge * 0.5;
+        }
+      }
+      return false;
+    };
 
-    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => {
+    // Slider kopieren Folien für die Endlos-Schleife – die Kopien sind keine eigenen Überschriften.
+    const KLON = ".swiper-slide-duplicate,.slick-cloned,.splide__slide--clone,.owl-item.cloned";
+    const COOKIE_TITEL = /cookie|consent|privatsphäre-einstellungen|datenschutz-?einstellungen/i;
+    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")]
+      .filter((h) => !imBanner(h) && !h.closest(KLON) && !(COOKIE_TITEL.test(h.textContent || "") && !h.closest("main,article")))
+      .map((h) => {
       const text = clean(h.textContent).slice(0, 140);
       const bildAlt = text ? "" : clean([...h.querySelectorAll("img[alt],svg[aria-label]")].map((b) => b.getAttribute("alt") || b.getAttribute("aria-label")).join(" "));
       return { level: Number(h.tagName[1]), text: text || bildAlt, nurBild: !text && Boolean(h.querySelector("img,svg")) };
@@ -191,7 +253,8 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
       },
       jsonLd,
       links,
-      details: document.querySelectorAll("details").length,
+      // Aufklapp-Elemente aus Cookie-Bannern (Complianz, Borlabs …) und Menüs sind kein FAQ-Bereich.
+      details: [...document.querySelectorAll("details")].filter((d) => !d.closest("nav") && !imBanner(d) && d.getBoundingClientRect().height > 0).length,
       text: document.body?.innerText || "",
     };
   });
@@ -218,7 +281,9 @@ export async function collectPage(browser, url, { drosseln = true, nurMessen = f
     ladezeitMs,
     lcp: vitals.lcp,
     lcpSlider: vitals.lcpSlider,
+    lcpElement: vitals.lcpElement,
     cls: vitals.cls,
+    clsQuelle: vitals.clsQuelle,
     bytes: bytes || vitals.fallbackBytes,
     screenshot,
     ...rest,
@@ -282,12 +347,36 @@ export function robotsBlocks(robots, pathname) {
   return best && best.type === "disallow" ? best.path : null;
 }
 
+/** Nur 404/410 heißt „gibt es nicht“ – 403, 5xx oder Zeitüberschreitung heißt „konnte nicht geprüft werden“. */
+export const fehltWirklich = (status) => status === 404 || status === 410;
+
 async function fetchText(url) {
   try {
-    const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(15000) });
+    // Ohne Browser-Kennung blocken manche Anbieter (z. B. Jimdo über Cloudflare) mit 403.
+    const res = await fetch(url, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(15000),
+      headers: { "user-agent": MOBILE_UA, accept: "text/html,application/xml,text/plain;q=0.9,*/*;q=0.8", "accept-language": "de-DE,de;q=0.9" },
+    });
     return { status: res.status, text: res.ok ? await res.text() : "" };
   } catch {
     return { status: 0, text: "" };
+  }
+}
+
+/** Manche Server-Schutze (Cloudflare) erkennen Node trotz Browser-Kennung – dann über den echten Browser abrufen. */
+async function holeText(url, browser) {
+  const res = await fetchText(url);
+  if (res.status === 200 || fehltWirklich(res.status) || !browser) return res;
+  const context = await browser.newContext({ userAgent: MOBILE_UA, locale: "de-DE" });
+  try {
+    const antwort = await context.newPage().then((p) => p.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 }));
+    const status = antwort?.status() ?? 0;
+    return { status, text: status === 200 ? await antwort.text() : "" };
+  } catch {
+    return res;
+  } finally {
+    await context.close();
   }
 }
 
@@ -307,12 +396,12 @@ export function sitemapPfad(value) {
 const MAX_SITEMAPS = 30;
 
 /** Liest eine Sitemap; bei einem Sitemap-Index auch die verlinkten Teil-Sitemaps (z. B. WordPress, Yoast). */
-async function ladeSitemap(url, besucht, tiefe = 0) {
-  const leer = { found: false, paths: [], teile: [] };
+async function ladeSitemap(url, besucht, browser, tiefe = 0) {
+  const leer = { found: false, paths: [], teile: [], status: 404 };
   if (besucht.has(url) || besucht.size >= MAX_SITEMAPS) return leer;
   besucht.add(url);
-  const res = await fetchText(url);
-  if (res.status !== 200) return leer;
+  const res = await holeText(url, browser);
+  if (res.status !== 200) return { ...leer, status: res.status };
   const istIndex = /<sitemapindex[\s>]/i.test(res.text);
   if (!istIndex && !/<urlset[\s>]/i.test(res.text)) return leer;
   const locs = [...res.text.matchAll(/<loc>\s*(?:<!\[CDATA\[)?\s*([^<\s\]]+)\s*(?:\]\]>)?\s*<\/loc>/gi)].map((m) =>
@@ -323,7 +412,7 @@ async function ladeSitemap(url, besucht, tiefe = 0) {
   const teile = [...locs];
   if (tiefe < 2) {
     for (const teil of locs) {
-      const sub = await ladeSitemap(teil, besucht, tiefe + 1);
+      const sub = await ladeSitemap(teil, besucht, browser, tiefe + 1);
       paths.push(...sub.paths);
       teile.push(...sub.teile);
     }
@@ -331,24 +420,35 @@ async function ladeSitemap(url, besucht, tiefe = 0) {
   return { found: true, paths, teile };
 }
 
-export async function collectOrigin(origin) {
+export async function collectOrigin(origin, browser = null) {
   if (originCache.has(origin)) return originCache.get(origin);
-  const robotsRes = await fetchText(`${origin}/robots.txt`);
-  const robots = robotsRes.status === 200 ? { found: true, ...parseRobots(robotsRes.text) } : { found: false, rules: [], sitemaps: [] };
+  const robotsRes = await holeText(`${origin}/robots.txt`, browser);
+  const robots =
+    robotsRes.status === 200
+      ? { found: true, ...parseRobots(robotsRes.text) }
+      : { found: false, rules: [], sitemaps: [], status: robotsRes.status, unklar: !fehltWirklich(robotsRes.status) };
 
   const kandidaten = robots.sitemaps.length
     ? robots.sitemaps.slice(0, 5)
     : [`${origin}/sitemap.xml`, `${origin}/sitemap_index.xml`, `${origin}/wp-sitemap.xml`];
   const besucht = new Set();
   const sitemap = { url: kandidaten[0], found: false, paths: [], teile: [] };
+  const fehlStatus = [];
   for (const url of kandidaten) {
-    const res = await ladeSitemap(url, besucht);
-    if (!res.found) continue;
+    const res = await ladeSitemap(url, besucht, browser);
+    if (!res.found) {
+      fehlStatus.push(res.status);
+      continue;
+    }
     if (!sitemap.found) sitemap.url = url;
     sitemap.found = true;
     sitemap.paths.push(...res.paths);
     sitemap.teile.push(...res.teile);
     if (!robots.sitemaps.length) break;
+  }
+  if (!sitemap.found && fehlStatus.some((s) => !fehltWirklich(s) && s !== 200)) {
+    sitemap.unklar = true;
+    sitemap.status = fehlStatus.find((s) => !fehltWirklich(s) && s !== 200);
   }
   sitemap.paths = [...new Set(sitemap.paths)];
   sitemap.benutzer = sitemap.teile.filter((t) => /(users?|author)[-_]?(sitemap)?[-_\d]*\.xml/i.test(t));
