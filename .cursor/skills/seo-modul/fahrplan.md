@@ -74,11 +74,13 @@ Erwartete echte Befunde bei den Handwerker-Seiten (30.09.2026):
 - Shop-Modus: Produkt-Einträge (Preis, Verfügbarkeit, Bewertungen) auf Produktseiten prüfen.
 - Prüfung in die Post-Deploy-Checkliste aufnehmen.
 - Doppelte Startseite erkennen (z. B. `/` und `/home` mit gleichem Inhalt, aber ohne Canonical aufeinander).
-- Weitere echte Seiten testen: Betriebe mit mehreren Standorten, Österreich/Schweiz, Webflow, TYPO3.
+- Weitere echte Seiten testen: Betriebe mit mehreren Standorten, Webflow, TYPO3.
+- Später (nach Deutschland): Österreich/Schweiz – Adressen ohne Länderkürzel erkennen („8010 Graz“ statt nur „A-8010 Graz“), echte AT/CH-Testfälle.
 
 ## Entscheidungen
 
 - Keine Platzierungen versprechen. Das Modul bewertet die Website, nicht Google-Profil, Bewertungen oder Wettbewerb.
+- Markt (02.10.2026): zuerst nur Deutschland. Österreich und Schweiz erst danach, andere Länder (z. B. Bali) vorerst nicht.
 - Berichte über fremde Websites erst selbst lesen, bevor sie jemand sieht. Falsche Befunde werden als Verbesserung ins Modul übernommen.
 - Verkauf an Agenturen: Nutzungsrecht, einmaliger Preis (noch offen), kein Update-Paket. Details: `public/docs/SEO.docx` (intern).
 
