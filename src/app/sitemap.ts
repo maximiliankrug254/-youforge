@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/leistungen",
     "/katalog",
     "/arbeiten",
+    "/website-check",
     "/kontakt",
     "/briefing",
     "/ki-hinweise",

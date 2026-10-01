@@ -8,6 +8,7 @@ import { CatalogTeaser } from "@/components/sections/CatalogTeaser";
 import { Founder } from "@/components/sections/Founder";
 import { CTA } from "@/components/sections/CTA";
 import { ChatDemo } from "@/components/sections/ChatDemo";
+import { WebsiteCheckTeaser } from "@/components/sections/WebsiteCheckTeaser";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <SplitStatements />
       <ChaosOrder />
+      <WebsiteCheckTeaser />
       <ServicesShowcase />
       <ProcessTimeline />
       <WorkTeaser />

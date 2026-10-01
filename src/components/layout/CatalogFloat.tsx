@@ -71,7 +71,8 @@ export function CatalogFloat() {
     !pathname ||
     pathname.startsWith("/demo/") ||
     pathname === "/katalog" ||
-    pathname.startsWith("/katalog/");
+    pathname.startsWith("/katalog/") ||
+    pathname === "/website-check";
 
   if (hide || FRAMES.length === 0) return null;
 

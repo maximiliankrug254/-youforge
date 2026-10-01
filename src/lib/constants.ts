@@ -21,6 +21,7 @@ export const navLinks = [
   { href: "/leistungen", label: "Leistungen" },
   { href: "/katalog", label: "Katalog" },
   { href: "/arbeiten", label: "Arbeiten" },
+  { href: "/website-check", label: "Website-Check" },
   { href: "/kontakt", label: "Kontakt" },
 ];
 

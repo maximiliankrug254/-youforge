@@ -172,6 +172,39 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
+            <h2 className="text-lg font-semibold text-foreground" id="website-check">
+              6a. Kostenloser Website-Check
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed">
+              Auf der Seite „Website-Check“ können Sie die Adresse einer Website
+              prüfen lassen. Dafür ruft unser Server die Startseite sowie die
+              Dateien robots.txt und Sitemap dieser Website ab. Um Ladezeiten zu
+              ermitteln, übermittelt unser Server die eingegebene Adresse an den
+              Dienst Google PageSpeed Insights (Google Ireland Limited, Gordon House,
+              Barrow Street, Dublin 4, Irland). Angaben zu Ihrer Person werden dabei
+              nicht an Google übermittelt.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed">
+              Zum Schutz vor Missbrauch verarbeitet unser Server Ihre IP-Adresse
+              kurzzeitig im Arbeitsspeicher, um die Zahl der Prüfungen zu begrenzen;
+              sie wird nicht dauerhaft gespeichert. Prüfergebnisse werden bis zu
+              30 Minuten zwischengespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
+              DSGVO (berechtigtes Interesse an einem sicheren und funktionsfähigen
+              Angebot).
+            </p>
+            <p className="mt-2 text-sm leading-relaxed">
+              Fordern Sie anschließend den vollständigen Bericht an, werden Name,
+              E-Mail-Adresse, optional Ihre Telefonnummer, die geprüfte Adresse und,
+              sofern vorhanden, das Prüfergebnis wie beim Projekt-Briefing über Web3Forms per E-Mail an
+              uns übermittelt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO
+              (Einwilligung durch Aktivierung der Checkbox) sowie lit. b DSGVO
+              (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald die
+              Anfrage abschließend bearbeitet ist und keine gesetzlichen
+              Aufbewahrungspflichten entgegenstehen.
+            </p>
+          </div>
+
+          <div>
             <h2 className="text-lg font-semibold text-foreground">
               7. Terminbuchung über Calendly
             </h2>
