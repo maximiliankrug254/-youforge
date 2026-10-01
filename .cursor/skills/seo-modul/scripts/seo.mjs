@@ -13,6 +13,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { collectOrigin, collectPage, internalLinks, launchBrowser } from "./analyse.mjs";
 import { renderHtml, renderMarkdown } from "./bericht.mjs";
+import { holeGoogle } from "./google.mjs";
 import { DEFAULT_BASE, RECHTSTEXT, REPORT_DIR, TEST_DIR, VERSION, ensureDirs, istUeberregional, normalizeUrl, stamp, toUrl } from "./lib.mjs";
 import { bewerte, einordnen, massnahmen, note, pruefeSeite, pruefeWebsite } from "./pruefungen.mjs";
 
@@ -29,6 +30,7 @@ function parseArgs(argv) {
     ueberregional: false,
     oeffnen: true,
     drosseln: true,
+    google: true,
     pdf: false,
     vorschau: false,
   };
@@ -44,6 +46,7 @@ function parseArgs(argv) {
     else if (arg === "--ueberregional") out.ueberregional = true;
     else if (arg === "--kein-oeffnen") out.oeffnen = false;
     else if (arg === "--ohne-drosselung") out.drosseln = false;
+    else if (arg === "--ohne-google") out.google = false;
     else if (arg === "--pdf") out.pdf = true;
     else if (arg === "--vorschau") out.vorschau = true;
     else if (arg === "--testfall") out.testfall = (argv[++i] ?? "").replace(/[^a-z0-9-]/gi, "");
@@ -83,9 +86,18 @@ async function nachmessen(browser, url, page, opts) {
   }
 }
 
+const lokal = (url) => /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(new URL(url).hostname);
+
 async function analysiere(browser, url, opts, istStart) {
   process.stdout.write(`  prüfe ${url} … `);
+  // Google braucht 15–40 s; läuft parallel zur eigenen Messung, nur für die Startseite.
+  const google = istStart && opts.google && !lokal(url) ? holeGoogle(url) : null;
   const page = await collectPage(browser, url, { drosseln: opts.drosseln });
+  if (google) {
+    const g = await google;
+    if (g.ok) page.google = { feld: g.feld, labor: g.labor };
+    else page.googleGrund = g.grund;
+  }
   if (!page.ok) {
     console.log(`nicht erreichbar (${page.error})`);
     return { page, istStart, einordnung: { typ: "fehler", gewertet: false, grund: "" }, results: [], score: { gesamt: 0, kategorien: {} }, massnahmen: [] };
@@ -97,7 +109,12 @@ async function analysiere(browser, url, opts, istStart) {
   const results = pruefeSeite(page, site, { ...kontext, einordnung });
   const score = bewerte(results);
   const zusatz = einordnung.gewertet ? "" : ` · ${TYP_KURZ[einordnung.typ] || einordnung.typ}, nicht gewertet`;
-  const hinweise = [page.zweiterVersuch && "im 2. Anlauf geladen", page.lcpMessungen && `Ladezeit ${page.lcpMessungen.length}× gemessen`].filter(Boolean);
+  const hinweise = [
+    page.zweiterVersuch && "im 2. Anlauf geladen",
+    page.lcpMessungen && `Ladezeit ${page.lcpMessungen.length}× gemessen`,
+    page.google && (page.google.feld ? "Google-Nutzerdaten da" : "Google: nur Testlauf"),
+    page.googleGrund && `Google: ${page.googleGrund}`,
+  ].filter(Boolean);
   console.log(`${score.gesamt}/100 (${note(score.gesamt)})${zusatz}${hinweise.length ? ` · ${hinweise.join(", ")}` : ""}`);
   return { page, istStart, einordnung, results, score, massnahmen: massnahmen(results) };
 }
@@ -105,7 +122,7 @@ async function analysiere(browser, url, opts, istStart) {
 const opts = parseArgs(process.argv.slice(2));
 if (!opts.urls.length) {
   console.error(
-    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ueberregional] [--ignoriere-noindex] [--pdf] [--vorschau] [--kein-oeffnen] [--ohne-drosselung]",
+    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ueberregional] [--ignoriere-noindex] [--pdf] [--vorschau] [--kein-oeffnen] [--ohne-drosselung] [--ohne-google]",
   );
   process.exit(1);
 }

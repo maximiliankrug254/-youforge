@@ -397,6 +397,41 @@ export function pruefeSeite(p, site, opts) {
       ),
     );
 
+  const g = p.google;
+  if (g?.feld?.lcp != null || g?.feld?.cls != null) {
+    const { lcp: gLcp, cls: gCls, quelle } = g.feld;
+    const stufeLcp = gLcp == null ? 0 : gLcp <= 2500 ? 0 : gLcp <= 4000 ? 1 : 2;
+    const stufeCls = gCls == null ? 0 : gCls <= 0.1 ? 0 : gCls <= 0.25 ? 1 : 2;
+    const schlimmste = Math.max(stufeLcp, stufeCls);
+    const teile = [
+      gLcp != null && `Echte Besucher sehen den Hauptinhalt nach ${sek(gLcp)} (gut: bis 2,5 s)`,
+      gCls != null && `Layout-Verschiebung ${gCls.toFixed(2).replace(".", ",")} (gut: bis 0,10)`,
+    ].filter(Boolean);
+    out.push(
+      r(
+        "google-feld",
+        "technik",
+        "wichtig",
+        "Echte Ladezeit (Google-Nutzerdaten)",
+        ["ok", "warnung", "fehler"][schlimmste],
+        `${teile.join("; ")}. Quelle: Chrome-Nutzer der letzten 28 Tage, ${quelle === "seite" ? "diese Seite" : "ganze Domain"}.`,
+        schlimmste === 0 ? "" : stufeLcp >= stufeCls ? lcpFix : "Bildern und Videos feste Größen geben und Platz für Banner, Pop-ups und nachladende Elemente reservieren.",
+      ),
+    );
+  } else if (g) {
+    const labor = [g.labor?.lcp != null && `Hauptinhalt nach ${sek(g.labor.lcp)}`, g.labor?.leistung != null && `Leistungswert ${g.labor.leistung}/100`].filter(Boolean);
+    out.push(
+      r(
+        "google-feld",
+        "technik",
+        "wichtig",
+        "Echte Ladezeit (Google-Nutzerdaten)",
+        "info",
+        `Google hat für diese Website noch zu wenige Besucherdaten.${labor.length ? ` Googles Testlauf am Handy: ${labor.join(", ")}.` : ""}`,
+      ),
+    );
+  }
+
   const cq = p.cls > 0.1 ? p.clsQuelle : null;
   const clsText = {
     popup: [" Größter Sprung durch ein Popup bzw. Einblend-Fenster", "Das Popup über dem Inhalt einblenden (ohne die Seite zu verschieben) oder erst nach einer Aktion des Besuchers zeigen."],

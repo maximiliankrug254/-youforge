@@ -10,7 +10,7 @@ export const TEST_DIR = join(SKILL_DIR, "tests", "faelle");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.4";
+export const VERSION = "1.5";
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },

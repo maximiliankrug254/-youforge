@@ -23,11 +23,13 @@ npm run seo:pruefen -- --url https://kunde.de --site --max 10         # ganze We
 npm run seo:pruefen -- --url https://alt.de --url https://neu.de      # Vergleich
 ```
 
-Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ueberregional` (Anbieter ohne festen Ort; automatisch bei `--ort DACH`, `Deutschland`, `bundesweit` …), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--base URL`.
+Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ueberregional` (Anbieter ohne festen Ort; automatisch bei `--ort DACH`, `Deutschland`, `bundesweit` …), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--ohne-google`, `--base URL`.
 
 Ausgabe: `.seo/berichte/seo-<zeit>.html|.md|.json` (+ `.pdf`/`.png`). Der HTML-Bericht öffnet sich automatisch.
 
 Gemessen wird wie auf einem Handy im 4G-Netz. Ladezeiten über 2,5 s misst das Modul selbst bis zu dreimal nach und nimmt den mittleren Wert; spätere Bildwechsel in Slidern zählen nicht. Mehrere Prüfungen nie gleichzeitig laufen lassen – das verfälscht die Ladezeit.
+
+**Google-Nutzerdaten:** Für die Startseite (bzw. jede Adresse im Vergleich) fragt das Modul parallel Google PageSpeed Insights ab. Prüfpunkt „Echte Ladezeit (Google-Nutzerdaten)“: Ladezeit und Layout-Verschiebung echter Chrome-Nutzer der letzten 28 Tage (Seite oder ganze Domain). Hat Google zu wenige Besucherdaten, erscheint nur ein Hinweis mit Googles Testlauf (zählt nicht zur Note). Braucht `PAGESPEED_API_KEY` in der Umgebung oder in `.env.local` (kostenlos, [Anleitung](https://developers.google.com/speed/docs/insights/v5/get-started) → „Get a Key“); ohne Schlüssel läuft alles wie bisher, die Konsole meldet „Google: kein Schlüssel“. Lokale Adressen (localhost) werden nicht an Google geschickt.
 
 ### So bewertet das Modul
 

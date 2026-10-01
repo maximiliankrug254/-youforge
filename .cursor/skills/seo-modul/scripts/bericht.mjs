@@ -91,6 +91,7 @@ function analyseBlock(a, index, offen) {
         <div class="bars">${kategorieBalken(a.score)}</div>
         <dl class="facts">
           <div><dt>Ladezeit (LCP)</dt><dd>${sek(a.page.lcp)}</dd></div>
+          ${a.page.google?.feld?.lcp != null ? `<div><dt>Ladezeit (Google-Nutzer)</dt><dd>${sek(a.page.google.feld.lcp)}</dd></div>` : ""}
           <div><dt>Datenmenge</dt><dd>${mb(a.page.bytes)}</dd></div>
           <div><dt>Wörter</dt><dd>${(a.page.text.match(/[A-Za-zÄÖÜäöüß0-9]{2,}/g) || []).length}</dd></div>
           <div><dt>Gemessen</dt><dd>${e(a.page.netz)}</dd></div>
@@ -119,6 +120,7 @@ function vergleichTabelle(analysen, titel) {
     ["Gesamt", (a) => `<b class="${a.score.gesamt === best ? "best" : ""}">${a.score.gesamt}</b>`],
     ...Object.entries(KATEGORIEN).map(([k, label]) => [label, (a) => a.score.kategorien[k] ?? "–"]),
     ["Ladezeit (LCP)", (a) => sek(a.page.lcp)],
+    ...(ok.some((a) => a.page.google?.feld?.lcp != null) ? [["Ladezeit (Google-Nutzer)", (a) => sek(a.page.google?.feld?.lcp)]] : []),
     ["Datenmenge", (a) => mb(a.page.bytes)],
     ["Firmeneintrag für Google", schemaZelle],
     ["Plattform", (a) => e(PLATTFORMEN[a.page.plattform] || PLATTFORMEN.unbekannt)],

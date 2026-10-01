@@ -2,7 +2,7 @@
 
 ## Aktuelle Version
 
-**1.4** vom 30.09.2026
+**1.5** vom 02.10.2026
 
 ## Was das Modul kann
 
@@ -70,7 +70,7 @@ Erwartete echte Befunde bei den Handwerker-Seiten (30.09.2026):
 
 - Texte, Seitentitel und FAQ nicht nur prüfen, sondern auf Wunsch Vorschläge schreiben (mit Lektorat).
 - Google Search Console anbinden, um echte Platzierungen und Klicks zu zeigen.
-- Echte Ladezeiten von Google-Nutzern (Chrome-Nutzerdaten über die PageSpeed-Insights-Schnittstelle) zusätzlich zur eigenen Messung zeigen – die eigene Messung schwankt je nach Verbindung.
+- Google-Nutzerdaten mit echtem Schlüssel an den Testfällen gegenprüfen (eigene Messung vs. Google) und Grenzwerte ggf. anpassen.
 - Shop-Modus: Produkt-Einträge (Preis, Verfügbarkeit, Bewertungen) auf Produktseiten prüfen.
 - Prüfung in die Post-Deploy-Checkliste aufnehmen.
 - Doppelte Startseite erkennen (z. B. `/` und `/home` mit gleichem Inhalt, aber ohne Canonical aufeinander).
@@ -83,6 +83,13 @@ Erwartete echte Befunde bei den Handwerker-Seiten (30.09.2026):
 - Verkauf an Agenturen: Nutzungsrecht, einmaliger Preis (noch offen), kein Update-Paket. Details: `public/docs/SEO.docx` (intern).
 
 ## Änderungsprotokoll
+
+- **1.5 – 02.10.2026** – Echte Ladezeiten von Google:
+  - Neu: `scripts/google.mjs` fragt Google PageSpeed Insights ab (Handy), parallel zur eigenen Messung, nur für die Startseite bzw. jede Vergleichsadresse.
+  - Neuer Prüfpunkt „Echte Ladezeit (Google-Nutzerdaten)“ (wichtig): Ladezeit und Layout-Verschiebung echter Chrome-Nutzer (28 Tage, Seite oder Domain). Ohne Nutzerdaten nur ein Hinweis mit Googles Testlauf.
+  - Bericht: „Ladezeit (Google-Nutzer)“ in der Seitenübersicht und in der Vergleichstabelle.
+  - Schlüssel `PAGESPEED_API_KEY` aus Umgebung oder `.env.local`; ohne Schlüssel unverändert. Neue Option `--ohne-google`.
+  - Dieselbe Abfrage nutzt der kostenlose Website-Check auf you-forge.de (`src/lib/website-check/`).
 
 - **1.4 – 30.09.2026** – Automatische Tests und fünf echte Handwerker-Websites (Jimdo, Wix, 3× WordPress):
   - Neu: `npm run seo:test` mit gespeicherten Testfällen, festgeschriebenem Stand und Kernbefunden; `--testfall name` speichert einen Lauf als Testfall.
