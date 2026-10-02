@@ -5,9 +5,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Kontakt",
+  title: "Kontakt: Termin buchen oder Projekt anfragen",
   description:
-    "Termin buchen oder Projekt-Briefing ausfüllen — zwei Wege zu YouForge.",
+    "Termin buchen oder Projekt-Briefing ausfüllen — zwei Wege zu YouForge. Antwort innerhalb von 24 Stunden, du sprichst direkt mit Max.",
+  alternates: { canonical: "/kontakt" },
 };
 
 export default function KontaktPage() {
@@ -17,6 +18,7 @@ export default function KontaktPage() {
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <SectionHeading
+              as="h1"
               label="Kontakt"
               title="Wie möchtest du starten?"
               description="Zwei Wege — du entscheidest. Kein Umweg, kein Warten."

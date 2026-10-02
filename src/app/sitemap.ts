@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/arbeiten",
     "/website-check",
     "/kontakt",
-    "/briefing",
     "/ki-hinweise",
   ];
 

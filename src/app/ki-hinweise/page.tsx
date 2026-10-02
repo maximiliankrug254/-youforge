@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Hinweise zu KI-Inhalten",
   description:
     "Transparenz zu KI-Demo, automatisierten Assistenten und KI-unterstützten Inhalten auf you-forge.de.",
+  alternates: { canonical: "/ki-hinweise" },
 };
 
 export default function KiHinweisePage() {

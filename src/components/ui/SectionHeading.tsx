@@ -6,12 +6,14 @@ export function SectionHeading({
   description,
   className,
   align = "left",
+  as: Heading = "h2",
 }: {
   label?: string;
   title: string;
   description?: string;
   className?: string;
   align?: "left" | "center";
+  as?: "h1" | "h2";
 }) {
   return (
     <div
@@ -26,9 +28,9 @@ export function SectionHeading({
           {label}
         </p>
       )}
-      <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+      <Heading className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p className="mt-4 text-lg text-muted">{description}</p>
       )}

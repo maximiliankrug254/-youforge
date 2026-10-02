@@ -6,9 +6,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { process, pricingTiers, services } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Leistungen",
+  title: "Leistungen: Websites, Web-Apps & KI-Automatisierung",
   description:
     "Websites, Landingpages, Web-Apps, KI-Automatisierung und mehr — digitale Lösungen von YouForge.",
+  alternates: { canonical: "/leistungen" },
 };
 
 export default function LeistungenPage() {
@@ -18,10 +19,19 @@ export default function LeistungenPage() {
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <SectionHeading
+              as="h1"
               label="Leistungen"
               title="Alles, was wir schmieden"
               description="Von der ersten Idee bis zum Launch — und mit optionaler laufender Betreuung."
             />
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="mt-6 max-w-2xl text-muted">
+              Konzept, Design, Texte, Technik und Launch kommen aus einer Hand. Kein Weiterreichen zwischen Agentur,
+              Freelancer und IT-Dienstleister: Du hast von Anfang bis Ende denselben Ansprechpartner. Ob eine einzelne
+              Landingpage oder eine Web-App mit Login – erst verstehen wir dein Business, dann bekommst du einen
+              Festpreis.
+            </p>
           </FadeIn>
         </div>
       </section>

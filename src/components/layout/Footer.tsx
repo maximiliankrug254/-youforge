@@ -8,6 +8,13 @@ export function Footer() {
         <div className="text-center sm:text-left">
           <p className="font-mono text-xs text-muted">
             © {new Date().getFullYear()} {siteConfig.name}
+            {" · "}
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="text-muted underline-offset-2 hover:text-accent hover:underline"
+            >
+              {siteConfig.email}
+            </a>
           </p>
           <p className="mt-1 max-w-md text-[11px] leading-relaxed text-muted/70">
             Interaktive{" "}

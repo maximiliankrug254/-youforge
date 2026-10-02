@@ -4,9 +4,10 @@ import { portfolioProjects } from "@/lib/constants";
 import { getPublicPortfolioProjects } from "@/lib/work-showcase";
 
 export const metadata: Metadata = {
-  title: "Arbeiten",
+  title: "Arbeiten: Websites, Web-Apps & KI-Projekte",
   description:
     "Portfolio und Referenzprojekte von YouForge — Websites, Web-Apps und KI-Lösungen.",
+  alternates: { canonical: "/arbeiten" },
 };
 
 export default function ArbeitenPage() {

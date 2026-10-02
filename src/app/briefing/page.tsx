@@ -4,9 +4,10 @@ import { ProjectBriefingForm } from "@/components/briefing/ProjectBriefingForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export const metadata: Metadata = {
-  title: "Projekt-Briefing",
+  title: "Projekt-Briefing: Dein Projekt in 10 Fragen",
   description:
     "10 kurze Fragen zu deinem Projekt — wir melden uns innerhalb von 24 Stunden.",
+  robots: { index: false },
 };
 
 export default function BriefingPage() {
@@ -16,6 +17,7 @@ export default function BriefingPage() {
         <div className="mx-auto max-w-2xl">
           <FadeIn>
             <SectionHeading
+              as="h1"
               label="Briefing"
               title="Dein Projekt in 10 Fragen."
               description="Ca. 5 Minuten — damit wir direkt in die Lösung einsteigen, statt Basics abzuklappern."

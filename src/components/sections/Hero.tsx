@@ -14,21 +14,20 @@ export function Hero() {
       <WireframeSphere />
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
-        <motion.p
-          className="mb-8 font-mono text-xs uppercase tracking-[0.25em] text-muted"
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          Digitalagentur · DACH
-        </motion.p>
-
         <motion.h1
           className="text-[clamp(1.75rem,5vw,3.25rem)] font-bold uppercase leading-[1.15] tracking-tight"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={shouldReduceMotion ? false : { y: 30 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
+          <motion.span
+            className="mb-8 block font-mono text-xs font-normal leading-normal tracking-[0.25em] text-muted"
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            Digitalagentur · DACH
+          </motion.span>{" "}
           Die meisten Unternehmen haben kein Website-Problem.
         </motion.h1>
 
