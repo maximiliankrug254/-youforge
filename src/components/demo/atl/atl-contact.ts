@@ -14,7 +14,7 @@ export const ATL_CONTACT = {
   hours: "Montag–Freitag 07:30–17:00 · Samstag nach Absprache",
   whatsapp:
     "https://wa.me/4917000000000?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Anfrage.",
-  email: "anfrage@spurwerk-demo.de",
+  email: "youforge@gmx.de",
   address: "Musterstraße 12, 12345 Musterstadt",
   region: "Karosserie · KFZ · Tuning",
 } as const;

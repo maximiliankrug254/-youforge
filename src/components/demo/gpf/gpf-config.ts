@@ -23,7 +23,7 @@ export const GPF_DEMO = {
     ownerLabel: "Ihr Ansprechpartner",
     phoneTel: "+4917000000000",
     phoneDisplay: "0170 000 0000",
-    email: "anfrage@gruenwerk-demo.de",
+    email: "youforge@gmx.de",
     addressLine1: "Musterstraße 12",
     addressLine2: "12345 Musterstadt",
     hours: "Mo–Fr 07:00–18:00 · Sa nach Absprache",

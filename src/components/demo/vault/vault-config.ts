@@ -15,7 +15,7 @@ export const VAULT = {
   contact: {
     phoneTel: "+441340000000",
     phoneDisplay: "+44 1340 000 000",
-    email: "allocation@vault-malt.test",
+    email: "youforge@gmx.de",
   },
   youforge: {
     label: "Living Demo",

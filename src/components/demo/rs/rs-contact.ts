@@ -11,7 +11,7 @@ export const RS_CONTACT = {
   phoneDisplay: "0170 000 0000",
   whatsapp:
     "https://wa.me/4917000000000?text=Hallo%2C%20ich%20brauche%20eine%20kostenlose%20Besichtigung.%20Objekt%3A",
-  email: "demo@youforge.de",
+  email: "youforge@gmx.de",
   address: "Musterstraße 12, 12345 Ihre Stadt",
   hours: "Mo–Fr 08–18 Uhr, Sa 08–14 Uhr",
   region: "Stadt & Umland",

@@ -14,7 +14,7 @@ export const LANE = {
   contact: {
     phoneTel: "+491700000011",
     phoneDisplay: "+49 170 000 0011",
-    email: "nacht@lane-kitchen.de",
+    email: "youforge@gmx.de",
     hours: "Mi–Sa 18–01 · So 16–23",
     closed: "Mo–Di geschlossen",
     seats: 12,

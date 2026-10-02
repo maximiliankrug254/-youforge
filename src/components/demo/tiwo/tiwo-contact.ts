@@ -5,7 +5,7 @@ export const TIWO_CONTACT = {
   tagline: "Flächen, die man fühlen will.",
   phoneTel: "+491701234567",
   phoneDisplay: "0170 1234567",
-  email: "demo@youforge.de",
+  email: "youforge@gmx.de",
   addressLine1: "Musterstraße 12",
   addressLine2: "12345 Ihre Stadt",
   address: "Musterstraße 12, 12345 Ihre Stadt",

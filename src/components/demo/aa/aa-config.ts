@@ -17,7 +17,7 @@ export const AA = {
   contact: {
     phoneTel: "+492661000000",
     phoneDisplay: "+49 2661 000 000",
-    email: "besuch@astundasche.de",
+    email: "youforge@gmx.de",
     hours: "Do–Sa 11–18 · Atelier nach Vereinbarung",
   },
   makers: {

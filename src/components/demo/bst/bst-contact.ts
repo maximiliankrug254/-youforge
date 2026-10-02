@@ -6,7 +6,7 @@ export const BST_CONTACT = {
   phoneDisplay: "0641 1234567",
   mobileTel: "+491701234567",
   mobileDisplay: "0170 1234567",
-  email: "kontakt@lindenhof-demo.de",
+  email: "youforge@gmx.de",
   address: "Musterstraße 12, 35390 Gießen",
   hours: "Tag & Nacht · 365 Tage",
   region: "Gießen & Umgebung",
