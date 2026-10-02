@@ -2,12 +2,30 @@ import type { Metadata } from "next";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WebsiteCheck } from "@/components/website-check/WebsiteCheck";
+import { siteConfig } from "@/lib/constants";
+
+const teilenTitel = "Kostenloser Website-Check: Wie gut findet Google deine Website?";
+const teilenText =
+  "Note von 0 bis 100 und deine drei wichtigsten Baustellen – in unter einer Minute. Kostenlos und ohne Anmeldung.";
 
 export const metadata: Metadata = {
   title: "Kostenloser Website-Check",
   description:
     "Wie gut findet Google deine Website? Kostenloser Schnell-Check in unter einer Minute: Handytauglichkeit, Ladezeit, Firmeneintrag und mehr.",
   alternates: { canonical: "/website-check" },
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    url: "/website-check",
+    siteName: siteConfig.name,
+    title: teilenTitel,
+    description: teilenText,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: teilenTitel,
+    description: teilenText,
+  },
 };
 
 export default async function WebsiteCheckPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
