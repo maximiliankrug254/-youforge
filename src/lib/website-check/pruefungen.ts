@@ -69,8 +69,9 @@ const tags = (html: string, name: string) => [...html.matchAll(new RegExp(`<${na
 const sek = (ms: number) => `${(Math.round(ms / 100) / 10).toFixed(1).replace(".", ",")} s`;
 const kurz = (text: string, max = 70) => (text.length > max ? `${text.slice(0, max - 1)}…` : text);
 
-function punkt(id: string, titel: string, stufe: PunktStufe, status: PunktStatus, detail: string, fix = ""): CheckPunkt {
-  return { id, titel, stufe, status, detail, fix: status === "ok" || status === "info" ? "" : fix };
+/** Bewusst ohne Lösungsweg: Der Schnell-Check zeigt nur, was nicht gut ist. Die Umsetzung macht YouForge. */
+function punkt(id: string, titel: string, stufe: PunktStufe, status: PunktStatus, detail: string): CheckPunkt {
+  return { id, titel, stufe, status, detail };
 }
 
 type JsonKnoten = Record<string, unknown>;
@@ -145,7 +146,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           "kritisch",
           "fehler",
           "Die Website läuft ohne Verschlüsselung. Browser warnen Besucher mit „Nicht sicher“.",
-          "SSL-Zertifikat beim Hoster aktivieren (oft kostenlos) und alle Adressen auf https umleiten.",
         ),
   );
 
@@ -162,7 +162,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           feste
             ? `Feste Breite von ${feste} Pixeln: Handys zeigen eine verkleinerte Desktop-Seite mit winziger Schrift. Google wertet das als nicht handytauglich.`
             : "Kein Hinweis für Handys (Viewport). Die Seite wird auf dem Smartphone verkleinert dargestellt.",
-          "Die Website für Handys anpassen (responsives Design) bzw. im Baukasten die mobile Ansicht einschalten.",
         ),
   );
 
@@ -181,7 +180,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           feld?.lcp != null
             ? `Echte Besucher sehen den Hauptinhalt nach ${sek(lcp)} (Google-Nutzerdaten der letzten 28 Tage ${quelle}). Gut sind bis 2,5 s.`
             : `Googles Testlauf am Handy: Hauptinhalt nach ${sek(lcp)} sichtbar. Gut sind bis 2,5 s. Echte Nutzerdaten hat Google für diese Website noch nicht.`,
-          "Große Bilder verkleinern und als WebP speichern, Slider und Videos im oberen Bereich reduzieren, unnötige Skripte und Plugins entfernen.",
         ),
       );
     }
@@ -196,7 +194,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           cls <= 0.1
             ? "Beim Laden verrutscht nichts Nennenswertes."
             : `Beim Laden verrutschen Inhalte spürbar (Wert ${cls.toFixed(2).replace(".", ",")}, gut sind bis 0,10). Besucher tippen dadurch leicht daneben.`,
-          "Bildern und Videos feste Größen geben und Platz für Banner, Pop-ups und nachladende Elemente reservieren.",
         ),
       );
     }
@@ -215,7 +212,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
   const titel = bereinige(/<title\b[^>]*>([\s\S]*?)<\/title>/i.exec(html)?.[1] || "");
   punkte.push(
     !titel
-      ? punkt("titel", "Seitentitel", "wichtig", "fehler", "Kein Seitentitel – Google muss sich selbst etwas ausdenken.", "Seitentitel setzen: Leistung + Ort + Firmenname.")
+      ? punkt("titel", "Seitentitel", "wichtig", "fehler", "Kein Seitentitel – Google muss sich selbst etwas ausdenken.")
       : titel.length < 30 || titel.length > 65
         ? punkt(
             "titel",
@@ -223,7 +220,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "wichtig",
             "warnung",
             `${titel.length} Zeichen: „${kurz(titel)}“. Ideal sind 30–65 Zeichen, sonst kürzt Google oder verschenkt Platz.`,
-            "Seitentitel auf 30–65 Zeichen bringen: Leistung + Ort + Firmenname.",
           )
         : punkt("titel", "Seitentitel", "wichtig", "ok", `„${kurz(titel)}“`),
   );
@@ -237,7 +233,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           "wichtig",
           "fehler",
           "Keine Beschreibung hinterlegt. Google zeigt dann einen zufälligen Textausschnitt im Suchergebnis.",
-          "Meta-Beschreibung setzen: 1–2 Sätze mit Leistung, Ort und Nutzen.",
         )
       : beschreibung.length < 70 || beschreibung.length > 160
         ? punkt(
@@ -245,8 +240,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "Beschreibung bei Google",
             "wichtig",
             "warnung",
-            `${beschreibung.length} Zeichen. Ideal sind 70–160 Zeichen.`,
-            "Beschreibung auf 70–160 Zeichen bringen: Leistung, Ort und Nutzen.",
+            `${beschreibung.length} Zeichen. Ideal sind 70–160 Zeichen, sonst kürzt Google oder zeigt zu wenig.`,
           )
         : punkt("beschreibung", "Beschreibung bei Google", "wichtig", "ok", `${beschreibung.length} Zeichen, passende Länge.`),
   );
@@ -268,9 +262,9 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
     }));
     punkte.push(
       h1.length === 0
-        ? punkt("h1", "Hauptüberschrift (H1)", "wichtig", "fehler", "Keine Hauptüberschrift gefunden.", "Genau eine H1 setzen, die sagt, was du anbietest und wo.")
+        ? punkt("h1", "Hauptüberschrift (H1)", "wichtig", "fehler", "Keine Hauptüberschrift gefunden – Google fehlt der wichtigste Hinweis, worum es geht.")
         : h1.length > 1
-          ? punkt("h1", "Hauptüberschrift (H1)", "wichtig", "warnung", `${h1.length} Hauptüberschriften gefunden – Google weiß nicht, welche zählt.`, "Nur eine H1 pro Seite, den Rest als Zwischenüberschriften (H2/H3).")
+          ? punkt("h1", "Hauptüberschrift (H1)", "wichtig", "warnung", `${h1.length} Hauptüberschriften gefunden – Google weiß nicht, welche zählt.`)
           : h1[0].nurBild
             ? punkt(
                 "h1",
@@ -278,15 +272,14 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
                 "wichtig",
                 "warnung",
                 "Die Hauptüberschrift ist nur ein Bild bzw. Logo – sie sagt Google nicht, worum es geht.",
-                "Eine echte Text-Überschrift als H1 setzen: Leistung + Ort.",
               )
             : punkt("h1", "Hauptüberschrift (H1)", "wichtig", "ok", `„${kurz(h1[0].text)}“`),
     );
     punkte.push(
       woerter < 150
-        ? punkt("text", "Textumfang", "wichtig", "fehler", `Nur etwa ${woerter} Wörter auf der Startseite. Google hat kaum etwas, woran es dich erkennt.`, "Mehr echten Inhalt: Leistungen erklären, Ablauf, Einsatzgebiet, häufige Fragen.")
+        ? punkt("text", "Textumfang", "wichtig", "fehler", `Nur etwa ${woerter} Wörter auf der Startseite. Google hat kaum etwas, woran es dich erkennt.`)
         : woerter < 300
-          ? punkt("text", "Textumfang", "wichtig", "warnung", `Etwa ${woerter} Wörter auf der Startseite – eher wenig.`, "Leistungen, Ablauf und Einsatzgebiet ausführlicher beschreiben.")
+          ? punkt("text", "Textumfang", "wichtig", "warnung", `Etwa ${woerter} Wörter auf der Startseite – eher wenig, um bei Google zu überzeugen.`)
           : punkt("text", "Textumfang", "wichtig", "ok", `Etwa ${woerter} Wörter – genug Inhalt für Google.`),
     );
   }
@@ -302,8 +295,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "Telefonnummer antippbar",
             "wichtig",
             "warnung",
-            "Die Telefonnummer steht da, lässt sich am Handy aber nicht antippen.",
-            "Telefonnummer als anklickbaren Link (tel:) einbauen – ideal im Kopfbereich jeder Seite.",
+            "Die Telefonnummer steht da, lässt sich am Handy aber nicht antippen. Interessenten müssen sie abtippen – viele rufen dann gar nicht an.",
           )
         : punkt(
             "telefon",
@@ -311,7 +303,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             nurBrowser ? "tipp" : "wichtig",
             nurBrowser ? "info" : "fehler",
             nurBrowser ? "Wir prüfen das im vollständigen Bericht." : "Keine Telefonnummer auf der Startseite gefunden.",
-            "Telefonnummer gut sichtbar und antippbar (tel:) einbauen – ideal im Kopfbereich jeder Seite.",
           ),
   );
 
@@ -327,8 +318,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "Firmeneintrag für Google",
             "kritisch",
             "warnung",
-            "Nur ein allgemeiner Eintrag (Organization). Für die lokale Suche fehlt ein Betriebs-Eintrag (LocalBusiness) mit Adresse und Öffnungszeiten.",
-            "Firmeneintrag vom Typ LocalBusiness mit Name, Adresse, Telefon, Öffnungszeiten und Einsatzgebiet ergänzen.",
+            "Nur ein allgemeiner Eintrag. Für die Suche vor Ort fehlen Google Angaben wie Adresse, Öffnungszeiten und Einsatzgebiet.",
           )
         : punkt(
             "firmeneintrag",
@@ -336,7 +326,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "kritisch",
             "fehler",
             "Kein strukturierter Firmeneintrag. Google erkennt Adresse, Öffnungszeiten und Einsatzgebiet dadurch schlechter.",
-            "Firmeneintrag (JSON-LD, Typ LocalBusiness) mit Name, Adresse, Telefon, Öffnungszeiten und Einsatzgebiet einbauen.",
           ),
   );
 
@@ -352,7 +341,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "wichtig",
             ohneAlt / bilder.length <= 0.1 ? "warnung" : "fehler",
             `${ohneAlt} von ${bilder.length} Bildern ohne Beschreibung. Google kann sie nicht zuordnen.`,
-            "Jedem Bild einen Alt-Text geben: Was ist zu sehen, gern mit Leistung und Ort.",
           ),
     );
   }
@@ -361,7 +349,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
   punkte.push(
     lang
       ? punkt("sprache", "Sprache angegeben", "wichtig", "ok", `lang="${lang}"`)
-      : punkt("sprache", "Sprache angegeben", "wichtig", "fehler", "Die Sprache der Seite ist nicht angegeben.", 'Sprache im Quelltext setzen (<html lang="de">).'),
+      : punkt("sprache", "Sprache angegeben", "wichtig", "fehler", "Die Sprache der Seite ist nicht angegeben."),
   );
 
   punkte.push(
@@ -375,7 +363,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
             "wichtig",
             "fehler",
             "Keine Sitemap gefunden. Google findet neue Unterseiten dadurch langsamer.",
-            "XML-Sitemap erzeugen und in der Google Search Console eintragen.",
           ),
   );
 
@@ -384,7 +371,7 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
       ? punkt("robots", "robots.txt", "wichtig", "info", "Die robots.txt ließ sich gerade nicht abrufen – wir prüfen sie im vollständigen Bericht.")
       : daten.robotsGefunden
         ? punkt("robots", "robots.txt", "wichtig", "ok", "Vorhanden.")
-        : punkt("robots", "robots.txt", "wichtig", "warnung", "Keine robots.txt gefunden.", "robots.txt anlegen und darin auf die Sitemap verweisen."),
+        : punkt("robots", "robots.txt", "wichtig", "warnung", "Keine robots.txt gefunden. Suchmaschinen fehlt die Hausordnung für deine Website."),
   );
 
   punkte.push(
@@ -398,7 +385,6 @@ export function pruefeStartseite(daten: Rohdaten): { punkte: CheckPunkt[]; nurBr
           metaProp("og:image")
             ? "Kein Vorschautitel für WhatsApp, Facebook & Co. – geteilte Links wirken unvollständig."
             : "Kein Vorschaubild für WhatsApp, Facebook & Co. – geteilte Links sehen leer aus.",
-          "Vorschaubild und -titel (Open Graph) setzen.",
         ),
   );
 

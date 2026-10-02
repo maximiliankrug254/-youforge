@@ -239,15 +239,14 @@ function Ergebnis({ ergebnis }: { ergebnis: CheckErgebnis }) {
                   <div>
                     <p className="font-semibold">{p.titel}</p>
                     <p className="mt-1 text-muted">{p.detail}</p>
-                    {p.fix && (
-                      <p className="mt-2 text-sm">
-                        <span className="text-accent">So geht&apos;s:</span> {p.fix}
-                      </p>
-                    )}
                   </div>
                 </li>
               ))}
             </ol>
+            <p className="mt-6 border-t border-border pt-5 text-sm">
+              <span className="text-accent">Die gute Nachricht:</span> Das lässt sich beheben. Im vollständigen Bericht siehst du, was
+              dringend ist – und auf Wunsch setzen wir es für dich um.
+            </p>
           </div>
         ) : (
           <div className="rounded-2xl border border-accent/30 bg-accent-muted p-6 sm:p-8">
@@ -365,8 +364,9 @@ function LeadFormular({ website, ergebnis, hinweis }: { website: string; ergebni
       <ul className="mt-4 space-y-2 text-sm text-muted">
         <li>✓ Alle wichtigen Unterseiten, nicht nur die Startseite</li>
         <li>✓ Ladezeit je Seite – mit dem Bild oder Skript, das bremst</li>
-        <li>✓ Konkrete Schritte für dein System (WordPress, Wix, Jimdo …)</li>
+        <li>✓ Was zu tun ist – sortiert nach Dringlichkeit</li>
         <li>✓ Von Max persönlich geprüft, keine Massenmail</li>
+        <li>✓ Auf Wunsch setzen wir alles für dich um</li>
       </ul>
 
       <input

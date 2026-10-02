@@ -7,7 +7,6 @@ export type CheckPunkt = {
   stufe: PunktStufe;
   status: PunktStatus;
   detail: string;
-  fix: string;
 };
 
 export type GoogleWerte = {
