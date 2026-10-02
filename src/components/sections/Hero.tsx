@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { WireframeSphere } from "@/components/animations/WireframeSphere";
@@ -58,7 +59,22 @@ export function Hero() {
         </motion.div>
 
         <motion.p
-          className="mt-16 font-mono text-[10px] uppercase tracking-[0.3em] text-muted/60"
+          className="mt-6 text-sm text-muted"
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+        >
+          Wie gut ist deine Website?{" "}
+          <Link
+            href="/website-check"
+            className="whitespace-nowrap text-accent underline-offset-4 transition-colors hover:text-accent-hover hover:underline"
+          >
+            Kostenloser Check →
+          </Link>
+        </motion.p>
+
+        <motion.p
+          className="mt-14 font-mono text-[10px] uppercase tracking-[0.3em] text-muted/60"
           initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4 }}

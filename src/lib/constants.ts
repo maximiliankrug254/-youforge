@@ -25,6 +25,8 @@ export const navLinks = [
   { href: "/kontakt", label: "Kontakt" },
 ];
 
+export const highlightedNavHrefs = ["/katalog", "/website-check"];
+
 export const splitStatements = [
   {
     context: "Andere bauen Websites.",

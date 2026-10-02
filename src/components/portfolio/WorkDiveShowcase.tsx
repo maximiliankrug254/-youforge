@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useRef } from "react";
 import {
   motion,
@@ -297,6 +298,15 @@ function CtaLayer({
             Vision schmieden →
           </Button>
         </div>
+        <p className="mt-8 text-sm text-white/55">
+          Erst mal schauen, wo deine Website steht?{" "}
+          <Link
+            href="/website-check"
+            className="whitespace-nowrap text-accent underline-offset-4 transition-colors hover:text-accent-hover hover:underline"
+          >
+            Kostenloser Check →
+          </Link>
+        </p>
       </div>
     </motion.div>
   );

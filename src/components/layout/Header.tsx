@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { navLinks, siteConfig } from "@/lib/constants";
+import { highlightedNavHrefs, navLinks, siteConfig } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -54,7 +54,7 @@ export function Header() {
               href={link.href}
               className={cn(
                 "font-mono text-xs uppercase tracking-wider transition-colors",
-                link.href === "/katalog"
+                highlightedNavHrefs.includes(link.href)
                   ? "text-accent hover:text-accent-hover"
                   : "text-muted hover:text-foreground"
               )}
@@ -99,7 +99,7 @@ export function Header() {
                 href={link.href}
                 className={cn(
                   "font-mono text-sm uppercase tracking-wider",
-                  link.href === "/katalog" ? "text-accent" : "text-muted"
+                  highlightedNavHrefs.includes(link.href) ? "text-accent" : "text-muted"
                 )}
                 onClick={() => setMenuOpen(false)}
               >

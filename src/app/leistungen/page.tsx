@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -28,25 +29,47 @@ export default function LeistungenPage() {
       <section className="px-6 pb-20 lg:px-8">
         <div className="mx-auto max-w-7xl space-y-6">
           {services.map((service, i) => (
-            <FadeIn key={service.slug} delay={i * 0.05}>
-              <article className="group rounded-2xl border border-border bg-surface/30 p-8 transition-colors hover:border-accent/20 hover:bg-surface/50 sm:p-10">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                        {service.title}
-                      </h2>
+            <Fragment key={service.slug}>
+              <FadeIn delay={i * 0.05}>
+                <article className="group rounded-2xl border border-border bg-surface/30 p-8 transition-colors hover:border-accent/20 hover:bg-surface/50 sm:p-10">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                          {service.title}
+                        </h2>
+                      </div>
+                      <p className="mt-4 max-w-2xl text-lg text-muted">
+                        {service.description}
+                      </p>
                     </div>
-                    <p className="mt-4 max-w-2xl text-lg text-muted">
-                      {service.description}
-                    </p>
+                    <span className="text-4xl font-bold text-foreground/5 transition-colors group-hover:text-accent/20">
+                      0{i + 1}
+                    </span>
                   </div>
-                  <span className="text-4xl font-bold text-foreground/5 transition-colors group-hover:text-accent/20">
-                    0{i + 1}
-                  </span>
-                </div>
-              </article>
-            </FadeIn>
+                </article>
+              </FadeIn>
+              {service.slug === "websites" && (
+                <FadeIn delay={0.08}>
+                  <aside className="flex flex-col gap-5 rounded-2xl border border-accent/25 bg-accent/5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
+                        Kostenloser Website-Check
+                      </p>
+                      <p className="mt-3 text-lg font-semibold tracking-tight">
+                        Du hast schon eine Website?
+                      </p>
+                      <p className="mt-1 text-muted">
+                        Prüf sie in unter einer Minute – kostenlos, ohne Anmeldung.
+                      </p>
+                    </div>
+                    <Button href="/website-check" className="shrink-0">
+                      Website prüfen →
+                    </Button>
+                  </aside>
+                </FadeIn>
+              )}
+            </Fragment>
           ))}
         </div>
       </section>
