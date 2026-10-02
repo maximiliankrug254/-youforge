@@ -2,7 +2,7 @@
 
 ## Aktuelle Version
 
-**1.5** vom 02.10.2026
+**1.6** vom 02.10.2026
 
 ## Was das Modul kann
 
@@ -80,11 +80,17 @@ Erwartete echte Befunde bei den Handwerker-Seiten (30.09.2026):
 ## Entscheidungen
 
 - Keine Platzierungen versprechen. Das Modul bewertet die Website, nicht Google-Profil, Bewertungen oder Wettbewerb.
+- Anleitung 50:50 (02.10.2026): Kunden erfahren, was nicht gut ist und was zu tun ist – aber nicht, wie. Die Umsetzung soll mit YouForge laufen, nicht mit dem eigenen IT-Dienstleister. Kunden bekommen nur die `--kunde`-Fassung.
 - Markt (02.10.2026): zuerst nur Deutschland. Österreich und Schweiz erst danach, andere Länder (z. B. Bali) vorerst nicht.
 - Berichte über fremde Websites erst selbst lesen, bevor sie jemand sieht. Falsche Befunde werden als Verbesserung ins Modul übernommen.
 - Verkauf an Agenturen: Nutzungsrecht, einmaliger Preis (noch offen), kein Update-Paket. Details: `public/docs/SEO.docx` (intern).
 
 ## Änderungsprotokoll
+
+- **1.6 – 02.10.2026** – Kunden-Fassung:
+  - Neu: `--kunde` erzeugt zusätzlich `seo-<zeit>-kunde.html` (PDF/Vorschau daraus). Je Problem nur „Was zu tun ist“ (`scripts/aufgaben.mjs`), keine technische Anleitung; am Ende „Umsetzung mit YouForge“ mit Kontakt und Terminlink.
+  - Der interne Bericht bleibt unverändert mit allen „So beheben“-Texten.
+  - Website-Check auf you-forge.de zeigt ebenfalls nur noch Probleme, keine Lösungen (werden auch nicht an den Browser geschickt).
 
 - **1.5 – 02.10.2026** – Echte Ladezeiten von Google:
   - Neu: `scripts/google.mjs` fragt Google PageSpeed Insights ab (Handy), parallel zur eigenen Messung, nur für die Startseite bzw. jede Vergleichsadresse.

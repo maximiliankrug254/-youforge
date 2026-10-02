@@ -31,6 +31,7 @@ function parseArgs(argv) {
     oeffnen: true,
     drosseln: true,
     google: true,
+    kunde: false,
     pdf: false,
     vorschau: false,
   };
@@ -47,6 +48,7 @@ function parseArgs(argv) {
     else if (arg === "--kein-oeffnen") out.oeffnen = false;
     else if (arg === "--ohne-drosselung") out.drosseln = false;
     else if (arg === "--ohne-google") out.google = false;
+    else if (arg === "--kunde") out.kunde = true;
     else if (arg === "--pdf") out.pdf = true;
     else if (arg === "--vorschau") out.vorschau = true;
     else if (arg === "--testfall") out.testfall = (argv[++i] ?? "").replace(/[^a-z0-9-]/gi, "");
@@ -122,7 +124,7 @@ async function analysiere(browser, url, opts, istStart) {
 const opts = parseArgs(process.argv.slice(2));
 if (!opts.urls.length) {
   console.error(
-    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ueberregional] [--ignoriere-noindex] [--pdf] [--vorschau] [--kein-oeffnen] [--ohne-drosselung] [--ohne-google]",
+    "Aufruf: node seo.mjs pruefen --url URL|PFAD [--url …] [--site] [--max 10] [--keyword BEGRIFF] [--ort ORT] [--ueberregional] [--ignoriere-noindex] [--pdf] [--vorschau] [--kein-oeffnen] [--ohne-drosselung] [--ohne-google] [--kunde]",
   );
   process.exit(1);
 }
@@ -241,6 +243,14 @@ writeFileSync(
 );
 
 console.log(`\nBericht: ${base}.html`);
+// Kunden-Fassung: nur „Was zu tun ist“, keine technische Anleitung. PDF und Vorschau entstehen daraus.
+const kundenHtml = `${base}-kunde.html`;
+if (opts.kunde) {
+  writeFileSync(kundenHtml, renderHtml(report, { kunde: true }));
+  console.log(`Kunden-Fassung: ${kundenHtml}`);
+}
+const fuerExport = opts.kunde ? kundenHtml : `${base}.html`;
+const exportBase = opts.kunde ? `${base}-kunde` : base;
 
 if (opts.testfall) {
   const origins = [...new Set(analysen.filter((a) => a.page.ok).map((a) => new URL(a.page.finalUrl || a.page.url).origin))];
@@ -265,15 +275,15 @@ if (opts.pdf || opts.vorschau) {
   const viewer = await launchBrowser();
   try {
     const page = await viewer.newPage({ viewport: { width: 1280, height: 900 } });
-    await page.goto(pathToFileURL(`${base}.html`).href);
+    await page.goto(pathToFileURL(fuerExport).href);
     await page.evaluate(() => document.querySelectorAll("details").forEach((d) => (d.open = true)));
     if (opts.vorschau) {
-      await page.screenshot({ path: `${base}.png`, fullPage: true, clip: { x: 0, y: 0, width: 1280, height: 1700 } });
-      console.log(`Vorschau: ${base}.png`);
+      await page.screenshot({ path: `${exportBase}.png`, fullPage: true, clip: { x: 0, y: 0, width: 1280, height: 1700 } });
+      console.log(`Vorschau: ${exportBase}.png`);
     }
     if (opts.pdf) {
-      await page.pdf({ path: `${base}.pdf`, format: "A4", printBackground: true, margin: { top: "12mm", bottom: "12mm", left: "10mm", right: "10mm" } });
-      console.log(`PDF: ${base}.pdf`);
+      await page.pdf({ path: `${exportBase}.pdf`, format: "A4", printBackground: true, margin: { top: "12mm", bottom: "12mm", left: "10mm", right: "10mm" } });
+      console.log(`PDF: ${exportBase}.pdf`);
     }
   } catch (err) {
     console.error(`PDF/Vorschau fehlgeschlagen: ${err instanceof Error ? err.message.split("\n")[0] : err}`);

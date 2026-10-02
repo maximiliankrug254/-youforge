@@ -1,7 +1,9 @@
-import { PLATTFORMEN, STUFEN, VERSION, escapeHtml as e, katLabels } from "./lib.mjs";
+import { aufgabe } from "./aufgaben.mjs";
+import { ANBIETER, PLATTFORMEN, STUFEN, VERSION, escapeHtml as e, katLabels } from "./lib.mjs";
 import { note } from "./pruefungen.mjs";
 
 let KATEGORIEN = katLabels();
+let KUNDE = false;
 const TYP_LABEL = { rechtstext: "Rechtstext · nicht gewertet", versteckt: "Verborgen · nicht gewertet", kopie: "Kopie · nicht gewertet" };
 
 const ICON = { ok: "✓", warnung: "!", fehler: "✕", info: "i" };
@@ -51,7 +53,15 @@ function checkZeile(c) {
           <span class="status">${STATUS_LABEL[c.status]}</span>
         </div>
         <p class="detail">${e(c.detail)}</p>
-        ${c.fix && c.status !== "ok" && c.status !== "info" ? `<p class="fix"><b>So beheben:</b> ${e(c.fix)}</p>` : ""}
+        ${
+          c.status === "ok" || c.status === "info"
+            ? ""
+            : KUNDE
+              ? `<p class="fix"><b>Was zu tun ist:</b> ${e(aufgabe(c))}</p>`
+              : c.fix
+                ? `<p class="fix"><b>So beheben:</b> ${e(c.fix)}</p>`
+                : ""
+        }
       </div>
     </li>`;
 }
@@ -70,7 +80,10 @@ function analyseBlock(a, index, offen) {
 
   const top = a.massnahmen.length
     ? `<ol class="todo">${a.massnahmen
-        .map((c) => `<li><strong>${e(c.titel)}</strong> <span class="tag tag-${c.stufe}">${STUFEN[c.stufe].label}</span><br><span>${e(c.fix || c.detail)}</span></li>`)
+        .map(
+          (c) =>
+            `<li><strong>${e(c.titel)}</strong> <span class="tag tag-${c.stufe}">${STUFEN[c.stufe].label}</span><br><span>${e(KUNDE ? aufgabe(c) : c.fix || c.detail)}</span></li>`,
+        )
         .join("")}</ol>`
     : `<p class="detail">Keine offenen Maßnahmen – stark.</p>`;
 
@@ -151,9 +164,10 @@ function websiteBlock(website) {
   </section>`;
 }
 
-export function renderHtml(report) {
+export function renderHtml(report, { kunde = false } = {}) {
   const { analysen, website, opts, erstellt, modus } = report;
   KATEGORIEN = katLabels(opts);
+  KUNDE = kunde;
   const kopf = modus === "vergleich" ? `${analysen.length} Websites im Vergleich` : e(pathOf(analysen[0].page.url));
   const kontext = [
     opts.keyword && `Suchbegriff: „${e(opts.keyword)}“`,
@@ -230,6 +244,9 @@ thead th{font-size:13px;color:var(--muted);font-weight:600}
 tbody th{font-weight:600}
 .best{color:var(--top)}
 .aussen li{margin:0 0 10px}
+.umsetzung{border-color:var(--accent);border-width:2px}
+.umsetzung a{color:var(--accent)}
+.knopf{display:inline-block;background:var(--accent);color:#fff!important;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:999px}
 footer{color:var(--muted);font-size:13px;margin-top:28px}
 @media (max-width:900px){.overview{grid-template-columns:1fr}.phone{max-width:240px;margin:0 auto}}
 @media print{body{background:#fff}.card{break-inside:avoid;box-shadow:none}details{display:block}}
@@ -248,6 +265,16 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
     <p class="detail">Das misst kein Tool – entscheidet aber stark über die Platzierung bei Google. Checkliste für den Betrieb:</p>
     <ul>${AUSSERHALB.map(([t, d]) => `<li><strong>${t}:</strong> ${d}</li>`).join("")}</ul>
   </section>
+  ${
+    kunde
+      ? `<section class="card umsetzung">
+    <h2>Umsetzung mit YouForge</h2>
+    <p>Dieser Bericht zeigt, was an deiner Website fehlt und was zu tun ist. Die Umsetzung übernehmen wir für dich – sortiert nach Dringlichkeit, ohne dass du dich um die Technik kümmern musst.</p>
+    <p><strong>${e(ANBIETER.name)}</strong> · <a href="mailto:${e(ANBIETER.email)}">${e(ANBIETER.email)}</a> · <a href="${e(ANBIETER.web)}">${e(ANBIETER.web.replace(/^https?:\/\//, ""))}</a></p>
+    <p><a class="knopf" href="${e(ANBIETER.termin)}">Kostenloses Gespräch buchen →</a></p>
+  </section>`
+      : ""
+  }
   <footer>Erstellt mit dem YouForge-SEO-Modul ${VERSION}. Bewertet werden Technik, Inhalte und lokale Angaben der Website. Platzierungen bei Google hängen zusätzlich von Unternehmensprofil, Bewertungen und Wettbewerb ab.</footer>
 </div>
 </body>

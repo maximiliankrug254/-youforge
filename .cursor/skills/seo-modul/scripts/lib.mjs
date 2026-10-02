@@ -10,7 +10,15 @@ export const TEST_DIR = join(SKILL_DIR, "tests", "faelle");
 
 export const DEFAULT_BASE = process.env.SEO_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const MOBILE = { width: 390, height: 844 };
-export const VERSION = "1.5";
+export const VERSION = "1.6";
+
+/** Absender der Kunden-Fassung („--kunde“). */
+export const ANBIETER = {
+  name: "YouForge · Max Krug",
+  email: "youforge@gmx.de",
+  web: "https://you-forge.de",
+  termin: "https://calendly.com/maximiliankrug7/30min",
+};
 
 export const STUFEN = {
   kritisch: { label: "Kritisch", gewicht: 3 },

@@ -23,7 +23,9 @@ npm run seo:pruefen -- --url https://kunde.de --site --max 10         # ganze We
 npm run seo:pruefen -- --url https://alt.de --url https://neu.de      # Vergleich
 ```
 
-Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ueberregional` (Anbieter ohne festen Ort; automatisch bei `--ort DACH`, `Deutschland`, `bundesweit` …), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--ohne-google`, `--base URL`.
+Optionen: `--keyword "Maler"` und `--ort "Rosenheim"` (Suchbegriff/Ort prüfen), `--ueberregional` (Anbieter ohne festen Ort; automatisch bei `--ort DACH`, `Deutschland`, `bundesweit` …), `--ignoriere-noindex` (Demo-Seiten), `--pdf` (Bericht als PDF), `--vorschau` (PNG vom Berichtskopf), `--kein-oeffnen`, `--ohne-drosselung`, `--ohne-google`, `--kunde` (zusätzliche Kunden-Fassung, siehe unten), `--base URL`.
+
+**Kunden-Fassung (`--kunde`):** Erzeugt zusätzlich `seo-<zeit>-kunde.html` (bei `--pdf`/`--vorschau` auch PDF/PNG daraus). Statt „So beheben“ steht dort nur „Was zu tun ist“ (`scripts/aufgaben.mjs`) – ohne Klickwege, Code oder Plugin-Namen – plus Kasten „Umsetzung mit YouForge“ (Kontakt in `ANBIETER`, `scripts/lib.mjs`). Ziel: Der Betrieb versteht, was fehlt, setzt es aber mit YouForge um. Der normale Bericht mit allen Anleitungen ist nur für YouForge. **Kunden immer nur die `-kunde`-Datei schicken.**
 
 Ausgabe: `.seo/berichte/seo-<zeit>.html|.md|.json` (+ `.pdf`/`.png`). Der HTML-Bericht öffnet sich automatisch.
 
