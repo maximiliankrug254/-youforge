@@ -1,0 +1,31 @@
+---
+description: Ein Kunde pro Agent-Chat; Kundenmaterial gehört ins Repo, nicht in Temp
+alwaysApply: true
+---
+
+# Ein Kunde, ein Agent
+
+Max arbeitet pro Kundenwebsite in einem eigenen Agent-Chat.
+
+## Wann erinnern
+
+Bevor du für einen Kunden etwas zerlegst, crawlst oder baust, prüfe den bisherigen Chat:
+
+- Ging es hier schon um einen **anderen** Kunden oder ein anderes Thema (z. B. Forensik, eine andere Demo), dann **stopp** und schreib kurz:
+  > „Neuer Kunde in diesem Chat. Willst du dafür einen eigenen Agent starten? Ich gebe dir eine Startnachricht mit.“
+- Erst weitermachen, wenn Max bestätigt, dass es hier bleiben soll.
+- Erste Kundenanfrage in einem frischen Chat: nicht nachfragen, einfach loslegen.
+
+Auslöser sind z. B. eine neue Website-URL, „Übergabepaket“, „Demo bauen“ oder „was kann ich verlangen“ zu einer neuen Firma.
+
+## Startnachricht für den neuen Agent
+
+Wenn Max wechselt, liefere einen kopierfertigen Block mit:
+
+- Kunde, Domain, Ziel (z. B. Living Demo unter `/demo/<slug>`)
+- Wo schon etwas liegt: `.uebergabe/<kunde>/`, `src/app/demo/<slug>/`, `src/components/demo/<slug>/`, `public/demo/<slug>/`
+- Regeln: nichts erfinden, Lücken weglassen, Lektorat nach Textänderungen, Domain `you-forge.de`, Antworten auf Deutsch
+
+## Kundenmaterial nie nur in Temp
+
+Crawl-Ergebnisse, Rohtexte und Bildlisten gehören nach `.uebergabe/<kunde>/rohdaten/`, nicht nur nach `%TEMP%`. Skripte dürfen in Temp laufen; ihre Ergebnisse werden ins Repo kopiert, bevor die Arbeit weitergeht.
