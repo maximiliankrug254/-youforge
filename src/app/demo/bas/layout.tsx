@@ -5,7 +5,7 @@ import { AaNav } from "@/components/demo/bas/AaNav";
 import { AaScrollProgress } from "@/components/demo/bas/AaScrollProgress";
 import { AaGrain } from "@/components/demo/bas/AaGrain";
 import { AaCursor } from "@/components/demo/bas/AaCursor";
-import { AA } from "@/components/demo/bas/aa-config";
+import { AA, AA_IMG } from "@/components/demo/bas/aa-config";
 
 const display = Instrument_Serif({
   subsets: ["latin"],
@@ -21,11 +21,29 @@ const sans = Syne({
   display: "swap",
 });
 
+const description =
+  "Weltweiter Transport exklusiver Automobile aus Eschborn bei Frankfurt. Spezialtransporte, Messen & Events, Show-Truck, Motorsport und Fahrzeugaufbereitung. Living Demo von YouForge.";
+const shareTitle = `${AA.brand.short} — ${AA.brand.tagline}`;
+const shareImage = { url: AA_IMG.flotte, width: 1140, height: 690, alt: "Die BAS-Flotte" };
+
 export const metadata: Metadata = {
   title: `${AA.brand.full} | Living Demo`,
-  description:
-    "Weltweiter Transport exklusiver Automobile aus Eschborn bei Frankfurt. Spezialtransporte, Messen & Events, Show-Truck, Motorsport und Fahrzeugaufbereitung. Living Demo von YouForge.",
+  description,
   robots: { index: false, follow: false },
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    url: AA.home,
+    title: shareTitle,
+    description,
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: shareTitle,
+    description,
+    images: [shareImage],
+  },
 };
 
 export const viewport: Viewport = {
