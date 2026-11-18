@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { BbfButton } from "@/components/demo/bbf/BbfButton";
@@ -8,19 +9,35 @@ import { BBF_ASSETS, BBF_CONTACT } from "@/components/demo/bbf/bbf-contact";
 
 export function BbfHero() {
   const reduceMotion = useReducedMotion();
+  const shiftRef = useRef<HTMLDivElement>(null);
+
+  function onPointerMove(e: React.PointerEvent<HTMLElement>) {
+    if (reduceMotion || !shiftRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    shiftRef.current.style.transform = `translate3d(${x * -22}px, ${y * -14}px, 0)`;
+  }
 
   return (
     <section
       id="top"
       className="relative isolate min-h-[100svh] overflow-hidden bg-[var(--bbf-void)] text-white"
+      onPointerMove={onPointerMove}
     >
-      <Image
-        src={BBF_ASSETS.hero}
-        alt="Hände bei der Arbeit am Motor in der Werkstatt"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+      <div ref={shiftRef} className="absolute -inset-[8%]">
+        <Image
+          src={BBF_ASSETS.hero}
+          alt="Hände bei der Arbeit am Motor in der Werkstatt"
+          fill
+          priority
+          sizes="100vw"
+          className="bbf-breathe object-cover object-center"
+        />
+      </div>
+      <div
+        className="bbf-glow pointer-events-none absolute -left-[10%] bottom-[8%] h-[46vw] w-[46vw] rounded-full bg-[radial-gradient(circle,rgba(255,77,0,0.32),transparent_68%)] blur-2xl"
+        aria-hidden
       />
       <div
         className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.45)_34%,rgba(0,0,0,0.12)_62%,transparent_100%)]"
@@ -47,7 +64,7 @@ export function BbfHero() {
           </nav>
           <BbfButton
             href={`tel:${BBF_CONTACT.phoneTel}`}
-            strength={0}
+            strength={0.18}
             className="hidden bg-[var(--bbf-red)] px-5 py-2.5 text-sm font-semibold text-black md:inline-flex"
           >
             Anrufen
@@ -61,6 +78,7 @@ export function BbfHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: BBF_EASE }}
           >
+            <span className="mr-2 inline-block h-1.5 w-1.5 bg-[var(--bbf-red)] align-middle bbf-pulse" aria-hidden />
             {BBF_CONTACT.region}
           </motion.p>
           <motion.h1
@@ -71,7 +89,7 @@ export function BbfHero() {
           >
             Werkstatt
             <br />
-            und <span className="text-[var(--bbf-red)]">Autogas.</span>
+            und <span className="bbf-ember text-[var(--bbf-red)]">Autogas.</span>
           </motion.h1>
           <motion.p
             className="mt-6 max-w-md text-base leading-relaxed text-white/75 sm:text-lg"
@@ -90,14 +108,14 @@ export function BbfHero() {
           >
             <BbfButton
               href={`tel:${BBF_CONTACT.phoneTel}`}
-              strength={0}
+              strength={0.18}
               className="inline-flex w-full items-center justify-center bg-[var(--bbf-red)] px-7 py-3.5 text-sm font-semibold text-black sm:w-auto"
             >
               {BBF_CONTACT.phoneDisplay}
             </BbfButton>
             <BbfButton
               href="#leistungen"
-              strength={0}
+              strength={0.18}
               className="inline-flex w-full items-center justify-center border border-white/30 px-7 py-3.5 text-sm font-semibold text-white sm:w-auto"
             >
               Leistungen

@@ -23,7 +23,7 @@ export function BbfPillars() {
         {BBF_PILLARS.map((pillar, index) => (
           <motion.article
             key={pillar.id}
-            className="bg-[var(--bbf-void)]"
+            className="group bg-[var(--bbf-void)]"
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -35,7 +35,7 @@ export function BbfPillars() {
                 alt={pillar.imageAlt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
               />
             </div>
             <div className="px-1 py-8 sm:px-2 lg:pr-10">

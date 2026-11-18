@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { BbfCursor } from "@/components/demo/bbf/BbfCursor";
 import { BbfLenis } from "@/components/demo/bbf/BbfLenis";
 import { BbfIntroLoader } from "@/components/demo/bbf/BbfIntroLoader";
 
@@ -90,11 +91,71 @@ export default function BbFahrzeugtechnikLayout({
           .bbf-ken {
             animation: bbf-ken 14s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           }
+          @keyframes bbf-breathe {
+            0%, 100% { transform: scale(1.06); }
+            50% { transform: scale(1.12); }
+          }
+          .bbf-breathe {
+            animation: bbf-breathe 16s ease-in-out infinite;
+          }
+          @keyframes bbf-ember {
+            0%, 100% { text-shadow: 0 0 0 transparent; }
+            50% { text-shadow: 0 0 22px rgba(255, 77, 0, 0.85); }
+          }
+          .bbf-ember {
+            animation: bbf-ember 3.4s ease-in-out infinite;
+          }
+          @keyframes bbf-drift {
+            0%, 100% { transform: translate3d(-6%, 8%, 0) scale(1); }
+            50% { transform: translate3d(10%, -8%, 0) scale(1.18); }
+          }
+          .bbf-glow {
+            animation: bbf-drift 18s ease-in-out infinite;
+          }
+          @keyframes bbf-pulse {
+            0%, 100% { opacity: 0.35; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1); }
+          }
+          .bbf-pulse {
+            animation: bbf-pulse 2.2s ease-in-out infinite;
+          }
+          html.bbf-cursor,
+          html.bbf-cursor * {
+            cursor: none !important;
+          }
+          .bbf-cursor-ring svg {
+            overflow: visible;
+          }
+          .bbf-cursor-ring circle {
+            fill: transparent;
+            stroke: var(--bbf-red);
+            stroke-width: 1.4;
+          }
+          .bbf-cursor-ring path {
+            fill: none;
+            stroke: var(--bbf-red);
+            stroke-width: 1.4;
+            stroke-linecap: round;
+          }
+          .bbf-cursor-ring[data-hot="1"] circle {
+            fill: color-mix(in srgb, var(--bbf-red) 22%, transparent);
+          }
+          @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+            html.bbf-cursor,
+            html.bbf-cursor * {
+              cursor: auto !important;
+            }
+          }
           @media (prefers-reduced-motion: reduce) {
             .bbf-marquee,
-            .bbf-ken { animation: none; }
+            .bbf-ken,
+            .bbf-breathe,
+            .bbf-ember,
+            .bbf-glow,
+            .bbf-pulse { animation: none; }
           }
         `}</style>
+        <BbfCursor />
         <BbfIntroLoader />
         <BbfLenis>{children}</BbfLenis>
       </div>

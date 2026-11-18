@@ -21,7 +21,7 @@ export function BbfContact() {
               href={BBF_CONTACT.maps}
               target="_blank"
               rel="noopener noreferrer"
-              strength={0}
+              strength={0.18}
               className="inline-flex items-center justify-center border border-white/30 px-6 py-3.5 text-sm font-semibold text-white"
             >
               Route planen
