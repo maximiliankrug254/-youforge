@@ -1,0 +1,21 @@
+BBS-Bauservice, Allendorf (Lumda)
+Quelle der Angaben: http://www.bbs-bauservice.de/ (Stand der Dateien 2002, Navigation 25.04.2004)
+Rohdaten: rohdaten/*.html und rohdaten/bilder/
+
+Betrieb
+- Firma BBS-Bauservice, Einzelunternehmen, gegründet 1996
+- Inhaber Bernd Schäfer, auf der Kontaktseite als Maurermeister bezeichnet
+- Bleichstrasse 3, 35469 Allendorf (Lumda)
+- Telefon 06407-400436
+- Fax 06407-400437
+- E-Mail BBS-Bauservice@web.de
+- Satz auf der Startseite: Unser Service rund ums Haus
+- Auftraggeber laut wir.htm: Architekten, Kommunen, private Bauherren
+- Leistungen laut wir.htm: Abbrucharbeiten, Rohbauarbeiten, Schornsteinsanierung, Altbausanierung, Kanalarbeiten, Hofbefestigungen, Garten- und Landschaftsbau, Zaunanlagen
+
+Nicht verwendet
+- 06407 400437 ist auf der eigenen Seite das Fax. Verzeichnisse führen die Nummer teils als Telefon.
+- Hochbau und Tiefbau stehen nur in Branchenbüchern, nicht auf der eigenen Seite.
+- Impressum der alten Seite nennt den Webdesigner Bernd Rummler, nicht den Betrieb.
+- bbs-logo.jpg, 230×182, Hausdach rot, Schrift BBS blau, Balken rot, Wort Bauservice.
+- Alte Fotos 128×63 bis 400×264. Mehrere Motive passen nicht zur Bildunterschrift und wirken wie Fremdmaterial. Für die Demo liegen eigene Beispielbilder unter public/demo/bbs-bauservice/. Die Bildunterschriften nennen nur die Leistung, keine konkrete Baustelle.
