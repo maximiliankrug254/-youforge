@@ -1,0 +1,50 @@
+Keils Bäder-ABZ / Firma Ingolf Keil
+Stand Crawl: 2026-11-25
+Quelle: http://www.keils-baeder-abz.de/
+YouForge-Einschätzung: Interessanter Lead
+
+Seiten:
+- http://www.keils-baeder-abz.de/
+- http://www.keils-baeder-abz.de/Das_Unternehmen/das_unternehmen.html
+- http://www.keils-baeder-abz.de/Mein_Service/mein_service.html
+- http://www.keils-baeder-abz.de/Wellness/wellness.html
+- http://www.keils-baeder-abz.de/Referenzen/referenzen.html
+- http://www.keils-baeder-abz.de/Lack-Decken/lack-decken.html
+- Referenzen Bild1–Bild8 Unterseiten
+
+Gesicherte Fakten:
+- Inhaber: Ingolf Keil
+- Betrieb: Keils Bäder-ABZ / Firma Ingolf Keil
+- Ein-Mann-Betrieb
+- Meister des Handwerks seit 1991 in Staufenberg-Treis (Marquee Service-Seite)
+- Fachverleger für Spann-Decken, System BARRISOL
+- Adresse: Goldbergstraße 16, 35460 Staufenberg/Treis
+- Tel.: 06406 73169
+- Mobil: 0170 3149049
+- Fax: 06406 73187
+- E-Mail: baeder.ABZ@gmx.de
+
+Leistungen (Website):
+- Gasinstallation, Wasserinstallation, Klempnerei/Spenglerei
+- Badausstattung / Traumbad inkl. Maurer-, Putzer- und Fliesenarbeiten
+- Haustechnik, Heizungs- und Ölanlagen, Solar
+- Regenwassernutzung, Kanalreinigung, Wasseraufbereitung
+- moderne Heiztechnik
+- BARRISOL Lack-/Spanndecken
+- Kundendienst, Lieferung, Beratung, Verkauf, Reparatur
+
+Nicht übernehmen ohne Aktualisierung:
+- „zehnjährige Tradition“ (historischer Website-Text, kein aktuelles Jahresalter erfinden)
+
+Zusatz (Verzeichnis, nicht Primärquelle):
+- https://www.sanitaerexperten.de/stadt/staufenberg-hessen/profil/ingolf-keil/
+
+Bilder: .uebergabe/keils-baeder/rohdaten/bilder/
+Demo-Assets: public/demo/keils-baeder/
+Slug: /demo/keils-baeder
+
+Leistungsspektrum-Bilder (illustrativ, nicht Betriebsfotos):
+- svc-bad.jpg, svc-wasser.jpg: Unsplash (Lizenz frei)
+- svc-heizung.jpg: Pexels (Solar-Montage Dach)
+- svc-klempner.jpg, svc-spanndecke.jpg, svc-regen.jpg, svc-kanal.jpg, svc-haustechnik.jpg: generiert, themengenau
+Referenzen ref-01…08: Originale vom Kundenstandort
