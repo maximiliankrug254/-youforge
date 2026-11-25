@@ -1,21 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { RsLenis } from "@/components/demo/rs/RsLenis";
 import { RsIntroLoader } from "@/components/demo/rs/RsIntroLoader";
 import { RsNav } from "@/components/demo/rs/RsNav";
 import { RS_CONTACT } from "@/components/demo/rs/rs-contact";
-
-const rsSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-rs-sans",
-  weight: ["400", "500", "600", "700"],
-});
-
-const rsDisplay = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-rs-display",
-  weight: ["400", "500", "600"],
-});
 
 export const metadata: Metadata = {
   title: `${RS_CONTACT.brand} — ${RS_CONTACT.profession} | Living Demo`,
@@ -38,7 +25,7 @@ export default function RsDemoLayout({
 }) {
   return (
     <div
-      className={`${rsSans.variable} ${rsDisplay.variable} rs-demo min-h-dvh bg-[var(--rs-cream)] text-[var(--rs-ink)] antialiased`}
+      className="rs-demo min-h-dvh bg-[var(--rs-cream)] text-[var(--rs-ink)] antialiased"
       style={
         {
           "--rs-ink": "#1c1917",
@@ -52,6 +39,10 @@ export default function RsDemoLayout({
         } as React.CSSProperties
       }
     >
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap"
+        rel="stylesheet"
+      />
       <style>{`
         body:has(.rs-demo) header:not([data-rs-nav]),
         body:has(.rs-demo) footer,
@@ -62,7 +53,7 @@ export default function RsDemoLayout({
           scroll-padding-top: 4.5rem;
         }
         .rs-demo {
-          font-family: var(--font-rs-sans), system-ui, sans-serif;
+          font-family: "DM Sans", system-ui, sans-serif;
           overflow-x: clip;
         }
         .rs-pulse {
@@ -77,7 +68,7 @@ export default function RsDemoLayout({
         .rs-demo h2,
         .rs-demo h3,
         .rs-demo .font-rs-display {
-          font-family: var(--font-rs-display), Georgia, serif;
+          font-family: "Source Serif 4", Georgia, serif;
         }
         .rs-demo ::selection {
           background: color-mix(in srgb, var(--rs-ochre) 45%, transparent);
