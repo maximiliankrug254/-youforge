@@ -1,0 +1,26 @@
+import { ANA_DEMO } from "@/components/demo/anatolia/ana-config";
+
+export const ANA_CONTACT = {
+  short: ANA_DEMO.brand.short,
+  full: ANA_DEMO.brand.full,
+  legalName: ANA_DEMO.brand.legalName,
+  tagline: ANA_DEMO.brand.tagline,
+  navSubtitle: ANA_DEMO.brand.navSubtitle,
+  profession: ANA_DEMO.brand.profession,
+  owner: ANA_DEMO.contact.owner,
+  ownerRole: ANA_DEMO.contact.ownerRole,
+  phoneTel: ANA_DEMO.contact.phoneTel,
+  phoneDisplay: ANA_DEMO.contact.phoneDisplay,
+  email: ANA_DEMO.contact.email,
+  addressLine1: ANA_DEMO.contact.addressLine1,
+  addressLine2: ANA_DEMO.contact.addressLine2,
+  city: ANA_DEMO.contact.city,
+  region: ANA_DEMO.contact.region,
+  mapsUrl: `https://maps.google.com/?q=${ANA_DEMO.contact.mapsQuery}`,
+  since: ANA_DEMO.business.sinceYear,
+  sinceLabel: ANA_DEMO.business.sinceLabel,
+  sinceExact: ANA_DEMO.business.sinceExact,
+  register: ANA_DEMO.business.register,
+  subject: ANA_DEMO.business.subject,
+  route: ANA_DEMO.route,
+} as const;
